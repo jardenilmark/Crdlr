@@ -2,13 +2,12 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: [
-    './frontend.jsx'
-  ],
+  entry: path.join(__dirname, 'src/frontend/') +
+   '/frontend.jsx',
   output: {
     filename: 'bundle.js',
     publicPath: '/',
-    path: path.join(process.cwd(), 'public')
+    path: path.join(__dirname, 'public')
   },
   module: {
     rules: [{

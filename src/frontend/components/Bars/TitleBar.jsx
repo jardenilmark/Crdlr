@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl } from 'react-bootstrap'
 
 class Header extends React.Component {
   render () {
@@ -12,12 +12,10 @@ class Header extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Navbar.Form pullRight>
-            <FormGroup>
-              <FormControl type="text" placeholder="Search" />
-            </FormGroup>{' '}
-            <Button type="submit">Submit</Button>
-          </Navbar.Form>
+          <Nav pullRight>
+            <NavItem eventKey={1} href="#">Sign Up</NavItem>
+            <NavItem eventKey={2} href="#">Login</NavItem>
+          </Nav>
         </Navbar.Collapse>
       </Navbar>
     )
