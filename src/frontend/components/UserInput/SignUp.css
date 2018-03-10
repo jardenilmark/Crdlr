@@ -1,0 +1,17 @@
+.center {
+  margin: auto;
+  width: 70%;
+  border: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.jumbotron {
+  flex: 1;
+  background-Color: 'red';
+}
+
+.centerText {
+  text-align: center;
+}

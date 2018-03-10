@@ -2,13 +2,19 @@ import React from 'react'
 import { FormGroup, MenuItem, ControlLabel, FormControl } from 'react-bootstrap'
 
 class Header extends React.Component {
+  constructor (props) {
+    super(props)
+    this.arr = props.array
+    this.name = props.name
+  }
   render () {
     return (
-      <FormGroup controlId="formControlsSelect">
-        <ControlLabel>Select</ControlLabel>{' '}
+      <FormGroup controlId={this.name}>
+        <ControlLabel>{this.name}</ControlLabel>{' '}
         <FormControl componentClass="select" placeholder="select">
-          <option value="select">select</option>
-          <option value="other">...</option>
+          {this.arr.map(elem => {
+            return <option value={elem}>{elem}</option>
+          })}
         </FormControl>
       </FormGroup>
     )

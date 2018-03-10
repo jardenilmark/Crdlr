@@ -1,13 +1,11 @@
 import React from 'react'
-import TitleBar from './Bars/TitleBar'
-import SearchBar from './Bars/SearchBar'
+import Route from './Route/Route'
 
 class App extends React.Component {
   render () {
     return (
       <div>
-        <TitleBar />
-        <SearchBar />
+        <Route />
       </div>
     )
   }
