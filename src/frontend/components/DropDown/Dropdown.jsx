@@ -1,7 +1,7 @@
 import React from 'react'
-import { FormGroup, MenuItem, ControlLabel, FormControl } from 'react-bootstrap'
+import { Dropdown } from 'semantic-ui-react'
 
-class Header extends React.Component {
+class Drop extends React.Component {
   constructor (props) {
     super(props)
     this.arr = props.array
@@ -9,16 +9,9 @@ class Header extends React.Component {
   }
   render () {
     return (
-      <FormGroup controlId={this.name}>
-        <ControlLabel>{this.name}</ControlLabel>{' '}
-        <FormControl componentClass="select" placeholder="select">
-          {this.arr.map(elem => {
-            return <option value={elem}>{elem}</option>
-          })}
-        </FormControl>
-      </FormGroup>
+      <Dropdown placeholder={this.name} search selection options={this.arr} />
     )
   }
 }
 
-export default Header
+export default Drop

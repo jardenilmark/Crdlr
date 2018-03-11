@@ -11,15 +11,20 @@ async function getCarList (db, request, response) {
 
 async function getFilteredList (db, request, response) {
   const para = request.params.para
-  console.log(para)
   const result = await db.collection('cars').find({},
     { [para]: 1 }).toArray()
   response.json(result)
 }
 
 async function getAvailCars (db, request, response) {
-  const body = request.bodyParser
-  const result = await db.collection('cars').find({ body }).toArray()
+  const para = request.params.para
+  const arr = para.split(',')
+  let data = {}
+  arr.forEach(element => {
+    const array = element.split(':')
+    data[array[0]] = array[1].substring(1, array[1].length - 1)
+  })
+  const result = await db.collection('cars').find(data).toArray()
   response.json(result)
 }
 
@@ -35,7 +40,7 @@ module.exports = {
       .get('/getCar/:para', (request, response) => {
         getFilteredList(db, request, response)
       })
-      .get('/availCars', (request, response) => {
+      .get('/availCars/:para', (request, response) => {
         getAvailCars(db, request, response)
       })
   }

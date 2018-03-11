@@ -1,6 +1,5 @@
 import React from 'react'
 import TitleBar from '../Bars/TitleBar'
-import { Jumbotron } from 'react-bootstrap'
 import './SignUp.css'
 
 class Search extends React.Component {
