@@ -1,12 +1,10 @@
 import React from 'react'
-import Route from './Route/Route'
+import Route from './Route/Route.jsx'
 
 class App extends React.Component {
   render () {
     return (
-      <div>
-        <Route />
-      </div>
+      <Route />
     )
   }
 }

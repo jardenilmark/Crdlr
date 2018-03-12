@@ -1,26 +1,29 @@
 import React from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Popup, Button, Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import Login from '../UserInput/Login.jsx'
 
-class Header extends React.Component {
+class TitleBar extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {}
-    this.handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    this.state = { activeItem: 'Home' }
   }
+
   render () {
-    const { activeItem } = this.state
+    const { activeItem } = this.props
+    console.log(this.props.match)
+    console.log(JSON.stringify(this.props))
     return (
       <Menu style={{margin: 0}} stackable>
         <Menu.Item header>CRDLR</Menu.Item>
-        <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick} as={Link} to='/'/>
-        <Menu.Item name='Search' active={activeItem === 'Search'} onClick={this.handleItemClick} as={Link} to='/Search'/>
+        <Menu.Item name='Home' active={activeItem === 'Home'} as={Link} to='/'/>
+        <Menu.Item name='Search' active={activeItem === 'Search'} as={Link} to='/Search'/>
         <Menu.Menu position='right'>
-          <Menu.Item name='Login' active={activeItem === 'Login'} onClick={this.handleItemClick}/>
+          <Menu.Item name='Login' active={activeItem === 'Login'}><Login /></Menu.Item>
         </Menu.Menu>
       </Menu>
     )
   }
 }
 
-export default Header
+export default TitleBar

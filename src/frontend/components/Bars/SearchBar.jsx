@@ -1,6 +1,8 @@
 import React from 'react'
 import Dropdown from '../DropDown/Dropdown.jsx'
-import { Grid, Segment, Divider, Sidebar, Button, Menu } from 'semantic-ui-react'
+import Item from '../Item.jsx'
+import { Grid, Segment, Divider, Button, Menu, Icon } from 'semantic-ui-react'
+import TitleBar from './TitleBar.jsx'
 
 class Header extends React.Component {
   constructor (props) {
@@ -10,7 +12,7 @@ class Header extends React.Component {
       carArr: [],
       selectedBrand: ''
     }
-    this.arr = ['Location', 'Brand', 'Type', 'Model', 'Price']
+    this.arr = ['Location', 'Brand', 'Type', 'Model']
   }
 
   async getInfo (para) {
@@ -38,10 +40,19 @@ class Header extends React.Component {
     })
   }
 
+  async iniCarList() {
+    const response = await fetch(`/carLists`)
+    const result = await response.json()
+    this.setState({
+      carArr: result
+    })
+  }
+
   async populateState () {
     for (const item of this.arr) {
       await this.getInfo(item.toLowerCase())
     }
+    await this.iniCarList()
   }
 
   componentDidMount () {
@@ -61,6 +72,7 @@ class Header extends React.Component {
       }
     })
     data = data.substring(0, data.length - 1)
+    console.log(data)
     if (data.length !== 0) {
       const response = await fetch(`/availCars/${data}`)
       const result = await response.json()
@@ -72,21 +84,36 @@ class Header extends React.Component {
 
   render () {
     const arr = this.state.array
+    const carArr = this.state.carArr
     const active = this.state.selectedBrand
     let count = 0
     return (
-      <Sidebar.Pushable as={Segment} style={{height: '95vh', margin: 0}}>
-        <Sidebar as={Menu} animation='overlay' style={{width: 250}} visible={true} icon='labeled' vertical inverted>
+      <div>
+        <TitleBar />
+        <Menu style={{margin: 0}}>
           {arr.map(elem => {
             const holder = this.arr[count++]
+            const dropArr = [...elem]
+            dropArr.push({key: '...', value: '...', text: '...'})
             return (
-              <Menu.Item name={holder} style={{marginTop: '5vh'}}>
-                <Dropdown array = {elem} name = {holder} active = {active}/>
+              <Menu.Item name={holder}>
+                <Dropdown array={dropArr} name={holder} active={active}/>
               </Menu.Item>)
           })}
-          <Button inverted content='Search' style={{marginTop: '5vh'}} onClick={(e) => this.getData()}/>
-        </Sidebar>
-      </Sidebar.Pushable>
+          <Menu.Item name='Search'>
+            <Button basic color='black' content='Search' onClick={(e) => this.getData()}>
+              <Button.Content>
+                <Icon name='search' />
+              </Button.Content>
+            </Button>
+          </Menu.Item>
+        </Menu>
+        <Grid style={{marginTop: 30}} relaxed>
+          {carArr.map(elem => {
+            return (<Item item={elem} />)
+          })}
+        </Grid>
+      </div>
     )
   }
 }

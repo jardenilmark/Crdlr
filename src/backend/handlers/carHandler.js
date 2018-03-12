@@ -22,7 +22,9 @@ async function getAvailCars (db, request, response) {
   let data = {}
   arr.forEach(element => {
     const array = element.split(':')
-    data[array[0]] = array[1].substring(1, array[1].length - 1)
+    if (!array[1].match(/[.]/g)) {
+      data[array[0]] = array[1].substring(1, array[1].length - 1)
+    }
   })
   const result = await db.collection('cars').find(data).toArray()
   response.json(result)
