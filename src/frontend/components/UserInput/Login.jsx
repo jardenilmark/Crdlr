@@ -1,9 +1,29 @@
 import React from 'react'
 import TitleBar from '../Bars/TitleBar.jsx'
 import { Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
 
 class Login extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {}
+  }
+
+  async loginUser () {
+    const payload = {
+      email: document.getElementById('emailLogin').value,
+      pass: document.getElementById('passwordLogin').value
+    }
+    const response = await fetch('/getUser', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const result = await response.json()
+    console.log(result)
+  }
+
   render () {
     return (
       <div>
@@ -15,15 +35,15 @@ class Login extends React.Component {
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>First Name</label>
-                  <input placeholder='First Name' />
+                  <label>Email</label>
+                  <input id='emailLogin' placeholder='Email' />
                 </Form.Field>
                 <Form.Field>
-                  <label>Last Name</label>
-                  <input placeholder='Last Name' />
+                  <label>Password</label>
+                  <input id='passwordLogin' placeholder='Password' type='password' />
                 </Form.Field>
-                <Button type='submit'primary>Login</Button>
-                <Button type='submit' secondary as={Link} to={'/SignUp'}>Sign Up</Button>
+                <Button type='submit' primary onClick={this.loginUser}>Login</Button>
+                <Button type='submit' secondary name='SignUp' onClick={this.props.handleItemClick}>Sign Up</Button>
               </Form>
             </Grid.Column>
           </Grid>

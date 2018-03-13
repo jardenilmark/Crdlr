@@ -1,5 +1,4 @@
 import React from 'react'
-import TitleBar from '../Bars/TitleBar.jsx'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 class SignUp extends React.Component {
@@ -39,7 +38,6 @@ class SignUp extends React.Component {
     ]
     return (
       <div>
-        <TitleBar />
         <div className='login-form'>
           <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 700 }}>

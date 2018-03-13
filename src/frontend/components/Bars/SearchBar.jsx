@@ -2,7 +2,6 @@ import React from 'react'
 import Dropdown from '../DropDown/Dropdown.jsx'
 import Item from '../Item.jsx'
 import { Grid, Segment, Divider, Button, Menu, Icon } from 'semantic-ui-react'
-import TitleBar from './TitleBar.jsx'
 
 class Header extends React.Component {
   constructor (props) {
@@ -89,7 +88,6 @@ class Header extends React.Component {
     let count = 0
     return (
       <div>
-        <TitleBar />
         <Menu style={{margin: 0}}>
           {arr.map(elem => {
             const holder = this.arr[count++]
