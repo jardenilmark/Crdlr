@@ -13,7 +13,7 @@ class Login extends React.Component {
       email: document.getElementById('emailLogin').value,
       pass: document.getElementById('passwordLogin').value
     }
-    const response = await fetch('/getUser', {
+    const response = await fetch('/loginUser', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
@@ -21,7 +21,7 @@ class Login extends React.Component {
       }
     })
     const result = await response.json()
-    console.log(result)
+    console.log('bearer ' + result.token)
   }
 
   render () {

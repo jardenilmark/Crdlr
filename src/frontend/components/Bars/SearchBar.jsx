@@ -39,7 +39,7 @@ class Header extends React.Component {
     })
   }
 
-  async iniCarList() {
+  async iniCarList () {
     const response = await fetch(`/carLists`)
     const result = await response.json()
     this.setState({

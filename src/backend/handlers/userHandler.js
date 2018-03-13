@@ -10,8 +10,13 @@ async function addUser (db, request, response) {
 async function loginUser (db, request, response, jwt) {
   const user = request.body
   const result = await db.collection('users').findOne(user)
-  const token = jwt.sign(result, secret)
-  response.json(token)
+  if (result !== null) {
+    const token = jwt.sign(result, secret)
+    console.log(token)
+    response.json({token})
+  } else {
+    response.json({success: false})
+  }
 }
 
 async function getUser (db, request, response, jwt) {
