@@ -18,7 +18,7 @@ class App extends React.Component {
     return (
       <div>
         <TitleBar handleItemClick={this.handleItemClick} activeItem={this.state.activeItem} />
-        <Body activeItem={this.state.activeItem} />
+        <Body handleItemClick={this.handleItemClick} activeItem={this.state.activeItem} />
       </div>
     )
   }

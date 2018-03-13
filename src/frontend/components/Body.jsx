@@ -17,7 +17,7 @@ class Body extends React.Component {
     } else if (activeItem === 'Search') {
       return <Search />
     } else {
-      return <SignUp />
+      return <SignUp handleItemClick={this.props.handleItemClick}/>
     }
   }
 

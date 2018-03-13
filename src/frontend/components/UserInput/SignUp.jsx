@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import database from '../../../backend/database.js'
+import swal from 'sweetalert'
 
 class SignUp extends React.Component {
   constructor (props) {
@@ -14,21 +16,16 @@ class SignUp extends React.Component {
     this.setState({ selectedValue: value })
   }
 
-  async addUser () {
-    const payload = {
+  async addUser (event, {name}) {
+    database.collection('users').add({
       email: document.getElementById('email').value,
-      pass: document.getElementById('pass').value,
+      password: document.getElementById('pass').value,
       gender: this.state.selectedValue
-    }
-    const response = await fetch('/addUser', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json'
-      }
     })
-    const result = await response.json()
-    console.log(result)
+    const confirmation = swal("Success!", "Sign Up Complete", "success")
+    if (await confirmation) {
+      this.props.handleItemClick(event, {name})
+    }
   }
 
   render () {
@@ -49,7 +46,7 @@ class SignUp extends React.Component {
                   <Form.Input id='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' />
                   <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' />
                   <Form.Select id='gender' fluid options={options} placeholder='Gender' onChange={this.handleOnChange}/>
-                  <Button color='teal' fluid size='large' onClick={(e) => this.addUser()}>Confirm</Button>
+                  <Button color='teal' name='Home' fluid size='large' onClick={(e, { name }) => this.addUser(e, { name })}>Confirm</Button>
                 </Segment>
               </Form>
             </Grid.Column>

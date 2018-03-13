@@ -33,5 +33,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
+  devServer: {
+    historyApiFallback: true,
+    publicPath: '/',
+    contentBase: './public',
+    hot: true
+  },
+  mode: 'development',
   performance: { hints: false }
 }

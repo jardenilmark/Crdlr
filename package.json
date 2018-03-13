@@ -6,12 +6,14 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "start": "webpack-dev-server --hot --inline",
     "build": "webpack"
   },
   "dependencies": {
     "eslint": "^4.15.0",
     "eslint-config-standard-jsx": "^5.0.0",
     "express": "^4.16.2",
+    "firebase": "^4.11.0",
     "jsonwebtoken": "^8.2.0",
     "mongodb": "^3.0.4",
     "nodemon": "^1.14.11",
@@ -22,10 +24,10 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "semantic-ui": "^2.3.0",
     "semantic-ui-react": "^0.78.3",
     "styled-components": "^3.2.1",
-    "sweetalert2": "^7.15.1"
+    "sweetalert": "^2.1.0",
+    "webpack-dev-server": "^3.1.1"
   },
   "devDependencies": {
     "babel": "^6.23.0",
