@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchCars, updateList } from '../actions/carFetch'
+import { fetchCars, updateList } from '../actions/carAction'
 import Search from '../../frontend/components/Search'
 
 function mapStateToProps (state) {

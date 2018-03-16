@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import App from '../../frontend/components/App'
-import { fetchActiveItem } from '../actions/activeItemFetch'
+import { fetchActiveItem } from '../actions/activeItemAction'
 
 function mapStateToProps (state) {
   return { activeItem: state.activeItem.activeItem }
