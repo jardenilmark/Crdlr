@@ -1,21 +1,17 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
-import Home from './Home.jsx'
-import Search from './Search.jsx'
-import SignUp from './UserInput/SignUp.jsx'
+import Home from './Home'
+import Search from './Search'
+import SignUp from './UserInput/SignUp'
+import CarContainer from '../../backend/containers/carContainer'
 
 class Body extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
   getActiveComponent () {
     const { activeItem } = this.props
-    if (activeItem === 'Home') {
+    if (activeItem === 'Home' || !activeItem) {
       return <Home />
     } else if (activeItem === 'Search') {
-      return <Search />
+      return <CarContainer />
     } else {
       return <SignUp handleItemClick={this.props.handleItemClick}/>
     }

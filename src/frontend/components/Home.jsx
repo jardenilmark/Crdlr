@@ -7,7 +7,7 @@ class Home extends React.Component {
       <div style={{backgroundImage: require('./pic/a.jpg')}}>
         <Image src={require('./pic/a.jpg')} style={{height: '90vh', width: '100%'}} />
         <div style={{backgroundColor: 'black', height: '6vh', textAlign: 'center', color: 'white', fontSize: '25px'}}>
-          THE BEST PRICE FOR YOUR MONEY
+          RENT A CAR TODAY
         </div>
       </div>
     )

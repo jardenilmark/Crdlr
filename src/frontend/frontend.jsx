@@ -1,10 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
+import store from '../backend/store'
+import { Provider } from 'react-redux'
+import itemContainer from '../backend/containers/itemContainer'
 
-const mount = document.getElementById('mount')
+function renderComponent (Component) {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Component />
+    </Provider>,
+    document.getElementById('mount')
+  )
+}
 
-ReactDOM.render(
-  <App />,
-  mount
-)
+renderComponent(itemContainer)

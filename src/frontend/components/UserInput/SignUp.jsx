@@ -1,30 +1,19 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-import database from '../../../backend/database.js'
+import database from '../../../backend/database'
 import swal from 'sweetalert'
 
 class SignUp extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedValue: ''
-    }
-    this.handleOnChange = this.handleOnChange.bind(this)
-  }
-
-  handleOnChange (e, { value }) {
-    this.setState({ selectedValue: value })
-  }
-
-  async addUser (event, {name}) {
+  async addUser (name) {
+    const { handleItemClick } = this.props
     database.collection('users').add({
       email: document.getElementById('email').value,
       password: document.getElementById('pass').value,
-      gender: this.state.selectedValue
+      gender: document.getElementById('gender').firstChild.innerText
     })
-    const confirmation = swal("Success!", "Sign Up Complete", "success")
+    const confirmation = swal('Success!', 'Sign Up Complete', 'success')
     if (await confirmation) {
-      this.props.handleItemClick(event, {name})
+      handleItemClick(name)
     }
   }
 
@@ -45,8 +34,8 @@ class SignUp extends React.Component {
                 <Segment stacked>
                   <Form.Input id='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' />
                   <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' />
-                  <Form.Select id='gender' fluid options={options} placeholder='Gender' onChange={this.handleOnChange}/>
-                  <Button color='teal' name='Home' fluid size='large' onClick={(e, { name }) => this.addUser(e, { name })}>Confirm</Button>
+                  <Form.Select id='gender' fluid options={options} placeholder='Gender'/>
+                  <Button color='teal' fluid size='large' onClick={() => this.addUser('Home')}>Confirm</Button>
                 </Segment>
               </Form>
             </Grid.Column>

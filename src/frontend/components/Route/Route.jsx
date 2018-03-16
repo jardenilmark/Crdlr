@@ -2,7 +2,7 @@ import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import Home from '../Home'
 import Search from '../Search'
-import SignUp from '../UserInput/SignUp.jsx'
+import SignUp from '../UserInput/SignUp'
 
 export default () => (
   <HashRouter>
