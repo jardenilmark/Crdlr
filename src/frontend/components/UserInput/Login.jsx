@@ -1,23 +1,30 @@
 import React from 'react'
 import TitleBar from '../Bars/TitleBar'
 import { Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { auth } from '../../../backend/database'
 
 class Login extends React.Component {
-  // async loginUser () {
-  //   const payload = {
-  //     email: document.getElementById('emailLogin').value,
-  //     pass: document.getElementById('passwordLogin').value
-  //   }
-  //   const response = await fetch('/loginUser', {
-  //     method: 'POST',
-  //     body: JSON.stringify(payload),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //   const result = await response.json()
-  //   console.log('bearer ' + result.token)
-  // }
+  async onclickHandler (name) {
+    const { activeItem } = this.props
+    const { handleItemClick } = this.props
+    const login = await this.loginUser()
+    if (login && activeItem === 'SignUp') {
+      handleItemClick(name)
+    }
+  }
+
+  async loginUser () {
+    const { setUser } = this.props
+    const email = document.getElementById('emailLogin').value
+    const pass = document.getElementById('passwordLogin').value
+    const user = await auth.signInWithEmailAndPassword(email, pass).catch(() => 'error')
+    if (user !== 'error') {
+      localStorage.setItem('user', JSON.stringify(auth.currentUser))
+      setUser(auth.currentUser)
+      return true
+    }
+    return false
+  }
 
   render () {
     const { handleItemClick } = this.props
@@ -38,7 +45,7 @@ class Login extends React.Component {
                   <label>Password</label>
                   <input id='passwordLogin' placeholder='Password' type='password' />
                 </Form.Field>
-                <Button type='submit' primary>Login</Button>
+                <Button type='submit' primary onClick={() => this.onclickHandler('Home')}>Login</Button>
                 <Button type='submit' secondary name='SignUp' onClick={() => handleItemClick('SignUp')}>Sign Up</Button>
               </Form>
             </Grid.Column>

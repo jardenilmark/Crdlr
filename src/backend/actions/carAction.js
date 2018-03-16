@@ -1,4 +1,4 @@
-import database from '../database'
+import { firestore } from '../database'
 
 function getCars (cars, filtered) {
   return {
@@ -11,7 +11,7 @@ function getCars (cars, filtered) {
 }
 
 async function getFromDb () {
-  const cars = await database.collection('cars').get()
+  const cars = await firestore.collection('cars').get()
   const arr = []
   cars.forEach(e => {
     arr.push(e.data())

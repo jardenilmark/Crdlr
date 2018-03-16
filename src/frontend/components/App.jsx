@@ -3,12 +3,20 @@ import TitleBar from './Bars/TitleBar'
 import Body from './Body'
 
 class App extends React.Component {
+  componentDidMount () {
+    const { setCurrentUser } = this.props
+    setCurrentUser(JSON.parse(localStorage.getItem('user')))
+  }
+
   render () {
-    const { activeItem, getItemName } = this.props
+    const { activeItem, currentUser, setItemName, setCurrentUser } = this.props
+    if (currentUser) {
+      console.log(currentUser.email)
+    }
     return (
       <div>
-        <TitleBar activeItem={activeItem} handleItemClick={getItemName}/>
-        <Body activeItem={activeItem} handleItemClick={getItemName} />
+        <TitleBar activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser}/>
+        <Body activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser}/>
       </div>
     )
   }

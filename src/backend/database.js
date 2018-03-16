@@ -10,4 +10,6 @@ const config = {
   messagingSenderId: "691462554775"
 }
 firebase.initializeApp(config)
-export default firebase.firestore()
+const firestore = firebase.firestore()
+const auth = firebase.auth()
+export {firestore, auth}

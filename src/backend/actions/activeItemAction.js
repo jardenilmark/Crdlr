@@ -5,7 +5,7 @@ function getActiveItem (name) {
   }
 }
 
-export function fetchActiveItem (name) {
+export function setActiveItem (name) {
   return (dispatch) => {
     dispatch(getActiveItem(name))
   }
