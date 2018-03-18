@@ -1,56 +1,83 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { firestore, auth } from '../../../backend/database'
+import Validator from '../../validator'
 import swal from 'sweetalert'
 
 class SignUp extends React.Component {
   async addUser (name) {
     const { handleItemClick, setUser } = this.props
-    console.log('test')
-    const email = document.getElementById('email').value
-    const pass = document.getElementById('pass').value
-    const user = await auth.createUserWithEmailAndPassword(email, pass)
-    const uid = user.uid
-    firestore.collection('users').doc(uid).set({
+    const user = {
+      email: document.getElementById('email').value,
+      pass: document.getElementById('pass').value,
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
       gender: document.getElementById('gender').firstChild.innerText,
-      phone: document.getElementById('phone').innerText
-    })
-    const confirmation = swal('Success!', 'Sign Up Complete', 'success')
-    if (await confirmation) {
-      handleItemClick(name)
-      await auth.signInWithEmailAndPassword(email, pass)
-      localStorage.setItem('user', JSON.stringify(auth.currentUser))
-      setUser(auth.currentUser)
+      phone: document.getElementById('phone').value
     }
-  }
+    const validator = new Validator(user)
+    if (validator.isAllValid()) {
+      try {
+        const create = await auth.createUserWithEmailAndPassword(user.email, user.pass)
+        user['uid'] = create.uid
+        firestore.collection('users').doc(user.uid).set({
+          gender: user.gender,
+          phone: user.phone,
+          firstName: user.firstName,
+          lastName: user.lastName
+        })
+        const confirmation = swal('Success!', 'Sign Up Complete', 'success')
+        if (await confirmation) {
+          handleItemClick(user.name)
+          await auth.signInWithEmailAndPassword(user.email, user.pass)
+          localStorage.setItem('user', JSON.stringify(auth.currentUser))
+          setUser(auth.currentUser)
+        }
+      } catch (e) {
+        this.props.setErrors({
+          emailError: validator.isEmail() === false,
+          passError: validator.isPass() === false
+        })
+      }
+    } else {
+      this.props.setErrors({
+        fnError: validator.isFirstName() === false,
+        lnError: validator.isLastName() === false,
+        emailError: validator.isEmail() === false,
+        passError: validator.isPass() === false,
+        phoneError: validator.isPhoneNum() === false,
+        genderError: validator.isGender() === false
+      })
+    }
+  } 
 
   render () {
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' }
     ]
+    const { fnError, lnError, emailError, passError, phoneError, genderError } = this.props
     return (
-      <div>
-        <div className='login-form'>
-          <Grid textAlign='center' style={{ height: '80vh' }} verticalAlign='middle'>
-            <Grid.Column style={{ maxWidth: 700 }}>
-              <Header as='h2' color='teal' textAlign='center'>
-                Sign Up
-              </Header>
-              <Form size='massive' error>
-                <Segment stacked>
-                  <Form.Input id='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' />
-                  <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' />
-                  {/* <Message error header='Action Forbidden' content='You can only sign up for an account once with a given e-mail address.' /> */}
-                  <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999}/>
-                  <Form.Select id='gender' fluid options={options} placeholder='Gender'/>
-                  <Button color='teal' fluid size='large' onClick={() => this.addUser('Home')}>Confirm</Button>
-                </Segment>
-              </Form>
-            </Grid.Column>
-          </Grid>
-        </div>
-      </div>
+      <Container fluid style={{height:'100%'}}>
+        <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
+          <Grid.Column style={{ maxWidth: 700 }}>
+            <Header as='h2' color='teal' textAlign='center'>
+              Sign Up
+            </Header>
+            <Form size='massive' error>
+              <Segment stacked>
+                <Form.Input id='firstName' placeholder='Firstname' error={fnError}/>
+                <Form.Input id='lastName' placeholder='Lastname' error={lnError}/>
+                <Form.Input id='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' error={emailError}/>
+                <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}/>
+                <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}/>
+                <Form.Select id='gender' fluid options={options} placeholder='Gender' error={genderError}/>
+                <Button color='teal' fluid size='large' onClick={() => this.addUser('Home')}>Confirm</Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
+      </Container>
     )
   }
 }

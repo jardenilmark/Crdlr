@@ -21,7 +21,15 @@ module.exports = {
     {
       test: /\.(jpg|png|gif|svg|pdf|ico)$/,
       loader: 'url-loader?limit=100000'
-    }]
+    }, 
+    {
+      test: /\.css$/,
+      use: [
+        { loader: "style-loader" },
+        { loader: "css-loader" }
+      ]
+    }
+    ]
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json']

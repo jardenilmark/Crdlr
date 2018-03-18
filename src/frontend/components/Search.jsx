@@ -1,7 +1,8 @@
 import React from 'react'
 import Item from './Item'
-import { Dropdown, Grid, Segment, Divider, Button, Menu, Icon } from 'semantic-ui-react'
+import { Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
 import database from '../../backend/database'
+import Button from './Buttons/customButton'
 
 const arr = ['Location', 'Brand', 'Type', 'Model']
 
@@ -68,7 +69,7 @@ class SearchBar extends React.Component {
   }
 
   render () {
-    const { allCars, filteredCars } = this.props
+    const { allCars, filteredCars, handleItemClick, setCar } = this.props
     let toShowArr = []
     let dropDownArr = []
     if (!allCars === false) {
@@ -79,27 +80,29 @@ class SearchBar extends React.Component {
     let idCar = 0
     return (
       <div>
-        <Menu style={{margin: 0}}>
-          {dropDownArr.map(elem => {
-            const holder = arr[count++]
-            const dropArr = [...elem]
-            dropArr.push({key: '...', value: '...', text: '...'})
-            return (
-              <Menu.Item name={holder} key={holder}>
-                <Dropdown placeholder={holder} search options={dropArr} selection id={holder}/>
-              </Menu.Item>)
-          })}
-          <Menu.Item name='Search'>
-            <Button basic color='black' onClick={(e) => this.getFilteredList()}>
-              <Button.Content>
-                <Icon name='search' />
-              </Button.Content>
-            </Button>
-          </Menu.Item>
-        </Menu>
-        <Grid style={{marginTop: 30}} relaxed>
+        <Grid style={{marginTop: 1}} columns='equal'>
+          <Grid.Row>
+            <Grid.Column/>
+            <Grid.Column/>
+            {dropDownArr.map(elem => {
+              const holder = arr[count++]
+              const dropArr = [...elem]
+              dropArr.push({key: '...', value: '...', text: '...'})
+              return (
+                <Grid.Column name={holder} key={holder} >
+                  <Dropdown button noResultsMessage='No Results Found' placeholder={holder} 
+                  onClose={() => this.getFilteredList()} 
+                  search options={dropArr} selection id={holder}/>
+                </Grid.Column>)
+            })}
+            <Grid.Column/>
+            <Grid.Column/>
+          </Grid.Row>
+        </Grid>
+        <Divider/>
+        <Grid style={{marginTop: 30, marginBottom: 30, paddingLeft: 20, paddingRight: 20}} relaxed>
           {toShowArr.map(elem => {
-            return (<Item item={elem} key={idCar++}/>)
+            return (<Item setCar={setCar} handleItemClick={handleItemClick} item={elem} key={idCar++}/>)
           })}
         </Grid>
       </div>

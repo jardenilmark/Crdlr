@@ -1,6 +1,7 @@
 import React from 'react'
 import TitleBar from './Bars/TitleBar'
 import Body from './Body'
+import { Container } from 'semantic-ui-react'
 
 class App extends React.Component {
   componentDidMount () {
@@ -9,15 +10,12 @@ class App extends React.Component {
   }
 
   render () {
-    const { activeItem, currentUser, setItemName, setCurrentUser } = this.props
-    if (currentUser) {
-      console.log(currentUser.email)
-    }
+    const { activeItem, currentUser, setItemName, setCurrentUser, setSelectedCar, selectedCar } = this.props
     return (
-      <div>
-        <TitleBar activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser}/>
-        <Body activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser}/>
-      </div>
+      <Container fluid>
+        <TitleBar activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser} user={currentUser}/>
+        <Body activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser} setCar={setSelectedCar} car={selectedCar}/>
+      </Container>
     )
   }
 }

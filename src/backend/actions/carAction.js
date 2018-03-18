@@ -10,6 +10,13 @@ function getCars (cars, filtered) {
   }
 }
 
+function getSelectedCar (car) {
+  return {
+    type: 'GET_SELECTEDCAR_TRUE',
+    payload: car
+  }
+}
+
 async function getFromDb () {
   const cars = await firestore.collection('cars').get()
   const arr = []
@@ -19,6 +26,11 @@ async function getFromDb () {
   return arr
 }
 
+export function setSelectedCar (car) {
+  return (dispatch) => {
+    dispatch(getSelectedCar(car))
+  }
+}
 export function fetchCars () {
   return async (dispatch) => {
     const arr = await getFromDb()
