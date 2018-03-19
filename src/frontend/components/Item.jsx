@@ -1,8 +1,18 @@
 import React from 'react'
 import { Header, Image, Button, Grid, Segment, Divider, Container, Table } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { storage } from '../../backend/database'
 
 class Item extends React.Component {
+  async loadImage (model) {
+    const url = await storage.ref().child(`cars/${model}.png`).getDownloadURL()
+    document.getElementById(`img${model}`).src = url
+  }
+
+  componentDidMount () {
+    this.loadImage(this.props.item.model)
+  }
+
   render () {
     const { item } = this.props
     return (
@@ -14,7 +24,7 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image src={require('./pic/carPics/' + item.model + '.png')} />
+          <Image id={`img${item.model}`} src=''/>
           <Divider/>
           <Header size='small' textAlign='center'>
             {item.price} per day

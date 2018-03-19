@@ -1,7 +1,6 @@
 import React from 'react'
 import Item from './Item'
 import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
-import database from '../../backend/database'
 import Button from './Buttons/customButton'
 
 const arr = ['Location', 'Brand', 'Type', 'Model']
@@ -83,7 +82,6 @@ class SearchBar extends React.Component {
       dropDownArr = this.getDropdownValues(arr)
       toShowArr = filteredCars
     }
-    console.log(toShowArr)
     let count = 0
     let idCar = 0
     return (
