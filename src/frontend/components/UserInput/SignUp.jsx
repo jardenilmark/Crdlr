@@ -60,7 +60,7 @@ class SignUp extends React.Component {
       <Container fluid style={{height: '100%'}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
           <Grid.Column style={{ maxWidth: 700 }}>
-            <Header as='h2' color='teal' textAlign='center'>
+            <Header as='h2' color='black' textAlign='center'>
               Sign Up
             </Header>
             <Form size='massive' error>
@@ -71,7 +71,7 @@ class SignUp extends React.Component {
                 <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}/>
                 <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}/>
                 <Form.Select id='gender' fluid options={options} placeholder='Gender' error={genderError}/>
-                <Button color='teal' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>
+                <Button color='black' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>
               </Segment>
             </Form>
           </Grid.Column>

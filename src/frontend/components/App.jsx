@@ -12,8 +12,6 @@ class App extends React.Component {
 
   render () {
     const { activeItem, currentUser, setCurrentUser, setItemName } = this.props
-    console.log(this.props)
-    console.log(auth.currentUser)
     return (
       <Container fluid>
         <TitleBar activeItem={activeItem} currentUser={currentUser} setCurrentUser={setCurrentUser}/>

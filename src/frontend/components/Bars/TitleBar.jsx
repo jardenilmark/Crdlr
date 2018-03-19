@@ -16,7 +16,6 @@ class TitleBar extends React.Component {
 
   render () {
     const { activeItem } = this.props
-    console.log(this.props)
     return (
       <Menu inverted borderless compact attached='top' style={{margin: -1}} stackable>
         <Menu.Item />
