@@ -3,7 +3,8 @@ export default function reducer (state = {}, action) {
     return {
       ...state,
       dateStart: action.payload.dateStart,
-      dateEnd: action.payload.dateEnd
+      dateEnd: action.payload.dateEnd,
+      activeItem: action.payload.active
     }
   } else {
     return state

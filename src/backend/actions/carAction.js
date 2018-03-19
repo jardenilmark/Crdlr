@@ -1,5 +1,4 @@
 import { firestore } from '../database'
-import history from '../history'
 
 function getCars (cars, filtered) {
   return {
@@ -8,13 +7,6 @@ function getCars (cars, filtered) {
       allCars: cars,
       filteredCars: filtered
     }
-  }
-}
-
-function getSelectedCar (car) {
-  return {
-    type: 'GET_SELECTEDCAR_TRUE',
-    payload: car
   }
 }
 
@@ -27,12 +19,6 @@ async function getFromDb () {
   return arr
 }
 
-export function setSelectedCar (car) {
-  return (dispatch) => {
-    dispatch(getSelectedCar(car))
-    history.push('/RentCar', {car})
-  }
-}
 export function fetchCars () {
   return async (dispatch) => {
     const arr = await getFromDb()

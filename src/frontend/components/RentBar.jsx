@@ -3,7 +3,7 @@ import { Step, Icon } from 'semantic-ui-react'
 
 class RentBar extends React.Component {
   render () {
-    const { activeItem } = this.props
+    const { currentlyActive } = this.props
     return (
       <Step.Group widths={3}>
         <Step active={true}>
@@ -18,7 +18,7 @@ class RentBar extends React.Component {
             <Step.Title>Length Of Use</Step.Title>
           </Step.Content>
         </Step>
-        <Step active={false}>
+        <Step active={currentlyActive === 'confirmation'}>
           <Icon name='credit card alternative' />
           <Step.Content>
             <Step.Title>Confirmation</Step.Title>

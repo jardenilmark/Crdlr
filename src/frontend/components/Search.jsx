@@ -1,6 +1,6 @@
 import React from 'react'
 import Item from './Item'
-import { Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
+import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
 import database from '../../backend/database'
 import Button from './Buttons/customButton'
 
@@ -68,18 +68,27 @@ class SearchBar extends React.Component {
     }
   }
 
+  getLoader (arr) {
+    if (arr.length === 0) {
+      return <Dimmer active>
+        <Loader indeterminate>Preparing Selection</Loader>
+      </Dimmer>
+    }
+  }
   render () {
-    const { allCars, filteredCars, setCar } = this.props
+    const { allCars, filteredCars } = this.props
     let toShowArr = []
     let dropDownArr = []
     if (!allCars === false) {
       dropDownArr = this.getDropdownValues(arr)
       toShowArr = filteredCars
     }
+    console.log(toShowArr)
     let count = 0
     let idCar = 0
     return (
-      <div>
+      <Container fluid>
+        {this.getLoader(toShowArr)}
         <Grid style={{marginTop: 1}} columns='equal'>
           <Grid.Row>
             <Grid.Column/>
@@ -103,11 +112,11 @@ class SearchBar extends React.Component {
         <Grid style={{marginTop: 30, marginBottom: 30, paddingLeft: 20, paddingRight: 20}} relaxed>
           {toShowArr.map(elem => {
             return (
-              <Item setCar={setCar} item={elem} key={idCar++}/>
+              <Item item={elem} key={idCar++}/>
             )
           })}
         </Grid>
-      </div>
+      </Container>
     )
   }
 }

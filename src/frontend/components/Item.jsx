@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 class Item extends React.Component {
   render () {
-    const { item, setCar } = this.props
+    const { item } = this.props
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Segment>
@@ -19,7 +19,7 @@ class Item extends React.Component {
           <Header size='small' textAlign='center'>
             {item.price} per day
           </Header>
-          <Button as={Link} to='/RentCar' fluid color='black' onClick={() => setCar(item)}>
+          <Button as={Link} to={{pathname: '/RentCar', state: {item: item}}} fluid color='black'>
             SELECT
           </Button>
         </Segment>

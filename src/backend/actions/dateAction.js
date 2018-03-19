@@ -1,15 +1,16 @@
-function getTransactionDate (transaction) {
+function getTransactionInfo (transaction) {
   return {
     type: 'GET_DATE',
     payload: {
       dateStart: transaction.dateStart,
-      dateEnd: transaction.dateEnd
+      dateEnd: transaction.dateEnd,
+      active: transaction.activeItem
     }
   }
 }
 
-export function setTransactionDate (date) {
+export function setTransactionInfo (info) {
   return (dispatch) => {
-    dispatch(getTransactionDate(date))
+    dispatch(getTransactionInfo(info))
   }
 }

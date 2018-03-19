@@ -17,9 +17,6 @@ function mapDispatchToProps (dispatch) {
     },
     updateCarList (arr, filtered) {
       dispatch(updateList(arr, filtered))
-    },
-    setCar (car) {
-      dispatch(setSelectedCar(car))
     }
   })
 }

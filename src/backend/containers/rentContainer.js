@@ -1,18 +1,19 @@
 import { connect } from 'react-redux'
-import { setTransactionDate } from '../actions/dateAction'
+import { setTransactionInfo } from '../actions/dateAction'
 import Rent from '../../frontend/components/Rent'
 
 const mapStateToProps = (state) => {
   return {
     dateStart: state.date.dateStart,
-    dateEnd: state.date.dateEnd
+    dateEnd: state.date.dateEnd,
+    currentlyActive: state.date.activeItem
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return ({
-    setActiveItem (itemName) {
-      dispatch(setTransactionDate(itemName))
+    setTransactionInfo (info) {
+      dispatch(setTransactionInfo(info))
     }
   })
 }

@@ -1,21 +1,25 @@
 import React from 'react'
-import Login from '../UserInput/Login'
+import LoginContainer from '../../../backend/containers/loginContainer'
 import SignOut from '../UserInput/SignOut'
 import { Button, Menu, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import SignUpContainer from '../../../backend/containers/signUpContainer'
+import history from '../../../backend/history'
 
 class TitleBar extends React.Component {
   getComponent () {
-    const { activeItem, currentUser, setCurrentUser } = this.props
+    const { currentUser, setCurrentUser } = this.props
     if (currentUser) {
       return <SignOut setUser={setCurrentUser} />
     }
-    return <Login activeItem={activeItem} setUser={setCurrentUser}/>
+    return <LoginContainer setUser={setCurrentUser}/>
   }
 
   render () {
-    const { activeItem } = this.props
+    let { activeItem } = this.props
+    if (!activeItem) {
+      activeItem = history.location.pathname.slice(1)
+    }
     return (
       <Menu inverted borderless compact attached='top' style={{margin: -1}} stackable>
         <Menu.Item />
@@ -25,7 +29,7 @@ class TitleBar extends React.Component {
           </Header>
         </Menu.Item>
         <Menu.Item />
-        <Menu.Item as={Link} to='/Home' name='Home' active={activeItem === 'Home' || !activeItem}/>
+        <Menu.Item as={Link} to='/Home' name='Home' active={activeItem === 'Home'}/>
         <Menu.Item as={Link} to='/Search' name='Search' active={activeItem === 'Search'}/>
         <Menu.Menu position='right'>
           <Menu.Item name='Login'>

@@ -1,5 +1,3 @@
-import history from '../history'
-
 function getErrors (error) {
   return {
     type: 'GET_ERROR_STATUS',
