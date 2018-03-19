@@ -2,19 +2,22 @@ import React from 'react'
 import TitleBar from './Bars/TitleBar'
 import Body from './Body'
 import { Container } from 'semantic-ui-react'
+import { auth } from '../../backend/database'
 
 class App extends React.Component {
   componentDidMount () {
     const { setCurrentUser } = this.props
-    setCurrentUser(JSON.parse(localStorage.getItem('user')))
+    setCurrentUser(localStorage.getItem('user'))
   }
 
   render () {
-    const { activeItem, currentUser, setItemName, setCurrentUser, setSelectedCar, selectedCar } = this.props
+    const { activeItem, currentUser, setCurrentUser, setItemName } = this.props
+    console.log(this.props)
+    console.log(auth.currentUser)
     return (
       <Container fluid>
-        <TitleBar activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser} user={currentUser}/>
-        <Body activeItem={activeItem} handleItemClick={setItemName} setUser={setCurrentUser} setCar={setSelectedCar} car={selectedCar}/>
+        <TitleBar activeItem={activeItem} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+        <Body setItemName={setItemName}/>
       </Container>
     )
   }

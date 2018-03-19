@@ -1,7 +1,6 @@
 class Validator {
   constructor (user) {
     this.user = user
-    console.log(user)
   }
   isEmail() {
     return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/g.test(this.user.email)

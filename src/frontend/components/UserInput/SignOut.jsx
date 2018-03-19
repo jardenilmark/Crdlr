@@ -4,8 +4,8 @@ import { auth } from '../../../backend/database'
 
 class SignOut extends React.Component {
   async logOutUser () {
-    const { handleItemClick, setUser } = this.props
-    const signOut = await auth.signOut()
+    const { setUser } = this.props
+    await auth.signOut()
     localStorage.clear()
     setUser()
   }

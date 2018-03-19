@@ -5,7 +5,7 @@ import LocationDate from './LocationDate'
 
 class Rent extends React.Component {
   render () {
-    const {handleItemClick, activeItem}=this.props
+    const { activeItem } = this.props
     return (
       <Container fluid>
         <RentBar activeItem={activeItem}/>

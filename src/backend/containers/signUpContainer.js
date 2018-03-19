@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import SignUp from '../../frontend/components/UserInput/SignUp'
-import { setErrors } from '../actions/errorAction'
+import { setErrors, setSuccess } from '../actions/errorAction'
 
 function mapStateToProps (state) {
   return {
@@ -9,7 +9,8 @@ function mapStateToProps (state) {
     emailError: state.error.emailError,
     passError: state.error.passError,
     phoneError: state.error.phoneError,
-    genderError: state.error.genderError
+    genderError: state.error.genderError,
+    success: state.error.success
   }
 }
 
@@ -17,6 +18,9 @@ function mapDispatchToProps (dispatch) {
   return ({
     setErrors (error) {
       dispatch(setErrors(error))
+    },
+    signUpDone () {
+      dispatch(setSuccess())
     }
   })
 }

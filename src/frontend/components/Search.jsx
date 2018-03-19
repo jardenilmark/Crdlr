@@ -69,7 +69,7 @@ class SearchBar extends React.Component {
   }
 
   render () {
-    const { allCars, filteredCars, handleItemClick, setCar } = this.props
+    const { allCars, filteredCars, setCar } = this.props
     let toShowArr = []
     let dropDownArr = []
     if (!allCars === false) {
@@ -90,9 +90,9 @@ class SearchBar extends React.Component {
               dropArr.push({key: '...', value: '...', text: '...'})
               return (
                 <Grid.Column name={holder} key={holder} >
-                  <Dropdown button noResultsMessage='No Results Found' placeholder={holder} 
-                  onClose={() => this.getFilteredList()} 
-                  search options={dropArr} selection id={holder}/>
+                  <Dropdown button noResultsMessage='No Results Found' placeholder={holder}
+                    onClose={() => this.getFilteredList()}
+                    search options={dropArr} selection id={holder}/>
                 </Grid.Column>)
             })}
             <Grid.Column/>
@@ -102,7 +102,9 @@ class SearchBar extends React.Component {
         <Divider/>
         <Grid style={{marginTop: 30, marginBottom: 30, paddingLeft: 20, paddingRight: 20}} relaxed>
           {toShowArr.map(elem => {
-            return (<Item setCar={setCar} handleItemClick={handleItemClick} item={elem} key={idCar++}/>)
+            return (
+              <Item setCar={setCar} item={elem} key={idCar++}/>
+            )
           })}
         </Grid>
       </div>

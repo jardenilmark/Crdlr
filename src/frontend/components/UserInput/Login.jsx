@@ -2,14 +2,15 @@ import React from 'react'
 import TitleBar from '../Bars/TitleBar'
 import { Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
+import { Link } from 'react-router-dom'
+import history from '../../../backend/history'
 
 class Login extends React.Component {
-  async onclickHandler (name) {
+  async onclickHandler () {
     const { activeItem } = this.props
-    const { handleItemClick } = this.props
     const login = await this.loginUser()
     if (login && activeItem === 'SignUp') {
-      handleItemClick(name)
+      history.push('/Home')
     }
   }
 
@@ -19,7 +20,7 @@ class Login extends React.Component {
     const pass = document.getElementById('passwordLogin').value
     const user = await auth.signInWithEmailAndPassword(email, pass).catch(() => 'error')
     if (user !== 'error') {
-      localStorage.setItem('user', JSON.stringify(auth.currentUser))
+      localStorage.setItem('user', auth.currentUser)
       setUser(auth.currentUser)
       return true
     }
@@ -27,7 +28,6 @@ class Login extends React.Component {
   }
 
   render () {
-    const { handleItemClick } = this.props
     return (
       <div>
         <Popup wide trigger={
@@ -45,8 +45,8 @@ class Login extends React.Component {
                   <label>Password</label>
                   <input id='passwordLogin' placeholder='Password' type='password' />
                 </Form.Field>
-                <Button type='submit' primary onClick={() => this.onclickHandler('Home')}>Login</Button>
-                <Button type='submit' secondary name='SignUp' onClick={() => handleItemClick('SignUp')}>Sign Up</Button>
+                <Button type='submit' onClick={() => this.onclickHandler()}primary>Login</Button>
+                <Button type='submit' as={Link} to='/SignUp' secondary>Sign Up</Button>
               </Form>
             </Grid.Column>
           </Grid>

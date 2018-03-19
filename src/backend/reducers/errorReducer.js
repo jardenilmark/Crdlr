@@ -1,7 +1,7 @@
 export default function reducer (state = {}, action) {
-  if (action.type === 'GET_ERROR') {
+  if (action.type === 'GET_ERROR_STATUS') {
     return {
-      ...state, 
+      ...state,
       fnError: action.payload.fnError,
       lnError: action.payload.lnError,
       emailError: action.payload.emailError,

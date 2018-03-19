@@ -1,14 +1,10 @@
 import React from 'react'
 import { Header, Image, Button, Grid, Segment, Divider, Container, Table } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 class Item extends React.Component {
-  handleOnClick () {
-    const { item, handleItemClick, setCar } = this.props
-    handleItemClick('RentCar')
-    setCar(item)
-  }
   render () {
-    const { item, handleItemClick} = this.props
+    const { item, setCar } = this.props
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Segment>
@@ -16,14 +12,14 @@ class Item extends React.Component {
             {item.type}
           </Header>
           <Header size='medium' style={{margin: 0}}>
-              {item.brand} {item.model}
-            </Header>
+            {item.brand} {item.model}
+          </Header>
           <Image src={require('./pic/carPics/' + item.model + '.png')} />
           <Divider/>
           <Header size='small' textAlign='center'>
             {item.price} per day
           </Header>
-          <Button fluid color='black' onClick={() => this.handleOnClick()}>
+          <Button as={Link} to='/RentCar' fluid color='black' onClick={() => setCar(item)}>
             SELECT
           </Button>
         </Segment>

@@ -3,10 +3,12 @@ import { Container, Button, Form, Grid, Header, Image, Message, Segment } from '
 import { firestore, auth } from '../../../backend/database'
 import Validator from '../../validator'
 import swal from 'sweetalert'
+import { Link } from 'react-router-dom'
+import history from '../../../backend/history'
 
 class SignUp extends React.Component {
-  async addUser (name) {
-    const { handleItemClick, setUser } = this.props
+  async addUser () {
+    const { setErrors, signUpDone } = this.props
     const user = {
       email: document.getElementById('email').value,
       pass: document.getElementById('pass').value,
@@ -28,19 +30,17 @@ class SignUp extends React.Component {
         })
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
-          handleItemClick(user.name)
-          await auth.signInWithEmailAndPassword(user.email, user.pass)
-          localStorage.setItem('user', JSON.stringify(auth.currentUser))
-          setUser(auth.currentUser)
+          history.push('/Home')
+          signUpDone()
         }
       } catch (e) {
-        this.props.setErrors({
+        setErrors({
           emailError: validator.isEmail() === false,
           passError: validator.isPass() === false
         })
       }
     } else {
-      this.props.setErrors({
+      setErrors({
         fnError: validator.isFirstName() === false,
         lnError: validator.isLastName() === false,
         emailError: validator.isEmail() === false,
@@ -49,8 +49,7 @@ class SignUp extends React.Component {
         genderError: validator.isGender() === false
       })
     }
-  } 
-
+  }
   render () {
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
@@ -58,7 +57,7 @@ class SignUp extends React.Component {
     ]
     const { fnError, lnError, emailError, passError, phoneError, genderError } = this.props
     return (
-      <Container fluid style={{height:'100%'}}>
+      <Container fluid style={{height: '100%'}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
           <Grid.Column style={{ maxWidth: 700 }}>
             <Header as='h2' color='teal' textAlign='center'>
@@ -72,7 +71,7 @@ class SignUp extends React.Component {
                 <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}/>
                 <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}/>
                 <Form.Select id='gender' fluid options={options} placeholder='Gender' error={genderError}/>
-                <Button color='teal' fluid size='large' onClick={() => this.addUser('Home')}>Confirm</Button>
+                <Button color='teal' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>
               </Segment>
             </Form>
           </Grid.Column>

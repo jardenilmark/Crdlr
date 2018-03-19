@@ -1,31 +1,24 @@
 import React from 'react'
-import { Container } from 'semantic-ui-react'
 import Home from './Home'
-import SignUp from './UserInput/SignUp'
 import CarContainer from '../../backend/containers/carContainer'
 import SignUpContainer from '../../backend/containers/signUpContainer'
-import Rent from './Rent'
+import { Container } from 'semantic-ui-react'
+import { Switch, Route } from 'react-router-dom'
+import RentContainer from '../../backend/containers/rentContainer'
+import BodyListener from './BodyListener'
 
 class Body extends React.Component {
-  getActiveComponent () {
-    const { activeItem, setUser, handleItemClick, setCar, car } = this.props
-    if (activeItem === 'Home' || !activeItem) {
-      return <Home />
-    } else if (activeItem === 'Search') {
-      return <CarContainer handleItemClick={handleItemClick} setCar={setCar}/>
-    } else if (activeItem === 'SignUp') {
-      return <SignUpContainer handleItemClick={handleItemClick} setUser={setUser}/>
-    } else if (activeItem === 'RentCar') {
-      return <Rent handleItemClick={handleItemClick} activeItem={activeItem}/>
-    } else {
-      return <Home />
-    }
-  }
-
   render () {
+    const { setItemName } = this.props
     return (
       <Container fluid>
-        {this.getActiveComponent()}
+        <BodyListener setItemName={setItemName}>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/Home' component={Home} />
+          <Route exact path='/Search' component={CarContainer} />
+          <Route exact path='/SignUp' component={SignUpContainer} />
+          <Route exact path='/RentCar' component={RentContainer} />
+        </BodyListener>
       </Container>
     )
   }
