@@ -66,7 +66,7 @@ class SearchBar extends React.Component {
           arr.push(elem)
         }
       })
-      updateCarList(allCars, arr)
+      updateCarList(arr)
     }
   }
 
@@ -85,9 +85,12 @@ class SearchBar extends React.Component {
     const { allCars, filteredCars } = this.props
     let toShowArr = []
     let dropDownArr = []
-    if (!allCars === false) {
+    if (allCars) {
       dropDownArr = this.getDropdownValues(arr)
-      toShowArr = filteredCars
+      toShowArr = allCars
+      if (filteredCars) {
+        toShowArr = filteredCars
+      }
     }
     let count = 0
     let idCar = 0

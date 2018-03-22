@@ -9,10 +9,10 @@ import CarCreate from '../UserInput/CarCreate'
 
 class TitleBar extends React.Component {
   getComponent () {
-    const { currentUser, setCurrentUser } = this.props
+    const { currentUser, setCurrentUser, activeItem } = this.props
     if (currentUser) {
       return <Menu.Menu position='right'>
-        <Menu.Item as={Link} to='/CarCreate'>
+        <Menu.Item name='CarCreate' active={activeItem === 'CarCreate'} as={Link} to='/CarCreate'>
           Register Car
         </Menu.Item>
         <Menu.Item>

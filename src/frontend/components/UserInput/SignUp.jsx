@@ -8,7 +8,7 @@ import history from '../../../backend/history'
 
 class SignUp extends React.Component {
   async addUser () {
-    const { setErrors, signUpDone } = this.props
+    const { setError } = this.props
     const user = {
       email: document.getElementById('email').value,
       pass: document.getElementById('pass').value,
@@ -17,8 +17,14 @@ class SignUp extends React.Component {
       gender: document.getElementById('gender').firstChild.innerText,
       phone: document.getElementById('phone').value
     }
-    const validator = new Validator(user)
-    if (validator.isAllValid()) {
+    let isAllValid = true
+    const validator = new Validator()
+    for (const key in user) {
+      if (validator.isValid(user[key], key)) {
+        isAllValid = false
+      }
+    }
+    if (isAllValid) {
       try {
         const create = await auth.createUserWithEmailAndPassword(user.email, user.pass)
         user['uid'] = create.uid
@@ -31,25 +37,23 @@ class SignUp extends React.Component {
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
           history.push('/')
-          signUpDone()
         }
       } catch (e) {
-        console.log(validator.isEmail())
-        setErrors({
-          emailError: true
-        })
+        setError(true, 'GET_ERROR_EMAIL')
       }
-    } else {
-      setErrors({
-        fnError: validator.isFirstName() === false,
-        lnError: validator.isLastName() === false,
-        emailError: validator.isEmail() === false,
-        passError: validator.isPass() === false,
-        phoneError: validator.isPhoneNum() === false,
-        genderError: validator.isGender() === false
-      })
     }
   }
+
+  onKeyPressHandler (name, type) {
+    const validator = new Validator()
+    const { setError } = this.props
+    let value = document.getElementById(name).value
+    if (name === 'gender') {
+      value = document.getElementById(name).firstChild.innerText
+    }
+    setError(validator.isValid(name, value) === false, type)
+  }
+
   render () {
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
@@ -57,20 +61,26 @@ class SignUp extends React.Component {
     ]
     const { fnError, lnError, emailError, passError, phoneError, genderError } = this.props
     return (
-      <Container fluid style={{height: '100%'}}>
+      <Container fluid style={{height: '100%', background: `url(${require('../../images/c.png')})`}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
           <Grid.Column style={{ maxWidth: 700 }}>
-            <Header as='h2' color='black' textAlign='center'>
-              Sign Up
-            </Header>
+            <Segment inverted style={{margin: 0}}>
+              <Header as='h2' color='black' textAlign='center'>
+                Sign Up
+              </Header>
+            </Segment>
             <Form size='massive' error>
               <Segment stacked>
-                <Form.Input id='firstName' placeholder='Firstname' error={fnError}/>
-                <Form.Input id='lastName' placeholder='Lastname' error={lnError}/>
-                <Form.Input id='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' error={emailError}/>
-                <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}/>
-                <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}/>
-                <Form.Select id='gender' fluid options={options} placeholder='Gender' error={genderError}/>
+                <Form.Input id='firstName' placeholder='Firstname' error={fnError} onKeyUp={() => this.onKeyPressHandler('firstName', 'GET_ERROR_FIRSTNAME')}/>
+                <Form.Input id='lastName' placeholder='Lastname' error={lnError} onKeyUp={() => this.onKeyPressHandler('lastName', 'GET_ERROR_LASTNAME')}/>
+                <Form.Input id='email' fluid icon='user' iconPosition='left' placeholder='E-mail address' error={emailError}
+                  onKeyUp={() => this.onKeyPressHandler('email', 'GET_ERROR_EMAIL')}/>
+                <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}
+                  onKeyUp={() => this.onKeyPressHandler('pass', 'GET_ERROR_PASS')}/>
+                <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}
+                  onKeyUp={() => this.onKeyPressHandler('phone', 'GET_ERROR_PHONE')}/>
+                <Form.Select id='gender' fluid options={options} placeholder='Gender' error={genderError}
+                  onKeyUp={() => this.onKeyPressHandler('gender', 'GET_ERROR_GENDER')}/>
                 <Button color='black' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>
               </Segment>
             </Form>

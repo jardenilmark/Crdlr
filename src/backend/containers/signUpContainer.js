@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import SignUp from '../../frontend/components/UserInput/SignUp'
-import { setErrors, setSuccess } from '../actions/errorAction'
+import { setError, setSuccess } from '../actions/errorAction'
 
 function mapStateToProps (state) {
   return {
@@ -16,11 +16,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return ({
-    setErrors (error) {
-      dispatch(setErrors(error))
-    },
-    signUpDone () {
-      dispatch(setSuccess())
+    setError (error, type) {
+      dispatch(setError(error, type))
     }
   })
 }

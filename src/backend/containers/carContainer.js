@@ -15,8 +15,8 @@ function mapDispatchToProps (dispatch) {
     getCars () {
       dispatch(fetchCars())
     },
-    updateCarList (arr, filtered) {
-      dispatch(updateList(arr, filtered))
+    updateCarList (filtered) {
+      dispatch(updateList(filtered))
     },
     updateLoader (loader) {
       dispatch(updateLoader(loader))

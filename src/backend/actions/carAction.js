@@ -1,29 +1,31 @@
 import { firestore } from '../database'
 
-function getCars (cars, filtered) {
+function getCars (cars) {
   return {
     type: 'GET_CARS_TRUE',
     payload: {
-      allCars: cars,
-      filteredCars: filtered
+      allCars: cars
     }
   }
 }
 
+function getFilteredCars (filtered) {
+  return {
+    type: 'GET_FILTERED_TRUE',
+    payload: {
+      filteredCars: filtered
+    }
+  }
+}
 function getLoader (loader) {
   return {
     type: 'GET_LOADER',
     payload: loader
   }
 }
-export function updateLoader (loader) {
-  return (dispatch) => {
-    dispatch(getLoader(loader))
-  }
-}
 
-async function getFromDb () {
-  const cars = await firestore.collection('cars').get()
+async function getFromDb (collection) {
+  const cars = await firestore.collection(collection).get()
   const arr = []
   cars.forEach(e => {
     arr.push(e.data())
@@ -33,13 +35,19 @@ async function getFromDb () {
 
 export function fetchCars () {
   return async (dispatch) => {
-    const arr = await getFromDb()
-    dispatch(getCars(arr, arr))
+    const arr = await getFromDb('cars')
+    dispatch(getCars(arr))
   }
 }
 
-export function updateList (arr, filtered) {
+export function updateLoader (loader) {
   return (dispatch) => {
-    dispatch(getCars(arr, filtered))
+    dispatch(getLoader(loader))
+  }
+}
+
+export function updateList (filtered) {
+  return (dispatch) => {
+    dispatch(getFilteredCars(filtered))
   }
 }

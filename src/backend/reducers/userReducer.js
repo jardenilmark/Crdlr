@@ -7,7 +7,8 @@ export default function reducer (state = {}, action) {
       lastName: action.payload.lastName,
       gender: action.payload.gender,
       phone: action.payload.phone,
-      email: action.payload.email}
+      email: action.payload.email
+    }
   } else {
     return state
   }
