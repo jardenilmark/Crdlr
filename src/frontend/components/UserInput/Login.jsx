@@ -4,12 +4,13 @@ import { Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from
 import { auth } from '../../../backend/database'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
+import alertify from 'alertify.js'
 
 class Login extends React.Component {
   async onclickHandler () {
     const login = await this.loginUser()
     if (login && history.location.pathname === '/SignUp') {
-      history.push('/Home')
+      history.push('/')
     }
   }
 
@@ -19,9 +20,10 @@ class Login extends React.Component {
     const pass = document.getElementById('passwordLogin').value
     const user = await auth.signInWithEmailAndPassword(email, pass).catch(() => 'error')
     if (user !== 'error') {
-      localStorage.setItem('user', auth.currentUser)
-      setUser(auth.currentUser)
+      localStorage.setItem('user', JSON.stringify(auth.currentUser))
+      setUser(JSON.stringify(auth.currentUser))
       setLoginStatus('success')
+      alertify.success(`Welcome ${auth.currentUser.email}!`, 3)
       return true
     }
     setLoginStatus('failed')

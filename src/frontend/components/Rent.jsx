@@ -2,15 +2,24 @@ import React from 'react'
 import { Container } from 'semantic-ui-react'
 import RentBar from './RentBar'
 import LocationDate from './LocationDate'
-import Confirmation from './Confirmation'
+import ConfirmationContainer from '../../backend/containers/confirmationContainer'
 
 class Rent extends React.Component {
   getPage () {
-    const { currentlyActive, setTransactionInfo } = this.props
+    const { date, currentlyActive, setTransactionInfo, history } = this.props
     if (currentlyActive === 'confirmation') {
-      return <Confirmation/>
+      return <ConfirmationContainer item={history.location.state.item} date={date}/>
     } else {
       return <LocationDate setTransactionInfo={setTransactionInfo}/>
+    }
+  }
+  componentDidMount () {
+    const { setTransactionInfo, history } = this.props
+    setTransactionInfo({
+      activeItem: 'date'
+    })
+    if (!history.location.state) {
+      history.push('/Search')
     }
   }
   render () {

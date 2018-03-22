@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import { setSelectedCar, fetchCars, updateList } from '../actions/carAction'
+import { fetchCars, updateList, updateLoader } from '../actions/carAction'
 import Search from '../../frontend/components/Search'
 
 function mapStateToProps (state) {
   return {
     allCars: state.cars.allCars,
     filteredCars: state.cars.filteredCars,
-    selectedCar: state.cars.selectedCar
+    loader: state.cars.loader
   }
 }
 
@@ -17,6 +17,9 @@ function mapDispatchToProps (dispatch) {
     },
     updateCarList (arr, filtered) {
       dispatch(updateList(arr, filtered))
+    },
+    updateLoader (loader) {
+      dispatch(updateLoader(loader))
     }
   })
 }

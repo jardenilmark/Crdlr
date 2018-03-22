@@ -30,13 +30,13 @@ class SignUp extends React.Component {
         })
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
-          history.push('/Home')
+          history.push('/')
           signUpDone()
         }
       } catch (e) {
+        console.log(validator.isEmail())
         setErrors({
-          emailError: validator.isEmail() === false,
-          passError: validator.isPass() === false
+          emailError: true
         })
       }
     } else {

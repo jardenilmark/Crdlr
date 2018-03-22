@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom'
 import { storage } from '../../backend/database'
 
 class Item extends React.Component {
-  async loadImage (model) {
-    const url = await storage.ref().child(`cars/${model}.png`).getDownloadURL()
-    document.getElementById(`img${model}`).src = url
-  }
-
-  componentDidMount () {
-    this.loadImage(this.props.item.model)
+  async loadImage () {
+    const { image, model, location } = this.props.item
+    const url = await storage.ref().child(`cars/${image}`).getDownloadURL()
+    const imgURL = document.getElementById(`img${model}${location}`)
+    if (imgURL) {
+      imgURL.src = url
+    }
   }
 
   render () {
     const { item } = this.props
+    this.loadImage()
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Segment>
@@ -24,10 +25,10 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image id={`img${item.model}`} src=''/>
+          <Image id={`img${item.model}${item.location}`} src=''/>
           <Divider/>
           <Header size='small' textAlign='center'>
-            {item.price} per day
+            {item.price}
           </Header>
           <Button as={Link} to={{pathname: '/RentCar', state: {item: item}}} fluid color='black'>
             SELECT

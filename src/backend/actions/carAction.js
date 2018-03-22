@@ -10,6 +10,18 @@ function getCars (cars, filtered) {
   }
 }
 
+function getLoader (loader) {
+  return {
+    type: 'GET_LOADER',
+    payload: loader
+  }
+}
+export function updateLoader (loader) {
+  return (dispatch) => {
+    dispatch(getLoader(loader))
+  }
+}
+
 async function getFromDb () {
   const cars = await firestore.collection('cars').get()
   const arr = []

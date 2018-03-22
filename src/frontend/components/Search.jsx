@@ -33,6 +33,9 @@ class SearchBar extends React.Component {
 
   componentDidMount () {
     this.props.getCars()
+    setTimeout(() => {
+      this.props.updateLoader(true)
+    }, 10000)
   }
 
   getFilteredList () {
@@ -68,10 +71,14 @@ class SearchBar extends React.Component {
   }
 
   getLoader (arr) {
-    if (arr.length === 0) {
+    if (arr.length === 0 && !this.props.loader) {
       return <Dimmer active>
         <Loader indeterminate>Preparing Selection</Loader>
       </Dimmer>
+    } else if (arr.length === 0 && this.props.loader) {
+      return <Header size='large'>
+        No Available Cars
+      </Header>
     }
   }
   render () {
@@ -86,7 +93,6 @@ class SearchBar extends React.Component {
     let idCar = 0
     return (
       <Container fluid>
-        {this.getLoader(toShowArr)}
         <Grid style={{marginTop: 1}} columns='equal'>
           <Grid.Row>
             <Grid.Column/>
@@ -107,6 +113,9 @@ class SearchBar extends React.Component {
           </Grid.Row>
         </Grid>
         <Divider/>
+        <Container fluid textAlign='center'>
+          {this.getLoader(toShowArr)}
+        </Container>
         <Grid style={{marginTop: 30, marginBottom: 30, paddingLeft: 20, paddingRight: 20}} relaxed>
           {toShowArr.map(elem => {
             return (

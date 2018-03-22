@@ -2,8 +2,7 @@ export default function reducer (state = {}, action) {
   if (action.type === 'GET_DATE') {
     return {
       ...state,
-      dateStart: action.payload.dateStart,
-      dateEnd: action.payload.dateEnd,
+      date: action.payload.date,
       activeItem: action.payload.active
     }
   } else {

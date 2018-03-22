@@ -4,8 +4,7 @@ import Rent from '../../frontend/components/Rent'
 
 const mapStateToProps = (state) => {
   return {
-    dateStart: state.date.dateStart,
-    dateEnd: state.date.dateEnd,
+    date: state.date.date,
     currentlyActive: state.date.activeItem
   }
 }

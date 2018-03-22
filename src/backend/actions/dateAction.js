@@ -2,8 +2,7 @@ function getTransactionInfo (transaction) {
   return {
     type: 'GET_DATE',
     payload: {
-      dateStart: transaction.dateStart,
-      dateEnd: transaction.dateEnd,
+      date: transaction.date,
       active: transaction.activeItem
     }
   }
