@@ -15,7 +15,6 @@ class Item extends React.Component {
 
   render () {
     const { item } = this.props
-    this.loadImage()
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Segment>
@@ -25,7 +24,7 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image id={`img${item.model}${item.location}`} src=''/>
+          <Image id={`img${item.model}${item.location}`} src={this.loadImage()}/>
           <Divider/>
           <Header size='small' textAlign='center'>
             {item.price}

@@ -61,11 +61,11 @@ class Confirmation extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount () { // to refactor
     this.initializeProps()
   }
 
-  render () {
+  render () { // place validation
     if (this.props.email) {
       this.arr = this.getElementArray()
     }

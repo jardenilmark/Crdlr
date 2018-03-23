@@ -1,0 +1,7 @@
+image: node:9.9.0
+
+all_tests:
+  stage: test
+  script:
+        - npm i
+        - npm test

@@ -12,6 +12,7 @@ class BodyListener extends React.Component {
       setItemName(loc)
     })
   }
+
   componentWillUnmount () {
     this.unlisten()
   }

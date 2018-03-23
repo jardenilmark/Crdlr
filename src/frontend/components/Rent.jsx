@@ -10,10 +10,11 @@ class Rent extends React.Component {
     if (currentlyActive === 'confirmation') {
       return <ConfirmationContainer item={history.location.state.item} date={date}/>
     } else {
-      return <LocationDate setTransactionInfo={setTransactionInfo}/>
+      // return <LocationDate setTransactionInfo={setTransactionInfo}/>
     }
   }
-  componentDidMount () {
+
+  componentDidMount () { // to refactor
     const { setTransactionInfo, history } = this.props
     setTransactionInfo({
       activeItem: 'date'
@@ -22,12 +23,13 @@ class Rent extends React.Component {
       history.push('/Search')
     }
   }
+
   render () {
     const { currentlyActive } = this.props
     return (
       <Container fluid>
         <RentBar currentlyActive={currentlyActive}/>
-        {this.getPage()}
+        {/* {this.getPage()} */}
       </Container>
     )
   }

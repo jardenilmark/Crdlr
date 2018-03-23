@@ -1,6 +1,6 @@
 import React from 'react'
 import TitleBar from '../Bars/TitleBar'
-import { Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Menu, Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
@@ -35,34 +35,36 @@ class Login extends React.Component {
       return <Message error header='Login Denied' content='Email and Password do not match'/>
     }
   }
+
   render () {
     const { status } = this.props
-    console.log(this.props)
     return (
-      <div>
-        <Popup wide trigger={
-          <Button icon>
-            <Icon name='user circle' />
-          </Button>} on='click'>
-          <Grid divided columns='equal'>
-            <Grid.Column>
-              <Form>
-                <Form.Field>
-                  <label>Email</label>
-                  <input id='emailLogin' placeholder='Email' />
-                </Form.Field>
-                <Form.Field>
-                  <label>Password</label>
-                  <input id='passwordLogin' placeholder='Password' type='password' />
-                </Form.Field>
-                <Button type='submit' onClick={() => this.onclickHandler()}primary>Login</Button>
-                <Button type='submit' as={Link} to='/SignUp' secondary>Sign Up</Button>
-              </Form>
-              {this.getWarningSign(status)}
-            </Grid.Column>
-          </Grid>
-        </Popup>
-      </div>
+      <Menu.Menu position='right'>
+        <Menu.Item>
+          <Popup wide trigger={
+            <Button icon>
+              <Icon name='user circle' />
+            </Button>} on='click'>
+            <Grid divided columns='equal'>
+              <Grid.Column>
+                <Form>
+                  <Form.Field>
+                    <label>Email</label>
+                    <input id='emailLogin' placeholder='Email' />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Password</label>
+                    <input id='passwordLogin' placeholder='Password' type='password' />
+                  </Form.Field>
+                  <Button type='submit' onClick={() => this.onclickHandler()}primary>Login</Button>
+                  <Button type='submit' as={Link} to='/SignUp' secondary>Sign Up</Button>
+                </Form>
+                {this.getWarningSign(status)}
+              </Grid.Column>
+            </Grid>
+          </Popup>
+        </Menu.Item>
+      </Menu.Menu>
     )
   }
 }

@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react'
 import { auth } from '../../backend/database'
 
 class App extends React.Component {
-  componentDidMount () {
+  componentDidMount () { // to refactor
     const { setCurrentUser } = this.props
     setCurrentUser(localStorage.getItem('user'))
   }

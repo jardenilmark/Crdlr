@@ -3,10 +3,8 @@ import Item from './Item'
 import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
 import Button from './Buttons/customButton'
 
-const arr = ['Location', 'Brand', 'Type', 'Model']
-
-class SearchBar extends React.Component {
-  getDropdownValues (array) {
+class Search extends React.Component {
+  getDropdownValues (arr) {
     const { allCars } = this.props
     const dropdownArray = []
     for (const para of arr) {
@@ -31,14 +29,15 @@ class SearchBar extends React.Component {
     return dropdownArray
   }
 
-  componentDidMount () {
-    this.props.getCars()
+  componentDidMount () { // to refactor
+    const { getCars, updateLoader } = this.props
+    getCars()
     setTimeout(() => {
-      this.props.updateLoader(true)
+      updateLoader(true)
     }, 10000)
   }
 
-  getFilteredList () {
+  getFilteredList (arr) {
     const selections = document.querySelectorAll('div.ui.search.selection.dropdown > div.text')
     let data = {}
     let count = 0
@@ -81,7 +80,9 @@ class SearchBar extends React.Component {
       </Header>
     }
   }
+
   render () {
+    const arr = ['Location', 'Brand', 'Type', 'Model']
     const { allCars, filteredCars } = this.props
     let toShowArr = []
     let dropDownArr = []
@@ -107,7 +108,7 @@ class SearchBar extends React.Component {
               return (
                 <Grid.Column name={holder} key={holder} >
                   <Dropdown button noResultsMessage='No Results Found' placeholder={holder}
-                    onClose={() => this.getFilteredList()}
+                    onClose={() => this.getFilteredList(arr)}
                     search options={dropArr} selection id={holder}/>
                 </Grid.Column>)
             })}
@@ -131,4 +132,4 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar
+export default Search
