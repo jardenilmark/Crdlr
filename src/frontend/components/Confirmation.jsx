@@ -7,17 +7,17 @@ import alertify from 'alertify.js'
 
 class Confirmation extends React.Component {
   async onClickHandler () {
-    const { brand, location, model, price, type } = this.props.item
-    const { email, num, firstName, lastName, phone, gender } = this.props
+    const { email, firstName, lastName, phone, gender, item } = this.props
+    const { brand, location, model, price, type } = item
     const arr = [
-      document.getElementById(`firstName${num}`).value,
-      document.getElementById(`lastName${num}`).value,
-      document.getElementById(`email${num}`).value,
-      document.getElementById(`phone${num}`).value,
-      document.getElementById(`gender${num}`).innerText,
-      document.getElementById(`creditCard${num}`).value,
-      document.getElementById(`homeAddress${num}`).value,
-      document.getElementById(`date${num}`).value
+      document.getElementById(`firstNameConfirm`).value,
+      document.getElementById(`lastNameConfirm`).value,
+      document.getElementById(`emailConfirm`).value,
+      document.getElementById(`phoneConfirm`).value,
+      document.getElementById(`genderConfirm`).innerText,
+      document.getElementById(`creditCardConfirm`).value,
+      document.getElementById(`homeAddressConfirm`).value,
+      document.getElementById(`dateConfirm`).value
     ]
     const sellerProfit = parseFloat(price.slice(1)) * 0.95
     const advertFee = parseFloat(price.slice(1)) * 0.5
@@ -46,6 +46,17 @@ class Confirmation extends React.Component {
         advertisementFee: advertFee,
         transactionDate: new Date()
       })
+      const cars = await firestore.collection('cars').get()
+      let id
+      for (let i = 0; i < cars.docs.length; i++) {
+        let bool = true
+        const data = cars.docs[i].data()
+        if (JSON.stringify(data) === JSON.stringify(item)) {
+          id = cars.docs[i].id
+        }
+      }
+      const ref = await firestore.collection('cars').doc(id)
+      await ref.update({ available: false })
       alertify.success(`Transaction Completed`, 3)
       history.push('/Search')
     }
@@ -56,7 +67,6 @@ class Confirmation extends React.Component {
     const user = localStorage.getItem('user')
     if (user) {
       const parsedUser = JSON.parse(user)
-      console.log(parsedUser)
       await getUsers(parsedUser.uid, parsedUser.email)
     }
   }

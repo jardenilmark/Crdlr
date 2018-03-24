@@ -25,7 +25,7 @@ function getLoader (loader) {
 }
 
 async function getFromDb (collection) {
-  const cars = await firestore.collection(collection).get()
+  const cars = await firestore.collection(collection).where('available', '==', true).get()
   const arr = []
   cars.forEach(e => {
     arr.push(e.data())
