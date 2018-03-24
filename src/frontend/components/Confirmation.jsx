@@ -1,94 +1,154 @@
 import React from 'react'
-import { Form, Segment, Button, Container, Grid } from 'semantic-ui-react'
+import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } from 'semantic-ui-react'
 import { firestore } from '../../backend/database'
+import history from '../../backend/history'
+import Validator from '../validator'
+import alertify from 'alertify.js'
 
 class Confirmation extends React.Component {
-  async getElementArray () {
-    const { firstName, lastName, email, phone, gender } = this.props
-    const arr = [
-      document.getElementById('firstNameConfirm'),
-      document.getElementById('lastNameConfirm'),
-      document.getElementById('emailConfirm'),
-      document.getElementById('phoneConfirm'),
-      document.getElementById('genderConfirm')
-    ]
-    const dbArr = [firstName, lastName, email, phone, gender]
-    for (let i = 0; i < arr.length; i++) {
-      arr[i].readOnly = true
-      arr[i].value = dbArr[i]
-      arr[i].placeholder = dbArr[i]
-      if (i === arr.length - 1) {
-        arr[i].disabled = true
-        arr[i].innerText = dbArr[i]
-      }
-    }
-    arr.push(document.getElementById('creditCard'))
-    arr.push(document.getElementById('homeAddress'))
-    return arr
-  }
-
   async onClickHandler () {
-    const arr = [...this.arr]
     const { brand, location, model, price, type } = this.props.item
-    const { date } = this.props
+    const { email, num, firstName, lastName, phone, gender } = this.props
+    const arr = [
+      document.getElementById(`firstName${num}`).value,
+      document.getElementById(`lastName${num}`).value,
+      document.getElementById(`email${num}`).value,
+      document.getElementById(`phone${num}`).value,
+      document.getElementById(`gender${num}`).innerText,
+      document.getElementById(`creditCard${num}`).value,
+      document.getElementById(`homeAddress${num}`).value,
+      document.getElementById(`date${num}`).value
+    ]
     const sellerProfit = parseFloat(price.slice(1)) * 0.95
     const advertFee = parseFloat(price.slice(1)) * 0.5
-    await firestore.collection('transactions').add({
-      firstname: arr[0].value,
-      lastname: arr[1].value,
-      email: arr[2].value,
-      phone: arr[3].value,
-      gender: arr[4].innerText,
-      creditCard: arr[5].value,
-      homeAddress: arr[6].value,
-      brand: brand,
-      location: location,
-      carModel: model,
-      price: sellerProfit,
-      type: type,
-      dateToMeet: date,
-      advertisementFee: advertFee,
-      transactionDate: new Date()
-    })
+    let isAllValid = true
+    const validator = new Validator()
+    for (const key in arr) {
+      if (validator.isValid(arr[key], key)) {
+        isAllValid = false
+      }
+    }
+    if (isAllValid) {
+      await firestore.collection('transactions').add({
+        firstname: arr[0],
+        lastname: arr[1],
+        email: arr[2],
+        phone: arr[3],
+        gender: arr[4],
+        creditCard: arr[5],
+        homeAddress: arr[6],
+        dateToMeet: arr[7],
+        brand: brand,
+        location: location,
+        carModel: model,
+        price: sellerProfit,
+        type: type,
+        advertisementFee: advertFee,
+        transactionDate: new Date()
+      })
+      alertify.success(`Transaction Completed`, 3)
+      history.push('/Search')
+    }
   }
 
-  async initializeProps () {
+  async initializeForm () {
     const { getUsers } = this.props
     const user = localStorage.getItem('user')
     if (user) {
       const parsedUser = JSON.parse(user)
+      console.log(parsedUser)
       await getUsers(parsedUser.uid, parsedUser.email)
     }
   }
 
-  componentDidMount () { // to refactor
-    this.initializeProps()
+  onKeyPressHandler (name, id, type) {
+    const validator = new Validator()
+    const { setError } = this.props
+    let value = document.getElementById(id).value
+    if (name === 'gender') {
+      value = document.getElementById(id).innerText
+    }
+    setError(validator.isValid(name, value) === false, type)
   }
 
-  render () { // place validation
-    if (this.props.email) {
-      this.arr = this.getElementArray()
+  componentDidMount () {
+    const { setSuccess } = this.props
+    this.initializeForm()
+    setSuccess()
+  }
+
+  getColor (error) {
+    if (error) {
+      return 'red'
+    } 
+    return 'white'
+  }
+
+  autoFillForm () {
+    const { email, lastName, firstName, phone, gender } = this.props
+    const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
+    if (email) {
+      for (const key in values) {
+        if (key === 'gender') {
+          document.getElementById(`${key}Confirm`).innerText = values[key]
+        } else {
+          document.getElementById(`${key}Confirm`).value = values[key]
+          document.getElementById(`${key}Confirm`).readOnly = true
+        }
+      }
     }
+  }
+
+  render () {
+    const { fnError, lnError, emailError, passError,
+      phoneError, genderError, creditCardError, addressError } = this.props
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' }
     ]
+    this.autoFillForm()
     return (
       <Container fluid style={{paddingTop: 20}}>
         <Grid textAlign='center' verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: '80%' }}>
-            <Form size='massive' error>
-              <Segment stacked>
-                <Form.Input id='firstNameConfirm' placeholder='Firstname'/>
-                <Form.Input id='lastNameConfirm' placeholder='Lastname'/>
-                <Form.Input id='emailConfirm' fluid icon='user' iconPosition='left' placeholder='E-mail address'/>
-                <Form.Input id='phoneConfirm' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999}/>
-                <Form.Select id='genderConfirm' fluid options={options} placeholder='Gender'/>
-                <Form.Input id='homeAddress' fluid icon='home' iconPosition='left' placeholder='Home Address'/>
-                <Form.Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number'/>
-                <Button color='black' fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
+            <Segment stacked basic>
+              <Segment style={{background: 'transparent'}}>
+                <Header inverted size='huge'>CONFIRM PURCHASE</Header>
               </Segment>
-            </Form>
+              <Divider/>
+              <Input id={`firstNameConfirm`} fluid placeholder={'firstName'}
+                size='massive' transparent inverted error={fnError} style={{color: this.getColor(fnError)}}
+                onKeyUp={() => this.onKeyPressHandler('firstName', `firstNameConfirm`, 'GET_ERROR_FIRSTNAME')}/>
+              <Divider/>
+              <Input id={`lastNameConfirm`} fluid placeholder={'LastName'} style={{color: this.getColor(lnError)}}
+                size='massive' transparent inverted error={lnError}
+                onKeyUp={() => this.onKeyPressHandler('lastName', `lastNameConfirm`,'GET_ERROR_LASTNAME')}/>
+              <Divider/>
+              <Dropdown style={{fontSize: 20, background: 'transparent', color: this.getColor(genderError)}} id={`genderConfirm`} selection
+                fluid options={options} placeholder={'Gender'} error={genderError}
+                onKeyUp={() => this.onKeyPressHandler('gender', `genderConfirm`,'GET_ERROR_GENDER')} />
+              <Divider/>
+              <Input id={`emailConfirm`} fluid icon='user' iconPosition='left' placeholder={'Email-Address'}
+                size='massive' transparent inverted error={emailError} style={{color: this.getColor(emailError)}}
+                onKeyUp={() => this.onKeyPressHandler('email', `emailConfirm`, 'GET_ERROR_EMAIL')}/>
+              <Divider/>
+              <Input id={`phoneConfirm`} fluid icon='phone' iconPosition='left' placeholder={'Phone Number'} transparent inverted
+                size='massive' type='number' min={0} max={99999999999} error={phoneError} style={{color: this.getColor(phoneError)}}
+                onKeyUp={() => this.onKeyPressHandler('phone', `phoneConfirm`, 'GET_ERROR_PHONE')}/>
+              <Divider/>
+              <Input id={`homeAddressConfirm`} fluid icon='home' iconPosition='left' placeholder='Home Address' 
+                size='massive' transparent inverted error={addressError} style={{color: this.getColor(addressError)}}
+                onKeyUp={() => this.onKeyPressHandler('address', `homeAddressConfirm`, 'GET_ERROR_ADDRESS')}/>
+              <Divider/>
+              <Input id={`creditCardConfirm`} fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number' 
+                size='massive' transparent inverted error={creditCardError} style={{color: this.getColor(creditCardError)}}
+                onKeyUp={() => this.onKeyPressHandler('creditCard', `creditCardConfirm`, 'GET_ERROR_CREDITCARD')}/>
+              <Divider/>
+              <Input id={`dateConfirm`} fluid icon='calendar' iconPosition='left' type='date' placeholder='Credit Card Number' 
+                size='massive' transparent inverted/>
+              <Divider/>
+              <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
+            </Segment>
           </Grid.Column>
         </Grid>
       </Container>

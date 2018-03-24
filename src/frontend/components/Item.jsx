@@ -29,7 +29,7 @@ class Item extends React.Component {
           <Header size='small' textAlign='center'>
             {item.price}
           </Header>
-          <Button as={Link} to={{pathname: '/RentCar', state: {item: item}}} fluid color='black'>
+          <Button as={Link} to={{pathname: '/Purchase', state: {item: item}}} fluid color='black'>
             SELECT
           </Button>
         </Segment>

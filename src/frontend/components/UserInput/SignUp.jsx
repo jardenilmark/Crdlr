@@ -54,7 +54,13 @@ class SignUp extends React.Component {
     setError(validator.isValid(name, value) === false, type)
   }
 
+  componentDidMount () {
+    const { setSuccess } = this.props
+    setSuccess()
+  }
+
   render () {
+    console.log(this.props)
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' }

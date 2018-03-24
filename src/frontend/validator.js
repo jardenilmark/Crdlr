@@ -6,9 +6,11 @@ class Validator {
       return value.length > 6 && value.length < 12 && /[^a-zA-Z0-9]/g.test(value) === false
     } else if (name === 'firstName' || name === 'lastName') {
       return /[^a-zA-Z]/g.test(value) === false
+    } else if (name === 'address') {
+      return /[^a-zA-Z0-9\s]/g.test(value) === false
     } else if (name === 'gender') {
       return value === 'Male' || value === 'Female'
-    } else if (name === 'phone') {
+    } else if (name === 'phone' || name === 'creditCard') {
       let phone = JSON.stringify(value)
       phone = phone.substring(1, phone.length - 1)
       return /[^0-9]/g.test(phone) === false && phone.length === 11

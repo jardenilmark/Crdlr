@@ -11,7 +11,22 @@ export default function reducer (state = {}, action) {
     return {...state, phoneError: action.payload}
   } else if (action.type === 'GET_ERROR_GENDER') {
     return {...state, genderError: action.payload}
-  } else {
+  } else if (action.type === 'GET_ERROR_CREDITCARD') {
+    return {...state, creditCardError: action.payload}
+  } else if (action.type === 'GET_ERROR_ADDRESS') {
+    return {...state, addressError: action.payload}
+  } else if (action.type === 'GET_SUCCESS') {
+    return {...state,
+      emailError: false,
+      fnError: false,
+      lnError: false,
+      passError: false,
+      phoneError: false,
+      genderError: false,
+      creditCardError: false,
+      addressError: false
+    }
+  }  {
     return state
   }
 }

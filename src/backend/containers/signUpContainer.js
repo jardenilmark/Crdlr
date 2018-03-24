@@ -9,8 +9,7 @@ function mapStateToProps (state) {
     emailError: state.error.emailError,
     passError: state.error.passError,
     phoneError: state.error.phoneError,
-    genderError: state.error.genderError,
-    success: state.error.success
+    genderError: state.error.genderError
   }
 }
 
@@ -18,6 +17,9 @@ function mapDispatchToProps (dispatch) {
   return ({
     setError (error, type) {
       dispatch(setError(error, type))
+    },
+    setSuccess () {
+      dispatch(setSuccess())
     }
   })
 }
