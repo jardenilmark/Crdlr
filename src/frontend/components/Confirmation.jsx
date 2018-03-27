@@ -3,41 +3,34 @@ import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } fr
 import { firestore } from '../../backend/database'
 import history from '../../backend/history'
 import Validator from '../validator'
+import { addToDb, updateCollection, getCollection } from '../firestoreActions'
 import alertify from 'alertify.js'
 
 class Confirmation extends React.Component {
   async onClickHandler () {
     const { email, firstName, lastName, phone, gender, item } = this.props
     const { brand, location, model, price, type } = item
-    const arr = [
-      document.getElementById(`firstNameConfirm`).value,
-      document.getElementById(`lastNameConfirm`).value,
-      document.getElementById(`emailConfirm`).value,
-      document.getElementById(`phoneConfirm`).value,
-      document.getElementById(`genderConfirm`).innerText,
-      document.getElementById(`creditCardConfirm`).value,
-      document.getElementById(`homeAddressConfirm`).value,
-      document.getElementById(`dateConfirm`).value
-    ]
+    const toCheck = {
+      firstName: document.getElementById(`firstNameConfirm`).value,
+      lastName: document.getElementById(`lastNameConfirm`).value,
+      email: document.getElementById(`emailConfirm`).value,
+      phone: document.getElementById(`phoneConfirm`).value,
+      gender: document.getElementById(`genderConfirm`).innerText,
+      creditCard: document.getElementById(`creditCardConfirm`).value,
+      address: document.getElementById(`homeAddressConfirm`).value
+    }
     const sellerProfit = parseFloat(price.slice(1)) * 0.95
     const advertFee = parseFloat(price.slice(1)) * 0.5
     let isAllValid = true
     const validator = new Validator()
-    for (const key in arr) {
-      if (validator.isValid(arr[key], key)) {
+    for (const key in toCheck) {
+      if (!validator.isValid(key, toCheck[key])) {
         isAllValid = false
       }
     }
     if (isAllValid) {
-      await firestore.collection('transactions').add({
-        firstname: arr[0],
-        lastname: arr[1],
-        email: arr[2],
-        phone: arr[3],
-        gender: arr[4],
-        creditCard: arr[5],
-        homeAddress: arr[6],
-        dateToMeet: arr[7],
+      const obj = {
+        ...toCheck,
         brand: brand,
         location: location,
         carModel: model,
@@ -45,8 +38,9 @@ class Confirmation extends React.Component {
         type: type,
         advertisementFee: advertFee,
         transactionDate: new Date()
-      })
-      const cars = await firestore.collection('cars').get()
+      }
+      addToDb('transactions', obj)
+      const cars = await getCollection('cars')
       let id
       for (let i = 0; i < cars.docs.length; i++) {
         let bool = true
@@ -55,8 +49,7 @@ class Confirmation extends React.Component {
           id = cars.docs[i].id
         }
       }
-      const ref = await firestore.collection('cars').doc(id)
-      await ref.update({ available: false })
+      updateCollection('cars', id, { available: false })
       alertify.success(`Transaction Completed`, 3)
       history.push('/Search')
     }
@@ -68,6 +61,7 @@ class Confirmation extends React.Component {
     if (user) {
       const parsedUser = JSON.parse(user)
       await getUsers(parsedUser.uid, parsedUser.email)
+      this.autoFillForm()
     }
   }
 
@@ -97,14 +91,12 @@ class Confirmation extends React.Component {
   autoFillForm () {
     const { email, lastName, firstName, phone, gender } = this.props
     const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
-    if (email) {
-      for (const key in values) {
-        if (key === 'gender') {
-          document.getElementById(`${key}Confirm`).innerText = values[key]
-        } else {
-          document.getElementById(`${key}Confirm`).value = values[key]
-          document.getElementById(`${key}Confirm`).readOnly = true
-        }
+    for (const key in values) {
+      if (key === 'gender') {
+        document.getElementById(`${key}Confirm`).innerText = values[key]
+      } else {
+        document.getElementById(`${key}Confirm`).value = values[key]
+        document.getElementById(`${key}Confirm`).readOnly = true
       }
     }
   }
@@ -116,7 +108,6 @@ class Confirmation extends React.Component {
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' }
     ]
-    this.autoFillForm()
     return (
       <Container fluid style={{paddingTop: 20}}>
         <Grid textAlign='center' verticalAlign='middle'>
@@ -153,9 +144,6 @@ class Confirmation extends React.Component {
               <Input id={`creditCardConfirm`} fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number' 
                 size='massive' transparent inverted error={creditCardError} style={{color: this.getColor(creditCardError)}}
                 onKeyUp={() => this.onKeyPressHandler('creditCard', `creditCardConfirm`, 'GET_ERROR_CREDITCARD')}/>
-              <Divider/>
-              <Input id={`dateConfirm`} fluid icon='calendar' iconPosition='left' type='date' placeholder='Credit Card Number' 
-                size='massive' transparent inverted/>
               <Divider/>
               <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
             </Segment>

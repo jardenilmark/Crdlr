@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
+import history from '../../../backend/history'
 import alertify from 'alertify.js'
 
 class SignOut extends React.Component {
@@ -10,6 +11,10 @@ class SignOut extends React.Component {
     localStorage.clear()
     setUser()
     alertify.error('User Signed Out')
+    const path = history.location.pathname 
+    if (path === '/CarCreate') {
+      history.push('/')
+    }
   }
 
   render () {

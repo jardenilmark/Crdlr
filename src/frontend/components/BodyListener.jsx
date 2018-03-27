@@ -16,10 +16,12 @@ class BodyListener extends React.Component {
   componentWillUnmount () {
     this.unlisten()
   }
+
   render () {
     return (
       <div>{this.props.children}</div>
     )
   }
 }
+
 export default withRouter(BodyListener)

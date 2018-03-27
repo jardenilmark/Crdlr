@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { firestore, auth } from '../../../backend/database'
+import { setCollection } from '../../firestoreActions'
 import Validator from '../../validator'
 import swal from 'sweetalert'
 import { Link } from 'react-router-dom'
@@ -9,9 +10,9 @@ import history from '../../../backend/history'
 class SignUp extends React.Component {
   async addUser () {
     const { setError } = this.props
+    const email = document.getElementById('email').value
+    const pass = document.getElementById('pass').value
     const user = {
-      email: document.getElementById('email').value,
-      pass: document.getElementById('pass').value,
       firstName: document.getElementById('firstName').value,
       lastName: document.getElementById('lastName').value,
       gender: document.getElementById('gender').firstChild.innerText,
@@ -20,20 +21,18 @@ class SignUp extends React.Component {
     let isAllValid = true
     const validator = new Validator()
     for (const key in user) {
-      if (validator.isValid(user[key], key)) {
+      if (!validator.isValid(key, user[key])) {
         isAllValid = false
       }
     }
+    if (!validator.isValid('email', email) && !validator.isValid('pass', pass)) {
+      isAllValid = false
+    }
     if (isAllValid) {
       try {
-        const create = await auth.createUserWithEmailAndPassword(user.email, user.pass)
-        user['uid'] = create.uid
-        firestore.collection('users').doc(user.uid).set({
-          gender: user.gender,
-          phone: user.phone,
-          firstName: user.firstName,
-          lastName: user.lastName
-        })
+        const create = await auth.createUserWithEmailAndPassword(email, pass)
+        const id = create.uid
+        setCollection('users', id, user)
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
           history.push('/')
@@ -60,7 +59,6 @@ class SignUp extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' }

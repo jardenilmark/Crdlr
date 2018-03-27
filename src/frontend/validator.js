@@ -1,5 +1,8 @@
 class Validator {
   isValid (name, value) {
+    if (value.length === 0) {
+      return false
+    }
     if (name === 'email') {
       return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/g.test(value)
     } else if (name === 'pass') {

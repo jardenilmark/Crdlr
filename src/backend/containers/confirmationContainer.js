@@ -23,8 +23,8 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps (dispatch) {
   return ({
-    getUsers (uid, email) {
-      dispatch(getUsers(uid, email))
+    async getUsers (uid, email) {
+      await dispatch(getUsers(uid, email))
     },
     setError (error, type) {
       dispatch(setError(error, type))

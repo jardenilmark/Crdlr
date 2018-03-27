@@ -12,8 +12,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return ({
-    getCars () {
-      dispatch(fetchCars())
+    async getCars () {
+      await dispatch(fetchCars())
     },
     updateCarList (filtered) {
       dispatch(updateList(filtered))
