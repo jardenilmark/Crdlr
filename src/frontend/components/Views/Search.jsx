@@ -28,7 +28,7 @@ class Search extends React.Component {
     return dropdownArray
   }
 
-  componentDidMount () { // to refactor
+  componentDidMount () {
     const { getCars, updateLoader } = this.props
     getCars()
     setTimeout(() => {
@@ -68,7 +68,7 @@ class Search extends React.Component {
     }
   }
 
-  renderLoader () { //to be placed in a component
+  renderLoader () {
     const { allCars, filteredCars } = this.props
     let arr = []
     if (filteredCars) {
@@ -91,7 +91,7 @@ class Search extends React.Component {
     }
   }
 
-  renderItems () { //to be placed in a component
+  renderItems () {
     const { allCars, filteredCars } = this.props
     const toRenderArr = []
     let carArr = []
@@ -108,7 +108,7 @@ class Search extends React.Component {
     return toRenderArr
   }
 
-  renderDropDowns () { //to be placed in a component
+  renderDropDowns () {
     const placeholders = ['Location', 'Brand', 'Type', 'Model']
     const toRenderArr = []
     let dropDownArr = []

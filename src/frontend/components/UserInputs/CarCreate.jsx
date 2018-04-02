@@ -47,7 +47,7 @@ class CarCreate extends React.Component {
     }
     let isAllValid = true
     for (const key in car) {
-      if (!car[key] || car[key] === 'Brand' || car[key] === 'Location' || car[key] === 'Type') {
+      if ((!car[key] && key !== 'details') || car[key] === 'Brand' || car[key] === 'Location' || car[key] === 'Type') {
         isAllValid = false
       }
     }
