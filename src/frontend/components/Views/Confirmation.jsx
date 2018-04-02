@@ -11,13 +11,13 @@ class Confirmation extends React.Component {
     const { email, firstName, lastName, phone, gender, item } = this.props
     const { brand, location, model, price, type } = item
     const toCheck = {
-      firstName: document.getElementById(`firstNameConfirm`).value,
-      lastName: document.getElementById(`lastNameConfirm`).value,
-      email: document.getElementById(`emailConfirm`).value,
-      phone: document.getElementById(`phoneConfirm`).value,
-      gender: document.getElementById(`genderConfirm`).innerText,
-      creditCard: document.getElementById(`creditCardConfirm`).value,
-      address: document.getElementById(`homeAddressConfirm`).value
+      firstName: document.getElementById(`firstName`).value,
+      lastName: document.getElementById(`lastName`).value,
+      email: document.getElementById(`email`).value,
+      phone: document.getElementById(`phone`).value,
+      gender: document.getElementById(`gender`).innerText,
+      creditCard: document.getElementById(`creditCard`).value,
+      address: document.getElementById(`address`).value
     }
     const sellerProfit = parseFloat(price.slice(1)) * 0.95
     const advertFee = parseFloat(price.slice(1)) * 0.5
@@ -65,12 +65,12 @@ class Confirmation extends React.Component {
     }
   }
 
-  onKeyPressHandler (name, id, type) {
+  onKeyPressHandler (name, type) {
     const validator = new Validator()
     const { setError } = this.props
-    let value = document.getElementById(id).value
+    let value = document.getElementById(name).value
     if (name === 'gender') {
-      value = document.getElementById(id).innerText
+      value = document.getElementById(name).innerText
     }
     setError(validator.isValid(name, value) === false, type)
   }
@@ -93,10 +93,10 @@ class Confirmation extends React.Component {
     const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
     for (const key in values) {
       if (key === 'gender') {
-        document.getElementById(`${key}Confirm`).innerText = values[key]
+        document.getElementById(key).innerText = values[key]
       } else {
-        document.getElementById(`${key}Confirm`).value = values[key]
-        document.getElementById(`${key}Confirm`).readOnly = true
+        document.getElementById(key).value = values[key]
+        document.getElementById(key).readOnly = true
       }
     }
   }
@@ -117,33 +117,33 @@ class Confirmation extends React.Component {
                 <Header inverted size='huge'>CONFIRM PURCHASE</Header>
               </Segment>
               <Divider/>
-              <Input id={`firstNameConfirm`} fluid placeholder={'firstName'}
+              <Input id='firstName' fluid placeholder='firstName'
                 size='massive' transparent inverted error={fnError} style={{color: this.getColor(fnError)}}
-                onKeyUp={() => this.onKeyPressHandler('firstName', `firstNameConfirm`, 'GET_ERROR_FIRSTNAME')}/>
+                onKeyUp={() => this.onKeyPressHandler('firstName', 'GET_ERROR_FIRSTNAME')}/>
               <Divider/>
-              <Input id={`lastNameConfirm`} fluid placeholder={'LastName'} style={{color: this.getColor(lnError)}}
+              <Input id='lastName' fluid placeholder='LastName' style={{color: this.getColor(lnError)}}
                 size='massive' transparent inverted error={lnError}
-                onKeyUp={() => this.onKeyPressHandler('lastName', `lastNameConfirm`,'GET_ERROR_LASTNAME')}/>
+                onKeyUp={() => this.onKeyPressHandler('lastName','GET_ERROR_LASTNAME')}/>
               <Divider/>
               <Dropdown style={{fontSize: 20, background: 'transparent', color: this.getColor(genderError)}} id={`genderConfirm`} selection
                 fluid options={options} placeholder={'Gender'} error={genderError}
-                onKeyUp={() => this.onKeyPressHandler('gender', `genderConfirm`,'GET_ERROR_GENDER')} />
+                onKeyUp={() => this.onKeyPressHandler('gender','GET_ERROR_GENDER')} />
               <Divider/>
-              <Input id={`emailConfirm`} fluid icon='user' iconPosition='left' placeholder={'Email-Address'}
+              <Input id='email' fluid icon='user' iconPosition='left' placeholder='Email-Address'
                 size='massive' transparent inverted error={emailError} style={{color: this.getColor(emailError)}}
-                onKeyUp={() => this.onKeyPressHandler('email', `emailConfirm`, 'GET_ERROR_EMAIL')}/>
+                onKeyUp={() => this.onKeyPressHandler('email', 'GET_ERROR_EMAIL')}/>
               <Divider/>
-              <Input id={`phoneConfirm`} fluid icon='phone' iconPosition='left' placeholder={'Phone Number'} transparent inverted
+              <Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' transparent inverted
                 size='massive' type='number' min={0} max={99999999999} error={phoneError} style={{color: this.getColor(phoneError)}}
-                onKeyUp={() => this.onKeyPressHandler('phone', `phoneConfirm`, 'GET_ERROR_PHONE')}/>
+                onKeyUp={() => this.onKeyPressHandler('phone', 'GET_ERROR_PHONE')}/>
               <Divider/>
-              <Input id={`homeAddressConfirm`} fluid icon='home' iconPosition='left' placeholder='Home Address' 
+              <Input id='address' fluid icon='home' iconPosition='left' placeholder='Home Address' 
                 size='massive' transparent inverted error={addressError} style={{color: this.getColor(addressError)}}
-                onKeyUp={() => this.onKeyPressHandler('address', `homeAddressConfirm`, 'GET_ERROR_ADDRESS')}/>
+                onKeyUp={() => this.onKeyPressHandler('address', 'GET_ERROR_ADDRESS')}/>
               <Divider/>
-              <Input id={`creditCardConfirm`} fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number' 
+              <Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number' 
                 size='massive' transparent inverted error={creditCardError} style={{color: this.getColor(creditCardError)}}
-                onKeyUp={() => this.onKeyPressHandler('creditCard', `creditCardConfirm`, 'GET_ERROR_CREDITCARD')}/>
+                onKeyUp={() => this.onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD')}/>
               <Divider/>
               <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
             </Segment>
