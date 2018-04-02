@@ -1,14 +1,18 @@
 import React from 'react'
-import LoginContainer from '../../backend/containers/loginContainer'
-import SignOut from './UserInput/SignOut'
+import LoginContainer from '../../../backend/containers/loginContainer'
+import SignOut from '../UserInputs/SignOut'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import Inventory from './Inventory';
 
 class SignIn extends React.Component {
   render () {
     const { activeItem, setCurrentUser } = this.props
     return (
       <Menu.Menu position='right'>
+        <Menu.Item name='Inventory' active={activeItem === 'Inventory'} as={Link} to='/Inventory'>
+          Inventory
+        </Menu.Item>
         <Menu.Item name='CarCreate' active={activeItem === 'CarCreate'} as={Link} to='/CarCreate'>
           Register Car
         </Menu.Item>

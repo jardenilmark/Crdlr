@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { setLoginStatus } from '../actions/loginAction'
-import Login from '../../frontend/components/UserInput/Login'
+import { setCurrentUser } from '../actions/userAction'
+import Login from '../../frontend/components/UserInputs/Login'
 
 const mapStateToProps = (state) => {
   return {
@@ -12,6 +13,9 @@ function mapDispatchToProps (dispatch) {
   return ({
     setLoginStatus (status) {
       dispatch(setLoginStatus(status))
+    },
+    setCurrentUser (user) {
+      dispatch(setCurrentUser(user))
     }
   })
 }

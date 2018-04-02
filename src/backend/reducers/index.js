@@ -1,14 +1,18 @@
 import { combineReducers } from 'redux'
 import carReducer from './carReducer'
-import activeReducer from './activeReducer'
+import itemReducer from './itemReducer'
 import userReducer from './userReducer'
 import errorReducer from './errorReducer'
 import loginReducer from './loginReducer'
+import imgReducer from './imgReducer'
+import locationReducer from './locationReducer'
 
 export default combineReducers({
   cars: carReducer,
-  activeItem: activeReducer,
+  item: itemReducer,
   user: userReducer,
   error: errorReducer,
-  login: loginReducer
+  login: loginReducer,
+  img: imgReducer,
+  location: locationReducer
 })

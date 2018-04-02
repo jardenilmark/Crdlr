@@ -1,51 +1,35 @@
-import { firestore } from '../database'
+import { getData, fetchFromDb, fetchFromDbFilter } from './data'
 
-function getCars (cars) {
-  return {
-    type: 'GET_CARS_TRUE',
-    payload: {
-      allCars: cars
-    }
-  }
-}
-
-function getFilteredCars (filtered) {
-  return {
-    type: 'GET_FILTERED_TRUE',
-    payload: {
-      filteredCars: filtered
-    }
-  }
-}
-function getData (type, data) {
-  return {
-    type: type,
-    payload: data
-  }
-}
-
-async function fetchFromDb (name) {
-  const collection = await firestore.collection(name).get()
-  const arr = []
+async function fetchCarsConnected (uid) {
+  const collection = await fetchFromDbFilter('cars', 'owner', uid)
+  const toSend = []
   collection.forEach(e => {
-    arr.push(e.data())
+    const obj = {
+      Brand: e.brand,
+      Location: e.location,
+      Model: e.model,
+      Price: e.price,
+      Type: e.type,
+      ImageId: e.image,
+      Id: e.id,
+      Sold: JSON.stringify(!e.available)
+    }
+    toSend.push(obj)
   })
-  return arr
+  return toSend
 }
 
-async function fetchAvailCars () {
-  const collection = await firestore.collection('cars').where('available', '==', true).get()
-  const arr = []
-  collection.forEach(e => {
-    arr.push(e.data())
-  })
-  return arr
+export function getCarsAdvertised (uid) {
+  return async (dispatch) => {
+    const arr = await fetchCarsConnected(uid)
+    dispatch(getData('GET_CARS_OWNER', arr))
+  }
 }
 
 export function fetchCars () {
   return async (dispatch) => {
-    const arr = await fetchAvailCars()
-    dispatch(getCars(arr))
+    const arr = await fetchFromDbFilter('cars', 'available', true)
+    dispatch(getData('GET_CARS', arr))
   }
 }
 
@@ -78,6 +62,6 @@ export function updateLoader (loader) {
 
 export function updateList (filtered) {
   return (dispatch) => {
-    dispatch(getFilteredCars(filtered))
+    dispatch(getData('GET_FILTERED', filtered))
   }
 }

@@ -15,7 +15,7 @@ class Login extends React.Component {
   }
 
   async loginUser () {
-    const { setUser, setLoginStatus } = this.props
+    const { setCurrentUser, setLoginStatus } = this.props
     const email = document.getElementById('emailLogin').value
     const pass = document.getElementById('passwordLogin').value
     const user = await auth.signInWithEmailAndPassword(email, pass).catch(() => 'error')

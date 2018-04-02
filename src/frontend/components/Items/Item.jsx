@@ -1,20 +1,22 @@
 import React from 'react'
 import { Header, Image, Button, Grid, Segment, Divider, Container, Table } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { storage } from '../../backend/database'
+import { storage } from '../../../backend/database'
 
 class Item extends React.Component {
-  async loadImage () {
+  async loadImage (imageId) {
+    const { id } = this.props
     const { image, model, location } = this.props.item
     const url = await storage.ref().child(`cars/${image}`).getDownloadURL()
-    const imgURL = document.getElementById(`img${model}${location}`)
+    const imgURL = document.getElementById(imageId)
     if (imgURL) {
       imgURL.src = url
     }
   }
 
   render () {
-    const { item } = this.props
+    const { item, id } = this.props
+    const imageId = `img${item.model}${item.location}${id}`
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Segment>
@@ -24,9 +26,9 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image id={`img${item.model}${item.location}`} src={this.loadImage()}/>
+          <Image verticalAlign='middle' id={imageId} style={{height: 250}} src={this.loadImage(imageId)}/>
           <Divider/>
-          <Header size='small' textAlign='center'>
+          <Header size='medium' textAlign='center'>
             {item.price}
           </Header>
           <Button as={Link} to={{pathname: '/Purchase', state: {item: item}}} fluid color='black'>

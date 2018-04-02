@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { fetchCars, updateList, updateLoader } from '../actions/carAction'
-import Search from '../../frontend/components/Search'
+import Search from '../../frontend/components/Views/Search'
 
 function mapStateToProps (state) {
   return {

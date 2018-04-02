@@ -1,8 +1,6 @@
 import { connect } from 'react-redux'
-import App from '../../frontend/components/Views/App'
-import { setActiveItem } from '../actions/itemAction'
+import SignedIn from '../../frontend/components/Views/SignedInView'
 import { setCurrentUser } from '../actions/userAction'
-
 function mapStateToProps (state) {
   return {
     activeItem: state.item.activeItem
@@ -11,13 +9,10 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return ({
-    setItemName (type) {
-      dispatch(setActiveItem(type))
-    },
     setCurrentUser (user) {
       dispatch(setCurrentUser(user))
     }
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(SignedIn)

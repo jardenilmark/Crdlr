@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getUsers } from '../actions/userAction'
 import { setError, setSuccess } from '../actions/errorAction'
-import Confirmation from '../../frontend/components/Confirmation'
+import Confirmation from '../../frontend/components/Views/Confirmation'
 
 const mapStateToProps = (state) => {
   return {

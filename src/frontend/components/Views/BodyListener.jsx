@@ -3,14 +3,17 @@ import { withRouter } from 'react-router-dom'
 
 class BodyListener extends React.Component {
   componentWillMount () {
-    const { setItemName } = this.props
-    this.unlisten = this.props.history.listen((location, action) => {
+    const { setItemName, activeItem, history } = this.props
+    this.unlisten = history.listen((location, action) => {
       let loc = location.pathname
       if (loc.length > 1) {
         loc = loc.slice(1)
       }
       setItemName(loc)
     })
+    if (!activeItem) {
+      setItemName(history.location.pathname.slice(1))
+    }
   }
 
   componentWillUnmount () {

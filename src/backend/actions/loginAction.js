@@ -1,12 +1,7 @@
-function getLoginStatus (success) {
-  return {
-    type: 'GET_LOGIN_STATUS',
-    payload: success
-  }
-}
+import { getData } from './data'
 
 export function setLoginStatus (success) {
   return (dispatch) => {
-    dispatch(getLoginStatus(success))
+    dispatch(getData('GET_LOGIN_STATUS', success))
   }
 }

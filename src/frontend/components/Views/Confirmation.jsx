@@ -1,9 +1,9 @@
 import React from 'react'
 import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } from 'semantic-ui-react'
-import { firestore } from '../../backend/database'
-import history from '../../backend/history'
-import Validator from '../validator'
-import { addToDb, updateCollection, getCollection } from '../firestoreActions'
+import { firestore } from '../../../backend/database'
+import history from '../../../backend/history'
+import Validator from '../../validator'
+import { addToDb, updateCollection, getCollection } from '../../firestoreActions'
 import alertify from 'alertify.js'
 
 class Confirmation extends React.Component {

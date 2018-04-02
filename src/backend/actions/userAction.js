@@ -1,36 +1,27 @@
 import { firestore } from '../database'
-
-function getUser (name) {
-  return {
-    type: 'GET_USER',
-    payload: name
-  }
-}
+import { getData, fetchFromDb } from './data'
 
 export function setCurrentUser (name) {
   return (dispatch) => {
-    dispatch(getUser(name))
+    dispatch(getData('GET_USER', name))
   }
 }
 
 export function getUsers (uid, email) {
   return async (dispatch) => {
     const users = await getUserFromDB(uid, email)
-    dispatch(users)
+    dispatch(getData('GET_USER_DB', users))
   }
 }
 
-async function getUserFromDB (uid, email) {
+async function getUserFromDB (uid, email) { // wont change this or else will query twice cause of email
   const user = await firestore.collection('users').doc(uid).get()
   const data = user.data()
   return {
-    type: 'GET_USER_DB',
-    payload: {
       firstName: data.firstName,
       lastName: data.lastName,
       gender: data.gender,
       phone: data.phone,
       email: email
     }
-  }
 }

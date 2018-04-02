@@ -1,11 +1,17 @@
 import { connect } from 'react-redux'
 import { fetchCarTypes, fetchCarBrands } from '../actions/carAction'
-import CarCreate from '../../frontend/components/UserInput/CarCreate';
+import { setImageFile } from '../actions/imgAction'
+import { setProgressBar } from '../actions/itemAction'
+import { fetchLocations } from '../actions/locationAction'
+import CarCreate from '../../frontend/components/UserInputs/CarCreate';
 
 const mapStateToProps = (state) => {
   return {
     brands: state.cars.brands,
-    types: state.cars.types
+    types: state.cars.types,
+    locations: state.location.locations,
+    file: state.img.file,
+    progress: state.item.progress
   }
 }
 
@@ -14,8 +20,17 @@ function mapDispatchToProps (dispatch) {
     fetchCarTypes () {
       dispatch(fetchCarTypes())
     },
+    fetchLocations () {
+      dispatch(fetchLocations())
+    },
     fetchCarBrands () {
       dispatch(fetchCarBrands())
+    },
+    setImageFile (file) {
+      dispatch(setImageFile(file))
+    },
+    setProgressBar (progress) {
+      dispatch(setProgressBar(progress))
     }
   })
 }

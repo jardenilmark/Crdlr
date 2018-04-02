@@ -1,7 +1,6 @@
 import React from 'react'
-import Item from './Item'
+import Item from '../Items/Item'
 import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
-import Button from './Buttons/customButton'
 
 class Search extends React.Component {
   getDropdownValues (arr) {
@@ -18,7 +17,7 @@ class Search extends React.Component {
       for (const item of set) {
         let a
         if (typeof (item) === 'string') {
-          a = item.substring(0, 3).toUpperCase()
+          a = item
         } else {
           a = count++
         }
@@ -69,63 +68,86 @@ class Search extends React.Component {
     }
   }
 
-  getLoader (arr) {
+  renderLoader () { //to be placed in a component
+    const { allCars, filteredCars } = this.props
+    let arr = []
+    if (filteredCars) {
+      arr = [filteredCars]
+    } else if (allCars) {
+      arr = [allCars]
+    }
     if (arr.length === 0 && !this.props.loader) {
-      return <Dimmer active>
-        <Loader indeterminate>Preparing Selection</Loader>
-      </Dimmer>
+      return (
+        <Dimmer active>
+          <Loader indeterminate>Preparing Selection</Loader>
+        </Dimmer>
+      )
     } else if (arr.length === 0 && this.props.loader) {
-      return <Header size='large'>
-        No Available Cars
-      </Header>
+      return (
+        <Header size='large'>
+          No Available Cars
+        </Header>
+      )
     }
   }
 
-  render () {
-    const arr = ['Location', 'Brand', 'Type', 'Model']
+  renderItems () { //to be placed in a component
     const { allCars, filteredCars } = this.props
-    let toShowArr = []
-    let dropDownArr = []
-    if (allCars) {
-      dropDownArr = this.getDropdownValues(arr)
-      toShowArr = allCars
-      if (filteredCars) {
-        toShowArr = filteredCars
-      }
-    }
+    const toRenderArr = []
+    let carArr = []
     let count = 0
-    let idCar = 0
+    if (filteredCars) {
+      carArr = filteredCars
+    } else if (allCars) {
+      carArr = allCars
+    }
+    carArr.forEach(e => {
+      toRenderArr.push(<Item item={e} id={count} key={count}/>)
+      count++
+    })
+    return toRenderArr
+  }
+
+  renderDropDowns () { //to be placed in a component
+    const placeholders = ['Location', 'Brand', 'Type', 'Model']
+    const toRenderArr = []
+    let dropDownArr = []
+    let count = 0
+    if (this.props.allCars) {
+      dropDownArr = this.getDropdownValues(placeholders)
+    }
+    dropDownArr.forEach(e => {
+      const placeholder = placeholders[count++]
+      const array = [...e]
+      array.push({key: '...', value: '...', text: '...'})
+      toRenderArr.push(                
+      <Grid.Column name={placeholder} key={placeholder} >
+        <Dropdown button noResultsMessage='No Results Found' placeholder={placeholder}
+          onClose={() => this.getFilteredList(placeholders)}
+          search options={array} selection id={placeholder}/>
+      </Grid.Column>)
+    })
+    return toRenderArr
+  }
+
+  render () {
     return (
       <Container fluid>
         <Grid style={{marginTop: 1}} columns='equal'>
           <Grid.Row>
             <Grid.Column/>
             <Grid.Column/>
-            {dropDownArr.map(elem => {
-              const holder = arr[count++]
-              const dropArr = [...elem]
-              dropArr.push({key: '...', value: '...', text: '...'})
-              return (
-                <Grid.Column name={holder} key={holder} >
-                  <Dropdown button noResultsMessage='No Results Found' placeholder={holder}
-                    onClose={() => this.getFilteredList(arr)}
-                    search options={dropArr} selection id={holder}/>
-                </Grid.Column>)
-            })}
+            {this.renderDropDowns()}
             <Grid.Column/>
             <Grid.Column/>
           </Grid.Row>
         </Grid>
         <Divider/>
         <Container fluid textAlign='center'>
-          {this.getLoader(toShowArr)}
+          {this.renderLoader()}
         </Container>
         <Grid style={{marginTop: 30, marginBottom: 30, paddingLeft: 20, paddingRight: 20}} relaxed>
-          {toShowArr.map(elem => {
-            return (
-              <Item item={elem} key={idCar++}/>
-            )
-          })}
+          {this.renderItems()}
         </Grid>
       </Container>
     )

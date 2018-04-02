@@ -3,22 +3,27 @@ import LoginContainer from '../../../backend/containers/loginContainer'
 import { Button, Menu, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
-import SignedIn from '../SignedInView'
+import SignedIn from '../../../backend/containers/signedInContainer'
 
 class TitleBar extends React.Component {
   getComponent () {
-    const { currentUser, setCurrentUser, activeItem } = this.props
+    const { currentUser } = this.props
     if (currentUser) {
-      return <SignedIn activeItem={activeItem} setCurrentUser={setCurrentUser}/>
+      return <SignedIn/>
     }
-    return <LoginContainer setUser={setCurrentUser}/>
+    return <LoginContainer/>
   }
 
-  render () {
+  getActiveItem () {
     let { activeItem } = this.props
     if (!activeItem) {
       activeItem = history.location.pathname.slice(1)
     }
+    return activeItem
+  }
+
+  render () {
+    const activeItem = this.getActiveItem()
     return (
       <Menu inverted borderless compact attached='top' style={{margin: -1}} stackable>
         <Menu.Item />

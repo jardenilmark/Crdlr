@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import SignUp from '../../frontend/components/UserInput/SignUp'
+import SignUp from '../../frontend/components/UserInputs/SignUp'
 import { setError, setSuccess } from '../actions/errorAction'
+import { setCurrentUser } from '../actions/userAction'
 
 function mapStateToProps (state) {
   return {
@@ -20,6 +21,9 @@ function mapDispatchToProps (dispatch) {
     },
     setSuccess () {
       dispatch(setSuccess())
+    },
+    setCurrentUser (user) {
+      dispatch(setCurrentUser(user))
     }
   })
 }

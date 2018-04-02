@@ -9,7 +9,7 @@ import history from '../../../backend/history'
 
 class SignUp extends React.Component {
   async addUser () {
-    const { setError } = this.props
+    const { setError, setCurrentUser } = this.props
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
     const user = {
@@ -25,7 +25,7 @@ class SignUp extends React.Component {
         isAllValid = false
       }
     }
-    if (!validator.isValid('email', email) && !validator.isValid('pass', pass)) {
+    if (!validator.isValid('email', email) || !validator.isValid('pass', pass)) {
       isAllValid = false
     }
     if (isAllValid) {
@@ -35,11 +35,15 @@ class SignUp extends React.Component {
         setCollection('users', id, user)
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
+          localStorage.setItem('user', JSON.stringify(auth.currentUser))
+          setCurrentUser(auth.currentUser)
           history.push('/')
         }
       } catch (e) {
         setError(true, 'GET_ERROR_EMAIL')
       }
+    } else {
+      swal('Error!', 'Sign Up Error', 'error')
     }
   }
 

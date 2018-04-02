@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/App'
+import App from './components/Views/App'
 import store from '../backend/store'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
