@@ -1,10 +1,10 @@
 import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
-import Search from '../frontend/components/Search'
+import Search from '../frontend/components/Views/Search'
 import { getFromDb } from '../backend/actions/carAction'
 import { Dropdown, Dimmer, Loader, Header } from 'semantic-ui-react'
-import Item from '../frontend/components/Item'
+import Item from '../frontend/components/Items/Item'
 
 describe('<Search />', () => {
   let wrapper
@@ -28,7 +28,7 @@ describe('<Search />', () => {
   })
   it('gets loader', () => {
     wrapper.setProps({loader: false})
-    const value = wrapper.instance().getLoader([])
+    const value = wrapper.instance().renderLoader([])
     expect(value).toEqual(
       <Dimmer active>
         <Loader indeterminate>Preparing Selection</Loader>
@@ -37,7 +37,7 @@ describe('<Search />', () => {
   })
   it('gets No Available Cars sign', () => {
     wrapper.setProps({loader: true})
-    const value = wrapper.instance().getLoader([])
+    const value = wrapper.instance().renderLoader([])
     expect(value).toEqual(
       <Header size='large'>
         No Available Cars

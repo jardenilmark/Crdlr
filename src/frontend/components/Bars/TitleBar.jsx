@@ -3,13 +3,13 @@ import LoginContainer from '../../../backend/containers/loginContainer'
 import { Button, Menu, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
-import SignedIn from '../../../backend/containers/signedInContainer'
+import SignedInView from '../../../backend/containers/signedInContainer'
 
 class TitleBar extends React.Component {
   getComponent () {
     const { currentUser } = this.props
     if (currentUser) {
-      return <SignedIn/>
+      return <SignedInView/>
     }
     return <LoginContainer/>
   }

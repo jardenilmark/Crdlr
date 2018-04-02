@@ -1,7 +1,7 @@
 import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
-import Item from '../frontend/components/Item'
+import Item from '../frontend/components/Items/Item'
 import { Image } from 'semantic-ui-react'
 
 describe('<Item />', () => {
