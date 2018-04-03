@@ -8,7 +8,8 @@ import swal from 'sweetalert'
 
 class Confirmation extends React.Component {
   async onClickHandler () {
-    const { brand, location, model, price, type, owner } = this.props.item
+    const { item } = this.props
+    const { brand, location, model, price, type, owner } = item
     const toCheck = {
       firstName: document.getElementById(`firstName`).value,
       lastName: document.getElementById(`lastName`).value,

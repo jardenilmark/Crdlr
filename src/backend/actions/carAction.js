@@ -13,7 +13,7 @@ async function fetchCarsConnected (uid) {
       ImageId: e.image,
       Id: e.id,
       peopleInterested: e.peopleInterested,
-      Sold: JSON.stringify(!e.available)
+      Sold: !e.available
     }
     toSend.push(obj)
   })

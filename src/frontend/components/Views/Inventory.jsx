@@ -96,9 +96,9 @@ class Inventory extends React.Component {
       toRender.push(<Table.Cell key={count++}><Image id={imageKey} rounded size='small' src={this.loadImage(imageKey, child)}/></Table.Cell>)
       for (const key in cars[num]) {
         const obj = cars[num][key]
-        if (obj === 'true') {
+        if (obj === true) {
           toRender.push(<Table.Cell key={count++}><Icon color='green' name='checkmark' size='large' /></Table.Cell>)
-        } else if (obj === 'false') {
+        } else if (obj === false) {
           const imageId = cars[num]['ImageId']
           const id = cars[num]['Id']
           toRender.push(
@@ -152,7 +152,7 @@ class Inventory extends React.Component {
     let numSold = 0
     cars.forEach(e => {
       for (const key in e) {
-        if (key === 'Sold' && e[key] === true) {
+        if (key === 'Sold' && e[key] === true) { 
           numSold++
         }
       }
@@ -168,7 +168,7 @@ class Inventory extends React.Component {
         for (const key in e) {
           if (key === 'peopleInterested') {
             arr.push({
-              modalVisbility: false
+              modalVisibility: false
             })
           }
         }
