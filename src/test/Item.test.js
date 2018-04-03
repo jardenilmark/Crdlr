@@ -7,8 +7,8 @@ import { Image } from 'semantic-ui-react'
 describe('<Item />', () => {
   let wrapper
   beforeEach(() => {
-    const item = {brand: 'Toyota', model: 'RAV4', type: 'Car', location: 'Cebu', image: 'RAV4.png'}
-    wrapper = shallow(<Item item={item}/>)
+    const item = {brand: 'Toyota', model: 'RAV4', type: 'Car', location: 'Cebu', image: '352171216'}
+    wrapper = shallow(<Item item={item} itemModals={[{visibility: true}]} id={0}/>)
   })
   it('renders <Item>', () => {
     expect(wrapper).toHaveLength(1)

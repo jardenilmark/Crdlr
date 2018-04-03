@@ -14,7 +14,7 @@ describe('<Search />', () => {
   const car2 = {brand: 'Honda', model: 'RAV5', type: 'SUV', location: 'iloilo'}
   const car3 = {brand: 'Toyota', model: 'RAV6', type: 'Car', location: 'Manila'}
   beforeEach(() => {
-    wrapper = shallow(<Search getCars={jest.fn()}/>)
+    wrapper = shallow(<Search initialize={jest.fn()}/>)
     arr = ['Location', 'Brand', 'Type', 'Model']
     allCars = [car, car2, car3]
   })
@@ -28,25 +28,16 @@ describe('<Search />', () => {
   })
   it('gets loader', () => {
     wrapper.setProps({loader: false})
-    const value = wrapper.instance().renderLoader([])
-    expect(value).toEqual(
-      <Dimmer active>
-        <Loader indeterminate>Preparing Selection</Loader>
-      </Dimmer>
-    )
+    expect(wrapper.find(Dimmer)).toHaveLength(1)
   })
   it('gets No Available Cars sign', () => {
     wrapper.setProps({loader: true})
-    const value = wrapper.instance().renderLoader([])
-    expect(value).toEqual(
-      <Header size='large'>
-        No Available Cars
-      </Header>
-    )
+    expect(wrapper.find(Header)).toHaveLength(1)
   })
   it('renders Item', () => {
-    wrapper.setProps({allCars: allCars})
-    expect(wrapper.find(Item)).toHaveLength(3)
+    wrapper.setProps({allCars: allCars, itemModals: true})
+    const value = wrapper.instance().renderItems()
+    expect(value).toHaveLength(3)
   })
   it('renders dropdown', () => {
     wrapper.setProps({allCars: allCars})

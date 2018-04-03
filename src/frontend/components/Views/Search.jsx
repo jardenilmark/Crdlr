@@ -3,31 +3,6 @@ import Item from '../../../backend/containers/itemContainer'
 import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
 
 class Search extends React.Component {
-  getDropdownValues (arr) {
-    const { allCars } = this.props
-    const dropdownArray = []
-    for (const para of arr) {
-      const set = new Set()
-      allCars.forEach(obj => {
-        const name = para.toLowerCase()
-        set.add(obj[name])
-      })
-      const valueArr = []
-      let count = 0
-      for (const item of set) {
-        let a
-        if (typeof (item) === 'string') {
-          a = item
-        } else {
-          a = count++
-        }
-        valueArr.push({key: a, value: a, text: item})
-      }
-      dropdownArray.push(valueArr)
-    }
-    return dropdownArray
-  }
-
   async intialize () {
     const { setItemModalVisibility, setItemModals, getCars, updateLoader } = this.props
     console.log(this.props)
@@ -108,7 +83,6 @@ class Search extends React.Component {
     const { itemModals, allCars, filteredCars } = this.props
     const toRenderArr = []
     let carArr = []
-    let modalItem = {}
     let count = 0
     if (filteredCars) {
       carArr = filteredCars
@@ -122,6 +96,31 @@ class Search extends React.Component {
       })
     }
     return toRenderArr
+  }
+
+  getDropdownValues (arr) {
+    const { allCars } = this.props
+    const dropdownArray = []
+    for (const para of arr) {
+      const set = new Set()
+      allCars.forEach(obj => {
+        const name = para.toLowerCase()
+        set.add(obj[name])
+      })
+      const valueArr = []
+      let count = 0
+      for (const item of set) {
+        let a
+        if (typeof (item) === 'string') {
+          a = item
+        } else {
+          a = count++
+        }
+        valueArr.push({key: a, value: a, text: item})
+      }
+      dropdownArray.push(valueArr)
+    }
+    return dropdownArray
   }
 
   renderDropDowns () {
