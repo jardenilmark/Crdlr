@@ -1,5 +1,5 @@
 import React from 'react'
-import Item from '../Items/Item'
+import Item from '../../../backend/containers/itemContainer'
 import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
 
 class Search extends React.Component {
@@ -28,12 +28,25 @@ class Search extends React.Component {
     return dropdownArray
   }
 
-  componentDidMount () {
-    const { getCars, updateLoader } = this.props
-    getCars()
+  async intialize () {
+    const { setItemModalVisibility, setItemModals, getCars, updateLoader } = this.props
+    console.log(this.props)
     setTimeout(() => {
       updateLoader(true)
-    }, 10000)
+    }, 6000)
+    await getCars()
+    const arr = []
+    const { allCars } = this.props
+    allCars.forEach(e => {
+      arr.push({
+        visibility: false
+      })
+    })
+    setItemModals(arr)
+  }
+
+  componentDidMount () {
+    this.intialize()
   }
 
   getFilteredList (arr) {
@@ -54,7 +67,7 @@ class Search extends React.Component {
       allCars.forEach(elem => {
         let isQualified = true
         for (const key in data) {
-          if (data[key] === '...') {
+          if (data[key] === 'Show All') {
             // do nothing
           } else if (data[key] !== elem[key]) {
             isQualified = false
@@ -69,20 +82,20 @@ class Search extends React.Component {
   }
 
   renderLoader () {
-    const { allCars, filteredCars } = this.props
+    const { allCars, filteredCars, loader } = this.props
     let arr = []
     if (filteredCars) {
-      arr = [filteredCars]
+      arr = filteredCars
     } else if (allCars) {
-      arr = [allCars]
+      arr = allCars
     }
-    if (arr.length === 0 && !this.props.loader) {
+    if (arr.length === 0 && !loader) {
       return (
         <Dimmer active>
-          <Loader indeterminate>Preparing Selection</Loader>
+          <Loader size='massive' indeterminate>Preparing Selection</Loader>
         </Dimmer>
       )
-    } else if (arr.length === 0 && this.props.loader) {
+    } else if (arr.length === 0 && loader) {
       return (
         <Header size='large'>
           No Available Cars
@@ -92,19 +105,22 @@ class Search extends React.Component {
   }
 
   renderItems () {
-    const { allCars, filteredCars } = this.props
+    const { itemModals, allCars, filteredCars } = this.props
     const toRenderArr = []
     let carArr = []
+    let modalItem = {}
     let count = 0
     if (filteredCars) {
       carArr = filteredCars
     } else if (allCars) {
       carArr = allCars
     }
-    carArr.forEach(e => {
-      toRenderArr.push(<Item item={e} id={count} key={count}/>)
-      count++
-    })
+    if (itemModals) {
+      carArr.forEach(e => {
+        toRenderArr.push(<Item item={e} id={count} key={count}/>)
+        count++
+      })
+    }
     return toRenderArr
   }
 
@@ -119,7 +135,7 @@ class Search extends React.Component {
     dropDownArr.forEach(e => {
       const placeholder = placeholders[count++]
       const array = [...e]
-      array.push({key: '...', value: '...', text: '...'})
+      array.push({key: 'Show All', value: 'Show All', text: 'Show All'})
       toRenderArr.push(                
       <Grid.Column name={placeholder} key={placeholder} >
         <Dropdown button noResultsMessage='No Results Found' placeholder={placeholder}

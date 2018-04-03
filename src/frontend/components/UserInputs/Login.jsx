@@ -21,7 +21,7 @@ class Login extends React.Component {
     const user = await auth.signInWithEmailAndPassword(email, pass).catch(() => 'error')
     if (user !== 'error') {
       localStorage.setItem('user', JSON.stringify(auth.currentUser))
-      setUser(JSON.stringify(auth.currentUser))
+      setCurrentUser(JSON.stringify(auth.currentUser))
       setLoginStatus('success')
       alertify.success(`Welcome ${auth.currentUser.email}!`, 3)
       return true

@@ -38,6 +38,10 @@ class SignUp extends React.Component {
           localStorage.setItem('user', JSON.stringify(auth.currentUser))
           setCurrentUser(auth.currentUser)
           history.push('/')
+        } else { // incase the user uses escape
+          localStorage.setItem('user', JSON.stringify(auth.currentUser))
+          setCurrentUser(auth.currentUser)
+          history.push('/')
         }
       } catch (e) {
         setError(true, 'GET_ERROR_EMAIL')

@@ -1,13 +1,20 @@
 import React from 'react'
-import { Popup, Header, Icon, Table, Image, Container, Button } from 'semantic-ui-react'
+import { Label, Popup, Header, Icon, Table, Image, Container, Button } from 'semantic-ui-react'
 import { getCollection, deleteCollection } from '../../firestoreActions'
 import { storage } from '../../../backend/database'
+import { Link } from 'react-router-dom'
+import Mail from '../../../backend/containers/mailContainer'
 import swal from 'sweetalert'
 
 class Inventory extends React.Component {
   componentDidMount () {
+    this.initialize()
+  }
+
+  async initialize () {
     const { getCarsAdvertised } = this.props
-    getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+    await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+    this.setModalArr()
   }
 
   getHeaders () {
@@ -17,8 +24,10 @@ class Inventory extends React.Component {
       let count = 0
       toRender.push(<Table.HeaderCell key={count++}/>)
       for (const key in cars[0]) {
-        if (key !== 'ImageId' && key !== 'Id') {
+        if (key !== 'ImageId' && key !== 'Id' && key !== 'peopleInterested') {
           toRender.push(<Table.HeaderCell key={count++}>{key}</Table.HeaderCell>)
+        } else if (key === 'peopleInterested') {
+          toRender.push(<Table.HeaderCell key={count++}>Interested Buyers</Table.HeaderCell>)
         }
       }
       return toRender
@@ -38,9 +47,9 @@ class Inventory extends React.Component {
       const confirmation = swal("Advertisment has been cancelled!", {
         icon: "success"
       })
-      if (await confirmation) {
-        deleteCollection('cars', id)
-        storage.ref().child(`cars/${imageId}`).delete()
+      if (await confirmation) { // add cancellation transaction
+        await deleteCollection('cars', id)
+        await storage.ref().child(`cars/${imageId}`).delete()
         getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
       }
     }
@@ -54,7 +63,30 @@ class Inventory extends React.Component {
     }
   }
 
-  getRowContents (num) {
+  getRowSubContents (key, obj, count, num) {
+    const { peopleModals } = this.props
+    if (key !== 'ImageId' && key !== 'Id' && key !== 'peopleInterested') {
+      return(<Table.Cell key={count}>{obj}</Table.Cell>)
+    } else if (key === 'peopleInterested') {
+      if (obj.length === 0) {
+        return(<Table.Cell key={count}>None</Table.Cell>)
+      } else {
+        let message = 'people interested'
+        if (obj.length === 1) {
+          message = 'person interested'
+        }
+        if (peopleModals) {
+          return(
+            <Table.Cell key={count}>
+              <Mail id={num} obj={obj} message={message}/>
+            </Table.Cell>
+          )
+        }
+      }
+    }
+  }
+
+  getRowContents (num) { // to refactor
     const { cars } = this.props
     if (cars && cars.length > 0) {
       const toRender = []
@@ -71,14 +103,13 @@ class Inventory extends React.Component {
           const id = cars[num]['Id']
           toRender.push(
             <Table.Cell key={count++}>
-            <Popup trigger={<Icon color='red' name='close' size='large' onClick={() => this.onClickHandler(imageId, id)}/>}
-              content='**Click on this icon to cancel advertisment'/>
+              <Popup trigger={<Icon color='red' name='close' size='large' onClick={() => this.onClickHandler(imageId, id)}/>}
+                content='**Click on this icon to cancel advertisment'/>
             </Table.Cell>
           )
         } else {
-          if (key !== 'ImageId' && key !== 'Id') {
-            toRender.push(<Table.Cell key={count++}>{obj}</Table.Cell>)
-          }
+          toRender.push(this.getRowSubContents(key, obj, count, num))
+          count++
         }
       }
       return toRender
@@ -91,7 +122,7 @@ class Inventory extends React.Component {
       const toRender = []
       let count = 0
       for (let i = 0; i < cars.length; i++) {
-        toRender.push(<Table.Row key={count++}>{this.getRowContents(i)}</Table.Row>)
+        toRender.push(<Table.Row key={i}>{this.getRowContents(i)}</Table.Row>)
       }
       return toRender
     }
@@ -108,8 +139,8 @@ class Inventory extends React.Component {
       }
       toRender.push(
         <Table.Row key={count++}>{renderEmptyRows}
-          <Table.HeaderCell>Number Sold:</Table.HeaderCell>
-          <Table.HeaderCell>{this.getNumberSold()}</Table.HeaderCell>
+          <Table.HeaderCell><Header size='medium'>Number Sold:</Header></Table.HeaderCell>
+          <Table.HeaderCell><Header size='medium'>{this.getNumberSold()}</Header></Table.HeaderCell>
         </Table.Row>
         )
       return toRender
@@ -128,6 +159,24 @@ class Inventory extends React.Component {
     })
     return numSold
   }
+
+  setModalArr () {
+    const { setPeopleModals, cars } = this.props
+    const arr = []
+    if (cars) {
+      cars.forEach(e => {
+        for (const key in e) {
+          if (key === 'peopleInterested') {
+            arr.push({
+              modalVisbility: false
+            })
+          }
+        }
+      })
+      setPeopleModals(arr)
+    }
+  }
+
   render () {
     return (
       <Container fluid style={{height: '100%', background: 'grey', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}}>

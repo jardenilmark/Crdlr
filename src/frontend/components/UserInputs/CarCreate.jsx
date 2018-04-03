@@ -33,7 +33,7 @@ class CarCreate extends React.Component {
   }
 
   onClickHandler (id) {
-    const { file, setProgressBar } = this.props
+    const { file, setProgressBar, progress } = this.props
     const car = {
       available: true,
       brand: document.getElementById('carBrand').innerText,
@@ -43,7 +43,8 @@ class CarCreate extends React.Component {
       price: `$${document.getElementById('carPrice').value}`,
       type: document.getElementById('carType').innerText,
       details: document.getElementById('carDesc').value,
-      owner: auth.currentUser.uid
+      owner: auth.currentUser.uid,
+      peopleInterested: []
     }
     let isAllValid = true
     for (const key in car) {
@@ -54,7 +55,7 @@ class CarCreate extends React.Component {
     if (!file) {
       isAllValid = false
     }
-    if (isAllValid) {
+    if (isAllValid && (progress === -1 || progress === 100)) {
       storage.ref(`cars/${id}`).put(file).on('state_changed', (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         setProgressBar(progress)
@@ -68,7 +69,7 @@ class CarCreate extends React.Component {
 
   render () {
     const picId = this.generateRandomPicId()
-    const { brands, types, locations } = this.props
+    const { brands, types, locations, progress } = this.props
     let carBrands = []
     let carTypes = []
     let locationOptions = []
@@ -99,7 +100,7 @@ class CarCreate extends React.Component {
               <div style={{textAlign: 'left', paddingBottom: 10, paddingTop: 10}}>
                 <Form.Checkbox label='I agree to the Terms and Conditions' />
               </div>
-              <Button onClick={() => this.onClickHandler(picId)} content='Submit' secondary fluid/>
+              <Button loading={progress > -1 && progress < 100} onClick={() => this.onClickHandler(picId)} content='Submit' secondary fluid/>
             </Segment>
           </Grid.Column>
         </Grid>

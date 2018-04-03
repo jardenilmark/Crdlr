@@ -1,7 +1,7 @@
 import { getData, fetchFromDb, fetchFromDbFilter } from './data'
 
 async function fetchCarsConnected (uid) {
-  const collection = await fetchFromDbFilter('cars', 'owner', uid)
+  const collection = await fetchFromDbFilter('cars', 'owner', uid, true)
   const toSend = []
   collection.forEach(e => {
     const obj = {
@@ -12,6 +12,7 @@ async function fetchCarsConnected (uid) {
       Type: e.type,
       ImageId: e.image,
       Id: e.id,
+      peopleInterested: e.peopleInterested,
       Sold: JSON.stringify(!e.available)
     }
     toSend.push(obj)

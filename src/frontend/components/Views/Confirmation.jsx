@@ -1,15 +1,16 @@
 import React from 'react'
 import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } from 'semantic-ui-react'
-import { firestore } from '../../../backend/database'
 import history from '../../../backend/history'
 import Validator from '../../validator'
 import { addToDb, updateCollection, getCollection } from '../../firestoreActions'
 import alertify from 'alertify.js'
+import swal from 'sweetalert'
 
 class Confirmation extends React.Component {
   async onClickHandler () {
     const { email, firstName, lastName, phone, gender, item } = this.props
-    const { brand, location, model, price, type } = item
+    const { brand, location, model, price, type, owner } = item
+    console.log(this.props)
     const toCheck = {
       firstName: document.getElementById(`firstName`).value,
       lastName: document.getElementById(`lastName`).value,
@@ -75,10 +76,39 @@ class Confirmation extends React.Component {
     setError(validator.isValid(name, value) === false, type)
   }
 
+  async isError () {
+    try {
+      const { owner } = this.props.item
+      const user = localStorage.getItem('user')
+      if (user && JSON.parse(user).uid === owner) {
+        const confirmation = swal('Error!', `You can't purchase your own vehicle`, 'error')
+        if (await confirmation) {
+          history.push('/Search')
+          return true
+        } else { // incase the user uses escape
+          history.push('/Search')
+          return true
+        }
+      }
+    } catch (e) {
+      const confirmation = swal('Error!', `No Item Selected`, 'error')
+      if (await confirmation) {
+        history.push('/Search')
+        return true
+      } else {
+        history.push('/Search')
+        return true
+      }
+    }
+    return false
+  }
+
   componentDidMount () {
     const { setSuccess } = this.props
-    this.initializeForm()
-    setSuccess()
+    if (!this.isError()) {
+      this.initializeForm()
+      setSuccess()
+    }
   }
 
   getColor (error) {
@@ -125,7 +155,7 @@ class Confirmation extends React.Component {
                 size='massive' transparent inverted error={lnError}
                 onKeyUp={() => this.onKeyPressHandler('lastName','GET_ERROR_LASTNAME')}/>
               <Divider/>
-              <Dropdown style={{fontSize: 20, background: 'transparent', color: this.getColor(genderError)}} id={`genderConfirm`} selection
+              <Dropdown style={{fontSize: 20, background: 'transparent', color: this.getColor(genderError)}} id='gender' selection
                 fluid options={options} placeholder={'Gender'} error={genderError}
                 onKeyUp={() => this.onKeyPressHandler('gender','GET_ERROR_GENDER')} />
               <Divider/>
