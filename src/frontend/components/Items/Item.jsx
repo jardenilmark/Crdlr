@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Modal, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
+import { TextArea, Input, Icon, Modal, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { storage } from '../../../backend/database'
 
@@ -19,15 +19,21 @@ class Item extends React.Component {
     const bool = itemModals[id].visibility
     return (
       <Modal trigger={<Button primary onClick={() => this.onClickHandler(true)}>CONTACT USER</Button>}
-        open={bool} onClose={() => this.onClickHandler(false)} size='small'>
-        <Header icon='browser' content='Cookies policy' />
+        open={bool} onClose={() => this.onClickHandler(false)} basic size='small'>
+        <Header textAlign='center'>Contact User</Header>
         <Modal.Content>
-          <h3>This website uses cookies to ensure the best user experience.</h3>
+          <Input fluid placeholder='First Name' />
+          <Divider />
+          <Input fluid placeholder='Last Name' />
+          <Divider />
+          <Input fluid placeholder='Gender' />
+          <Divider />
+          <Input fluid placeholder='Contact Number' />
+          <Divider />
+          <TextArea autoHeight style={{width: '100%'}} rows={5} placeholder='Message' />
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={() => this.onClickHandler(false)} inverted>
-            <Icon name='checkmark' /> Got it
-          </Button>
+          <Button fluid inverted>Confirm</Button>
         </Modal.Actions>
       </Modal>
     )

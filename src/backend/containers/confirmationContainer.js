@@ -5,11 +5,7 @@ import Confirmation from '../../frontend/components/Views/Confirmation'
 
 const mapStateToProps = (state) => {
   return {
-    firstName: state.user.firstName,
-    lastName: state.user.lastName,
-    gender: state.user.gender,
-    phone: state.user.phone,
-    email: state.user.email,
+    user: state.user.userInfo,
     fnError: state.error.fnError,
     lnError: state.error.lnError,
     emailError: state.error.emailError,

@@ -8,9 +8,7 @@ import swal from 'sweetalert'
 
 class Confirmation extends React.Component {
   async onClickHandler () {
-    const { email, firstName, lastName, phone, gender, item } = this.props
-    const { brand, location, model, price, type, owner } = item
-    console.log(this.props)
+    const { brand, location, model, price, type, owner } = this.props.item
     const toCheck = {
       firstName: document.getElementById(`firstName`).value,
       lastName: document.getElementById(`lastName`).value,
@@ -56,13 +54,16 @@ class Confirmation extends React.Component {
     }
   }
 
-  async initializeForm () {
-    const { getUsers } = this.props
-    const user = localStorage.getItem('user')
-    if (user) {
-      const parsedUser = JSON.parse(user)
-      await getUsers(parsedUser.uid, parsedUser.email)
-      this.autoFillForm()
+  async initialize () {
+    const { setSuccess, getUsers } = this.props
+    if (await this.isError() === false) {
+      const user = localStorage.getItem('user')
+      if (user) {
+        const parsedUser = JSON.parse(user)
+        await getUsers(parsedUser.uid, parsedUser.email)
+        this.autoFillForm()
+      }
+      setSuccess()
     }
   }
 
@@ -104,11 +105,7 @@ class Confirmation extends React.Component {
   }
 
   componentDidMount () {
-    const { setSuccess } = this.props
-    if (!this.isError()) {
-      this.initializeForm()
-      setSuccess()
-    }
+    this.initialize()
   }
 
   getColor (error) {
@@ -119,7 +116,7 @@ class Confirmation extends React.Component {
   }
 
   autoFillForm () {
-    const { email, lastName, firstName, phone, gender } = this.props
+    const { email, lastName, firstName, phone, gender } = this.props.user
     const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
     for (const key in values) {
       if (key === 'gender') {
@@ -132,6 +129,7 @@ class Confirmation extends React.Component {
   }
 
   render () {
+    console.log(this.props)
     const { fnError, lnError, emailError, passError,
       phoneError, genderError, creditCardError, addressError } = this.props
     const options = [
