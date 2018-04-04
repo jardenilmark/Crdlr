@@ -6,11 +6,10 @@ import alertify from 'alertify.js'
 
 class CarCreate extends React.Component {
   componentDidMount () {
-    const { fetchCarBrands, fetchCarTypes, setProgressBar, fetchLocations } = this.props
+    const { fetchCarBrands, fetchCarTypes, fetchLocations } = this.props
     fetchCarBrands()
     fetchCarTypes()
     fetchLocations()
-    setProgressBar(-1)
   }
 
   onChangeHandler (file) {

@@ -1,4 +1,11 @@
-export default function reducer (state = {}, action) {
+import history from '../history'
+
+const initialState = {
+  activeItem: history.location.pathname.slice(1),
+  progress: -1
+}
+
+export default function reducer (state = initialState, action) {
   if (action.type === 'GET_ITEM') {
     return {...state, activeItem: action.payload}
   } else if (action.type === 'GET_PROGRESS') {

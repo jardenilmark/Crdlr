@@ -5,7 +5,6 @@ import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Me
 class Search extends React.Component {
   async intialize () {
     const { setItemModalVisibility, setItemModals, getCars, updateLoader } = this.props
-    console.log(this.props)
     setTimeout(() => {
       updateLoader(true)
     }, 6000)
