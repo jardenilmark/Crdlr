@@ -4,6 +4,7 @@ import { getCollection, deleteCollection } from '../../firestoreActions'
 import { storage } from '../../../backend/database'
 import { Link } from 'react-router-dom'
 import { isUserError } from '../../errorHandler'
+import { getCollectionUID, addToDb } from '../../firestoreActions'
 import Mail from '../../../backend/containers/mailContainer'
 import swal from 'sweetalert'
 
@@ -37,7 +38,7 @@ class Inventory extends React.Component {
     }
   }
 
-  async onClickHandler (imageId, id) {
+  async onClickHandler (imageId, id, obj) {
     const { getCarsAdvertised } = this.props
     const option = swal(
       "Warning!",
@@ -48,10 +49,20 @@ class Inventory extends React.Component {
       const confirmation = swal("Advertisment has been cancelled!", {
         icon: "success"
       })
-      if (await confirmation) { // add cancellation transaction
+      if (await confirmation) {
+        const userUID = JSON.parse(localStorage.getItem('user')).uid
         await deleteCollection('cars', id)
         await storage.ref().child(`cars/${imageId}`).delete()
-        getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+        await getCarsAdvertised(userUID)
+        const user = await getCollectionUID('users', userUID)
+        const userData = user.data()
+        const transaction = {
+          ...userData,
+          fee: parseInt(obj.Price.slice(1)) * 0.02,
+          transactionDate: new Date(),
+          status: 'cancelled'
+        }
+        addToDb('transactions', transaction)
       }
     }
   }
@@ -104,7 +115,7 @@ class Inventory extends React.Component {
           const id = cars[num]['Id']
           toRender.push(
             <Table.Cell key={count++}>
-              <Popup trigger={<Icon color='red' name='close' size='large' onClick={() => this.onClickHandler(imageId, id)}/>}
+              <Popup trigger={<Icon color='red' name='close' size='large' onClick={() => this.onClickHandler(imageId, id, cars[num])}/>}
                 content='**Click on this icon to cancel advertisment'/>
             </Table.Cell>
           )

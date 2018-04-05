@@ -21,7 +21,7 @@ class Confirmation extends React.Component {
       address: document.getElementById(`address`).value
     }
     const sellerProfit = parseFloat(price.slice(1)) * 0.95
-    const advertFee = parseFloat(price.slice(1)) * 0.5
+    const advertFee = parseFloat(price.slice(1)) * 0.05
     let isAllValid = true
     const validator = new Validator()
     for (const key in toCheck) {
@@ -38,7 +38,8 @@ class Confirmation extends React.Component {
         price: sellerProfit,
         type: type,
         advertisementFee: advertFee,
-        transactionDate: new Date()
+        transactionDate: new Date(),
+        status: 'bought'
       }
       addToDb('transactions', obj)
       const cars = await getCollection('cars')
