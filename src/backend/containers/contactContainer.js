@@ -1,18 +1,15 @@
 import { connect } from 'react-redux'
 import { getUser } from '../actions/userAction'
 import { setError, setSuccess } from '../actions/errorAction'
-import Confirmation from '../../frontend/components/Views/Confirmation'
+import Contact from '../../frontend/components/Views/ContactView'
 
 const mapStateToProps = (state) => {
   return {
     user: state.user.userInfo,
     fnError: state.error.fnError,
     lnError: state.error.lnError,
-    emailError: state.error.emailError,
     phoneError: state.error.phoneError,
-    genderError: state.error.genderError,
-    creditCardError: state.error.creditCardError,
-    addressError: state.error.addressError
+    genderError: state.error.genderError
   }
 }
 
@@ -30,4 +27,4 @@ function mapDispatchToProps (dispatch) {
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Confirmation)
+export default connect(mapStateToProps, mapDispatchToProps)(Contact)

@@ -1,22 +1,14 @@
 import React from 'react'
-import Item from '../../../backend/containers/itemContainer'
+import Item from '../Items/Item'
 import { Dimmer, Loader, Container, Header, Dropdown, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
 
 class Search extends React.Component {
   async intialize () {
-    const { setItemModalVisibility, setItemModals, getCars, updateLoader } = this.props
+    const { getCars, updateLoader } = this.props
     setTimeout(() => {
       updateLoader(true)
     }, 6000)
     await getCars()
-    const arr = []
-    const { allCars } = this.props
-    allCars.forEach(e => {
-      arr.push({
-        visibility: false
-      })
-    })
-    setItemModals(arr)
   }
 
   componentDidMount () {
@@ -79,7 +71,7 @@ class Search extends React.Component {
   }
 
   renderItems () {
-    const { itemModals, allCars, filteredCars } = this.props
+    const { allCars, filteredCars } = this.props
     const toRenderArr = []
     let carArr = []
     let count = 0
@@ -88,12 +80,10 @@ class Search extends React.Component {
     } else if (allCars) {
       carArr = allCars
     }
-    if (itemModals) {
-      carArr.forEach(e => {
-        toRenderArr.push(<Item item={e} id={count} key={count}/>)
-        count++
-      })
-    }
+    carArr.forEach(e => {
+      toRenderArr.push(<Item item={e} id={count} key={count}/>)
+      count++
+    })
     return toRenderArr
   }
 
@@ -101,7 +91,7 @@ class Search extends React.Component {
     const { allCars } = this.props
     const dropdownArray = []
     for (const para of arr) {
-      const set = new Set()
+      const set = new Set() // so no duplicates
       allCars.forEach(obj => {
         const name = para.toLowerCase()
         set.add(obj[name])

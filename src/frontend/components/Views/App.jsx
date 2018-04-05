@@ -6,6 +6,7 @@ import CreateContainer from '../../../backend/containers/createContainer'
 import InventoryContainer from '../../../backend/containers/inventoryContainer'
 import TitleBar from '../../../backend/containers/titleBarContainer'
 import BodyListener from '../../../backend/containers/bodyContainer'
+import ContactView from '../../../backend/containers/contactContainer'
 import { Container } from 'semantic-ui-react'
 import { Route } from 'react-router-dom'
 import Purchase from './Purchase'
@@ -22,6 +23,7 @@ class Body extends React.Component {
           <Route exact path='/CarCreate' component={CreateContainer} />
           <Route exact path='/Purchase' component={Purchase} />
           <Route exact path='/Inventory' component={InventoryContainer} />
+          <Route exact path='/Contact' component={ContactView} />
         </BodyListener>
       </Container>
     )

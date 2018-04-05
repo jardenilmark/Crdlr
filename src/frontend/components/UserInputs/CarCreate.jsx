@@ -3,15 +3,22 @@ import { storage, auth } from '../../../backend/database'
 import { Modal, Progress, Input, Dropdown, Card, Image, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb } from '../../firestoreActions'
 import alertify from 'alertify.js'
+import swal from 'sweetalert'
+import { isUserError } from '../../errorHandler'
 
 class CarCreate extends React.Component {
   componentDidMount () {
-    const { fetchCarBrands, fetchCarTypes, fetchLocations } = this.props
-    fetchCarBrands()
-    fetchCarTypes()
-    fetchLocations()
+    this.initialize()
   }
 
+  async initialize () {
+    const { fetchCarBrands, fetchCarTypes, fetchLocations, history } = this.props
+    if (await isUserError(history)) {
+      fetchCarBrands()
+      fetchCarTypes()
+      fetchLocations()
+    }
+  }
   onChangeHandler (file) {
     const { setImageFile } = this.props
     setImageFile(file)

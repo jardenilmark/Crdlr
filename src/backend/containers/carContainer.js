@@ -1,14 +1,12 @@
 import { connect } from 'react-redux'
 import { fetchCars, updateList, updateLoader } from '../actions/carAction'
-import { setItemModals } from '../actions/itemAction'
 import Search from '../../frontend/components/Views/Search'
 
 function mapStateToProps (state) {
   return {
     allCars: state.cars.allCars,
     filteredCars: state.cars.filteredCars,
-    loader: state.cars.loader,
-    itemModals: state.item.itemModals
+    loader: state.cars.loader
   }
 }
 
@@ -22,9 +20,6 @@ function mapDispatchToProps (dispatch) {
     },
     updateLoader (loader) {
       dispatch(updateLoader(loader))
-    },
-    setItemModals (modals) {
-      dispatch(setItemModals(modals))
     }
   })
 }

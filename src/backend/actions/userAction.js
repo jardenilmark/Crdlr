@@ -7,7 +7,7 @@ export function setCurrentUser (name) {
   }
 }
 
-export function getUsers (uid, email) {
+export function getUser (uid, email) {
   return async (dispatch) => {
     const users = await getUserFromDB(uid, email)
     dispatch(getData('GET_USER_DB', users))

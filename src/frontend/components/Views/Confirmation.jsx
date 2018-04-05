@@ -1,10 +1,11 @@
 import React from 'react'
 import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } from 'semantic-ui-react'
 import history from '../../../backend/history'
-import Validator from '../../validator'
 import { addToDb, updateCollection, getCollection } from '../../firestoreActions'
+import { onKeyPressHandler, onChangeHandler, getColor, isError } from '../../errorHandler'
 import alertify from 'alertify.js'
 import swal from 'sweetalert'
+import Validator from '../../validator'
 
 class Confirmation extends React.Component {
   async onClickHandler () {
@@ -56,64 +57,23 @@ class Confirmation extends React.Component {
   }
 
   async initialize () {
-    const { setSuccess, getUsers } = this.props
-    if (await this.isError() === false) {
-      const user = localStorage.getItem('user')
-      if (user) {
-        const parsedUser = JSON.parse(user)
-        await getUsers(parsedUser.uid, parsedUser.email)
-        this.autoFillForm()
-      }
-      setSuccess()
-    }
-  }
-
-  onKeyPressHandler (name, type) {
-    const validator = new Validator()
-    const { setError } = this.props
-    let value = document.getElementById(name).value
-    if (name === 'gender') {
-      value = document.getElementById(name).innerText
-    }
-    setError(validator.isValid(name, value) === false, type)
-  }
-
-  async isError () {
+    const { setSuccess, getUser, history, item } = this.props
     try {
-      const { owner } = this.props.item
-      const user = localStorage.getItem('user')
-      if (user && JSON.parse(user).uid === owner) {
-        const confirmation = swal('Error!', `You can't purchase your own vehicle`, 'error')
-        if (await confirmation) {
-          history.push('/Search')
-          return true
-        } else { // incase the user uses escape
-          history.push('/Search')
-          return true
-        }
-      }
-    } catch (e) {
-      const confirmation = swal('Error!', `No Item Selected`, 'error')
-      if (await confirmation) {
-        history.push('/Search')
-        return true
-      } else {
-        history.push('/Search')
-        return true
-      }
+      const { owner } = item
+      const message = `You can't purchase your own vehicle`
+      if (await isError(owner, message) === false) {
+      const parsedUser = JSON.parse(localStorage.getItem('user'))
+      await getUser(parsedUser.uid, parsedUser.email)
+      this.autoFillForm()
     }
-    return false
+    } catch (e) {
+      // do nothing
+    }
+    setSuccess()
   }
 
   componentDidMount () {
     this.initialize()
-  }
-
-  getColor (error) {
-    if (error) {
-      return 'red'
-    } 
-    return 'white'
   }
 
   autoFillForm () {
@@ -130,9 +90,8 @@ class Confirmation extends React.Component {
   }
 
   render () {
-    console.log(this.props)
-    const { fnError, lnError, emailError, passError,
-      phoneError, genderError, creditCardError, addressError } = this.props
+    const { fnError, lnError, emailError, phoneError,
+      genderError, creditCardError, addressError, setError } = this.props
     const options = [
       { key: 'm', text: 'Male', value: 'male' },
       { key: 'f', text: 'Female', value: 'female' }
@@ -147,32 +106,32 @@ class Confirmation extends React.Component {
               </Segment>
               <Divider/>
               <Input id='firstName' fluid placeholder='firstName'
-                size='massive' transparent inverted error={fnError} style={{color: this.getColor(fnError)}}
-                onKeyUp={() => this.onKeyPressHandler('firstName', 'GET_ERROR_FIRSTNAME')}/>
+                size='massive' transparent inverted style={{color: getColor(fnError)}}
+                onKeyUp={() => onKeyPressHandler('firstName', 'GET_ERROR_FIRSTNAME', setError)}/>
               <Divider/>
-              <Input id='lastName' fluid placeholder='LastName' style={{color: this.getColor(lnError)}}
-                size='massive' transparent inverted error={lnError}
-                onKeyUp={() => this.onKeyPressHandler('lastName','GET_ERROR_LASTNAME')}/>
+              <Input id='lastName' fluid placeholder='LastName' style={{color: getColor(lnError)}}
+                size='massive' transparent inverted
+                onKeyUp={() => onKeyPressHandler('lastName','GET_ERROR_LASTNAME', setError)}/>
               <Divider/>
-              <Dropdown style={{fontSize: 20, background: 'transparent', color: this.getColor(genderError)}} id='gender' selection
-                fluid options={options} placeholder={'Gender'} error={genderError}
-                onKeyUp={() => this.onKeyPressHandler('gender','GET_ERROR_GENDER')} />
+              <Dropdown style={{fontSize: 20, background: 'transparent', color: getColor(genderError)}} id='gender' selection
+                fluid options={options} placeholder={'Gender'}
+                onChange={() => onChangeHandler('gender','GET_ERROR_GENDER', setError)} />
               <Divider/>
               <Input id='email' fluid icon='user' iconPosition='left' placeholder='Email-Address'
-                size='massive' transparent inverted error={emailError} style={{color: this.getColor(emailError)}}
-                onKeyUp={() => this.onKeyPressHandler('email', 'GET_ERROR_EMAIL')}/>
+                size='massive' transparent inverted style={{color: getColor(emailError)}}
+                onKeyUp={() => onKeyPressHandler('email', 'GET_ERROR_EMAIL', setError)}/>
               <Divider/>
               <Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' transparent inverted
-                size='massive' type='number' min={0} max={99999999999} error={phoneError} style={{color: this.getColor(phoneError)}}
-                onKeyUp={() => this.onKeyPressHandler('phone', 'GET_ERROR_PHONE')}/>
+                size='massive' type='number' min={0} max={99999999999} style={{color: getColor(phoneError)}}
+                onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
               <Divider/>
               <Input id='address' fluid icon='home' iconPosition='left' placeholder='Home Address' 
-                size='massive' transparent inverted error={addressError} style={{color: this.getColor(addressError)}}
-                onKeyUp={() => this.onKeyPressHandler('address', 'GET_ERROR_ADDRESS')}/>
+                size='massive' transparent inverted style={{color: getColor(addressError)}}
+                onKeyUp={() => onKeyPressHandler('address', 'GET_ERROR_ADDRESS', setError)}/>
               <Divider/>
               <Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number' 
-                size='massive' transparent inverted error={creditCardError} style={{color: this.getColor(creditCardError)}}
-                onKeyUp={() => this.onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD')}/>
+                size='massive' transparent inverted style={{color: getColor(creditCardError)}}
+                onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/>
               <Divider/>
               <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
             </Segment>

@@ -3,6 +3,7 @@ import { Label, Popup, Header, Icon, Table, Image, Container, Button } from 'sem
 import { getCollection, deleteCollection } from '../../firestoreActions'
 import { storage } from '../../../backend/database'
 import { Link } from 'react-router-dom'
+import { isUserError } from '../../errorHandler'
 import Mail from '../../../backend/containers/mailContainer'
 import swal from 'sweetalert'
 
@@ -12,9 +13,11 @@ class Inventory extends React.Component {
   }
 
   async initialize () {
-    const { getCarsAdvertised } = this.props
-    await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
-    this.setModalArr()
+    const { getCarsAdvertised, history } = this.props
+    if (await isUserError(history)) {
+      await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+      this.setModalArr()
+    }
   }
 
   getHeaders () {
@@ -36,13 +39,11 @@ class Inventory extends React.Component {
 
   async onClickHandler (imageId, id) {
     const { getCarsAdvertised } = this.props
-    const option = swal({
-      title: "Warning!",
-      text: "You will be charged a 2% cancellation fee if you wish to continue",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true
-    })
+    const option = swal(
+      "Warning!",
+      "You will be charged a 2% cancellation fee if you wish to continue",
+      "warning"
+    )
     if (await option) {
       const confirmation = swal("Advertisment has been cancelled!", {
         icon: "success"
