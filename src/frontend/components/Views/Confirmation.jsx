@@ -3,6 +3,7 @@ import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } fr
 import history from '../../../backend/history'
 import { addToDb, updateCollection, getCollection } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler, getColor, isError } from '../../errorHandler'
+import { getDocumentValues } from '../../documentHandler'
 import alertify from 'alertify.js'
 import swal from 'sweetalert'
 import Validator from '../../validator'
@@ -11,19 +12,10 @@ class Confirmation extends React.Component {
   async onClickHandler () {
     const { item } = this.props
     const { brand, location, model, price, type, owner } = item
-    const toCheck = {
-      firstName: document.getElementById(`firstName`).value,
-      lastName: document.getElementById(`lastName`).value,
-      email: document.getElementById(`email`).value,
-      phone: document.getElementById(`phone`).value,
-      gender: document.getElementById(`gender`).innerText,
-      creditCard: document.getElementById(`creditCard`).value,
-      address: document.getElementById(`address`).value
-    }
-    const sellerProfit = parseFloat(price.slice(1)) * 0.95
-    const advertFee = parseFloat(price.slice(1)) * 0.05
-    let isAllValid = true
+    const  arr = ['firstName', 'lastName', 'email', 'phone', 'gender', 'creditCard', 'address']
+    const toCheck = getDocumentValues(arr)
     const validator = new Validator()
+    let isAllValid = true
     for (const key in toCheck) {
       if (!validator.isValid(key, toCheck[key])) {
         isAllValid = false
@@ -35,25 +27,22 @@ class Confirmation extends React.Component {
         brand: brand,
         location: location,
         carModel: model,
-        price: sellerProfit,
         type: type,
-        advertisementFee: advertFee,
+        price: parseFloat(price.slice(1)) * 0.95,
+        advertisementFee: parseFloat(price.slice(1)) * 0.05,
         transactionDate: new Date(),
         status: 'bought'
       }
       addToDb('transactions', obj)
       const cars = await getCollection('cars')
-      let id
       for (let i = 0; i < cars.docs.length; i++) {
-        let bool = true
         const data = cars.docs[i].data()
         if (JSON.stringify(data) === JSON.stringify(item)) {
-          id = cars.docs[i].id
+          updateCollection('cars', cars.docs[i].id, { available: false })
+          alertify.success(`Transaction Completed`, 3)
+          history.push('/Search')
         }
       }
-      updateCollection('cars', id, { available: false })
-      alertify.success(`Transaction Completed`, 3)
-      history.push('/Search')
     }
   }
 
@@ -81,7 +70,7 @@ class Confirmation extends React.Component {
     const { email, lastName, firstName, phone, gender } = this.props.user
     const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
     for (const key in values) {
-      if (key === 'gender') {
+      if (document.getElementById(key).className.includes('dropdown')) {
         document.getElementById(key).innerText = values[key]
       } else {
         document.getElementById(key).value = values[key]
@@ -91,12 +80,8 @@ class Confirmation extends React.Component {
   }
 
   render () {
-    const { fnError, lnError, emailError, phoneError,
+    const { fnError, lnError, emailError, phoneError, genderOptions,
       genderError, creditCardError, addressError, setError } = this.props
-    const options = [
-      { key: 'm', text: 'Male', value: 'male' },
-      { key: 'f', text: 'Female', value: 'female' }
-    ]
     return (
       <Container fluid style={{paddingTop: 20}}>
         <Grid textAlign='center' verticalAlign='middle'>
@@ -115,7 +100,7 @@ class Confirmation extends React.Component {
                 onKeyUp={() => onKeyPressHandler('lastName','GET_ERROR_LASTNAME', setError)}/>
               <Divider/>
               <Dropdown style={{fontSize: 20, background: 'transparent', color: getColor(genderError)}} id='gender' selection
-                fluid options={options} placeholder={'Gender'}
+                fluid options={genderOptions} placeholder={'Gender'}
                 onChange={() => onChangeHandler('gender','GET_ERROR_GENDER', setError)} />
               <Divider/>
               <Input id='email' fluid icon='user' iconPosition='left' placeholder='Email-Address'

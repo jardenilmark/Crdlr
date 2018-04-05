@@ -1,4 +1,10 @@
-export default function reducer (state = {}, action) {
+const initialState = {
+  brands: [],
+  types: [],
+  advertisedCars: []
+}
+
+export default function reducer (state = initialState, action) {
   if (action.type === 'GET_CARS') {
     return {...state, allCars: action.payload}
   } else if (action.type === 'GET_FILTERED') {

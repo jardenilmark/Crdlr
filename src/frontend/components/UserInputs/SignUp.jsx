@@ -2,32 +2,36 @@ import React from 'react'
 import { Container, Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
 import { setCollection } from '../../firestoreActions'
-import swal from 'sweetalert'
-import { Link } from 'react-router-dom'
-import history from '../../../backend/history'
 import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'
+import { getDocumentValues } from '../../documentHandler'
+import { Link } from 'react-router-dom'
+import swal from 'sweetalert'
+import history from '../../../backend/history'
 import Validator from '../../validator' 
 
 class SignUp extends React.Component {
+  addAction () {
+    const { setCurrentUser } = this.props
+    localStorage.setItem('user', JSON.stringify(auth.currentUser))
+    setCurrentUser(auth.currentUser)
+    history.push('/')
+  }
+
   async addUser () {
-    const { setError, setCurrentUser } = this.props
+    const { setError } = this.props
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
-    const user = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      gender: document.getElementById('gender').firstChild.innerText,
-      phone: document.getElementById('phone').value
-    }
-    let isAllValid = true
+    const userArr = ['firstName', 'lastName', 'gender', 'phone']
+    const user = getDocumentValues(userArr)
     const validator = new Validator()
-    for (const key in user) {
-      if (!validator.isValid(key, user[key])) {
+    const toCheck =  {...user, email: email, pass: pass}
+    let isAllValid = true
+    for (const key in toCheck) {
+      console.log(key, toCheck[key])
+      console.log(validator.isValid(key, toCheck[key]))
+      if (!validator.isValid(key, toCheck[key])) {
         isAllValid = false
       }
-    }
-    if (!validator.isValid('email', email) || !validator.isValid('pass', pass)) {
-      isAllValid = false
     }
     if (isAllValid) {
       try {
@@ -36,13 +40,9 @@ class SignUp extends React.Component {
         setCollection('users', id, user)
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
-          localStorage.setItem('user', JSON.stringify(auth.currentUser))
-          setCurrentUser(auth.currentUser)
-          history.push('/')
+          this.addAction()
         } else { // incase the user uses escape
-          localStorage.setItem('user', JSON.stringify(auth.currentUser))
-          setCurrentUser(auth.currentUser)
-          history.push('/')
+          this.addAction()
         }
       } catch (e) {
         setError(true, 'GET_ERROR_EMAIL')
@@ -58,11 +58,7 @@ class SignUp extends React.Component {
   }
 
   render () {
-    const options = [
-      { key: 'm', text: 'Male', value: 'male' },
-      { key: 'f', text: 'Female', value: 'female' }
-    ]
-    const { fnError, lnError, emailError, passError, phoneError, genderError, setError } = this.props
+    const { fnError, lnError, emailError, passError, phoneError, genderError, setError, genderOptions } = this.props
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../images/c.png')})`}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
@@ -82,7 +78,7 @@ class SignUp extends React.Component {
                   onKeyUp={() => onKeyPressHandler('pass', 'GET_ERROR_PASS', setError)}/>
                 <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}
                   onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
-                <Form.Select id='gender' fluid options={options} placeholder='Gender' error={genderError}
+                <Form.Select id='gender' fluid options={genderOptions} placeholder='Gender' error={genderError}
                   onChange={() => onChangeHandler('gender', 'GET_ERROR_GENDER', setError)}/>
                 <Button color='black' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>
               </Segment>

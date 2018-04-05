@@ -5,6 +5,7 @@ import { storage } from '../../../backend/database'
 import { Link } from 'react-router-dom'
 import { isUserError } from '../../errorHandler'
 import { getCollectionUID, addToDb } from '../../firestoreActions'
+import { loadImage } from '../../documentHandler'
 import Mail from '../../../backend/containers/mailContainer'
 import swal from 'sweetalert'
 
@@ -18,23 +19,6 @@ class Inventory extends React.Component {
     if (await isUserError(history)) {
       await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
       this.setModalArr()
-    }
-  }
-
-  getHeaders () {
-    const { cars } = this.props
-    if (cars && cars.length > 0) {
-      const toRender = []
-      let count = 0
-      toRender.push(<Table.HeaderCell key={count++}/>)
-      for (const key in cars[0]) {
-        if (key !== 'ImageId' && key !== 'Id' && key !== 'peopleInterested') {
-          toRender.push(<Table.HeaderCell key={count++}>{key}</Table.HeaderCell>)
-        } else if (key === 'peopleInterested') {
-          toRender.push(<Table.HeaderCell key={count++}>Interested Buyers</Table.HeaderCell>)
-        }
-      }
-      return toRender
     }
   }
 
@@ -67,16 +51,26 @@ class Inventory extends React.Component {
     }
   }
 
-  async loadImage (id, imageId) {
-    const url = await storage.ref().child(`cars/${imageId}`).getDownloadURL()
-    const imgURL = document.getElementById(id)
-    if (imgURL) {
-      imgURL.src = url
+  getHeaders () {
+    const { cars } = this.props
+    if (cars && cars.length > 0) {
+      const toRender = []
+      let count = 0
+      toRender.push(<Table.HeaderCell key={count++}/>)
+      for (const key in cars[0]) {
+        if (key !== 'ImageId' && key !== 'Id' && key !== 'peopleInterested') {
+          toRender.push(<Table.HeaderCell key={count++}>{key}</Table.HeaderCell>)
+        } else if (key === 'peopleInterested') {
+          toRender.push(<Table.HeaderCell key={count++}>Interested Buyers</Table.HeaderCell>)
+        }
+      }
+      return toRender
     }
   }
 
-  getRowSubContents (key, obj, count, num) {
-    const { peopleModals } = this.props
+  getRowSubContents (key, count, num) {
+    const { peopleModals, cars } = this.props
+    const obj = cars[num][key]
     if (key !== 'ImageId' && key !== 'Id' && key !== 'peopleInterested') {
       return(<Table.Cell key={count}>{obj}</Table.Cell>)
     } else if (key === 'peopleInterested') {
@@ -105,22 +99,21 @@ class Inventory extends React.Component {
       let count = 0
       const imageKey = `${count}${cars[num]['ImageId']}`
       const child = `${cars[num]['ImageId']}`
-      toRender.push(<Table.Cell key={count++}><Image id={imageKey} rounded size='small' src={this.loadImage(imageKey, child)}/></Table.Cell>)
+      toRender.push(<Table.Cell key={count++}><Image id={imageKey} rounded size='small' src={loadImage(imageKey, child)}/></Table.Cell>)
       for (const key in cars[num]) {
         const obj = cars[num][key]
         if (obj === true) {
           toRender.push(<Table.Cell key={count++}><Icon color='green' name='checkmark' size='large' /></Table.Cell>)
         } else if (obj === false) {
-          const imageId = cars[num]['ImageId']
-          const id = cars[num]['Id']
           toRender.push(
             <Table.Cell key={count++}>
-              <Popup trigger={<Icon color='red' name='close' size='large' onClick={() => this.onClickHandler(imageId, id, cars[num])}/>}
+              <Popup trigger={<Icon color='red' name='close' size='large'
+                onClick={() => this.onClickHandler(cars[num]['ImageId'], cars[num]['Id'], cars[num])}/>}
                 content='**Click on this icon to cancel advertisment'/>
             </Table.Cell>
           )
         } else {
-          toRender.push(this.getRowSubContents(key, obj, count, num))
+          toRender.push(this.getRowSubContents(key, count, num))
           count++
         }
       }
@@ -175,18 +168,16 @@ class Inventory extends React.Component {
   setModalArr () {
     const { setPeopleModals, cars } = this.props
     const arr = []
-    if (cars) {
-      cars.forEach(e => {
-        for (const key in e) {
-          if (key === 'peopleInterested') {
-            arr.push({
-              modalVisibility: false
-            })
-          }
+    cars.forEach(e => {
+      for (const key in e) {
+        if (key === 'peopleInterested') {
+          arr.push({
+            modalVisibility: false
+          })
         }
-      })
-      setPeopleModals(arr)
-    }
+      }
+    })
+    setPeopleModals(arr)
   }
 
   render () {

@@ -1,10 +1,11 @@
 import React from 'react'
-import { storage, auth } from '../../../backend/database'
+import { storage } from '../../../backend/database'
 import { Modal, Progress, Input, Dropdown, Card, Image, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb } from '../../firestoreActions'
+import { getDocumentValues } from '../../documentHandler'
+import { isUserError } from '../../errorHandler'
 import alertify from 'alertify.js'
 import swal from 'sweetalert'
-import { isUserError } from '../../errorHandler'
 
 class CarCreate extends React.Component {
   componentDidMount () {
@@ -12,11 +13,12 @@ class CarCreate extends React.Component {
   }
 
   async initialize () {
-    const { fetchCarBrands, fetchCarTypes, fetchLocations, history } = this.props
+    const { setProgressBar, fetchCarBrands, fetchCarTypes, fetchLocations, history } = this.props
     if (await isUserError(history)) {
       fetchCarBrands()
       fetchCarTypes()
       fetchLocations()
+      setProgressBar(-1)
     }
   }
   onChangeHandler (file) {
@@ -40,26 +42,21 @@ class CarCreate extends React.Component {
 
   onClickHandler (id) {
     const { file, setProgressBar, progress } = this.props
+    const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
     const car = {
+      ...getDocumentValues(dropArr),
       available: true,
-      brand: document.getElementById('carBrand').innerText,
       image: id,
-      location: document.getElementById('carLocation').innerText,
-      model: document.getElementById('carModel').value,
-      price: `$${document.getElementById('carPrice').value}`,
-      type: document.getElementById('carType').innerText,
-      details: document.getElementById('carDesc').value,
-      owner: auth.currentUser.uid,
+      owner: JSON.parse(localStorage.getItem('user')).uid,
       peopleInterested: []
     }
     let isAllValid = true
     for (const key in car) {
-      if ((!car[key] && key !== 'details') || car[key] === 'Brand' || car[key] === 'Location' || car[key] === 'Type') {
+      if ((!car[key] && key !== 'details') || car[key] === 'Brand' 
+        || car[key] === 'Location' || car[key] === 'Type' || !file) {
         isAllValid = false
+        break
       }
-    }
-    if (!file) {
-      isAllValid = false
     }
     if (isAllValid && (progress === -1 || progress === 100)) {
       storage.ref(`cars/${id}`).put(file).on('state_changed', (snapshot) => {
@@ -74,16 +71,9 @@ class CarCreate extends React.Component {
   }
 
   render () {
+    console.log(this.props)
     const picId = this.generateRandomPicId()
     const { brands, types, locations, progress } = this.props
-    let carBrands = []
-    let carTypes = []
-    let locationOptions = []
-    if (brands && types && locations) {
-      carBrands = brands
-      carTypes = types
-      locationOptions = locations
-    }
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../images/d.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}}>
         <Grid textAlign='center' verticalAlign='middle' style={{ paddingTop: '7%' }}>
@@ -92,17 +82,17 @@ class CarCreate extends React.Component {
               {this.showProgressBar()}
               <Form>
                 <Form.Group>
-                  <Form.Input id='carModel' placeholder='Car Model' width={12}/>
-                  <Form.Input id='carPrice' placeholder='Price' type='number' width={6}/>
+                  <Form.Input id='model' placeholder='Car Model' width={12}/>
+                  <Form.Input id='price' placeholder='Price' type='number' width={6}/>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Dropdown id='carBrand' selection placeholder='Brand' options={carBrands} width={8}/>
-                  <Form.Dropdown id='carType' selection placeholder='Type' options={carTypes} width={8}/>
+                  <Form.Dropdown id='brand' selection placeholder='Brand' options={brands} width={8}/>
+                  <Form.Dropdown id='type' selection placeholder='Type' options={types} width={8}/>
                 </Form.Group>
-                <Form.Dropdown id='carLocation' selection placeholder='Location' options={locationOptions}/>
+                <Form.Dropdown id='location' selection placeholder='Location' options={locations}/>
               </Form>
               <Input type='file' onChange={ (e) => this.onChangeHandler(e.target.files[0], picId) } />
-              <Form.TextArea id='carDesc' placeholder='Additional Details' style={{marginTop: 20, width: '100%', height: '10%'}} />
+              <Form.TextArea id='desc' placeholder='Additional Details' style={{marginTop: 20, width: '100%', height: '10%'}} />
               <div style={{textAlign: 'left', paddingBottom: 10, paddingTop: 10}}>
                 <Form.Checkbox label='I agree to the Terms and Conditions' />
               </div>

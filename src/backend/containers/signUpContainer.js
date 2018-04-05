@@ -10,7 +10,8 @@ function mapStateToProps (state) {
     emailError: state.error.emailError,
     passError: state.error.passError,
     phoneError: state.error.phoneError,
-    genderError: state.error.genderError
+    genderError: state.error.genderError,
+    genderOptions: state.user.genderOptions
   }
 }
 

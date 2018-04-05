@@ -8,7 +8,7 @@ class ContactView extends React.Component {
     const { lastName, firstName, phone, gender } = this.props.user
     const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
     for (const key in values) {
-      if (key === 'gender') {
+      if (document.getElementById(key).className.includes('dropdown')) {
         document.getElementById(key).innerText = values[key]
       } else {
         document.getElementById(key).value = values[key]
@@ -38,11 +38,7 @@ class ContactView extends React.Component {
   }
 
   render () {
-    const { setError, fnError, lnError, genderError, phoneError } = this.props
-    const options = [
-      { key: 'm', text: 'Male', value: 'male' },
-      { key: 'f', text: 'Female', value: 'female' }
-    ]
+    const { setError, fnError, lnError, genderError, phoneError, genderOptions } = this.props
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../images/e.jpg')})`}}>
         <Modal open basic size='small' style={{top: '45%'}}>
@@ -62,7 +58,7 @@ class ContactView extends React.Component {
                 onKeyUp={() => onKeyPressHandler('lastName', 'GET_ERROR_LASTNAME', setError)} />
               <Divider />
               <Dropdown style={{ background: 'transparent', color: getColor(genderError)}} id='gender' selection
-                fluid options={options} placeholder={'Gender'}
+                fluid options={genderOptions} placeholder={'Gender'}
                 onChange={() => onChangeHandler('gender','GET_ERROR_GENDER', setError)} />
               <Divider />
               <Input fluid id='phone' placeholder='Contact Number' inverted transparent style={{color: getColor(phoneError)}}

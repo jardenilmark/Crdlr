@@ -1,5 +1,9 @@
 const initialeState = {
-  currentUser: localStorage.getItem('user')
+  currentUser: localStorage.getItem('user'),
+  genderOptions: [
+    { key: 'm', text: 'Male', value: 'male' },
+    { key: 'f', text: 'Female', value: 'female' }
+  ]
 }
 
 export default function reducer (state = initialeState, action) {

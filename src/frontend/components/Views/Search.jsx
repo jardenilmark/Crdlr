@@ -17,19 +17,18 @@ class Search extends React.Component {
 
   getFilteredList (arr) {
     const selections = document.querySelectorAll('div.ui.search.selection.dropdown > div.text')
+    const { allCars, updateCarList } = this.props
+    const updatedList = []
     let data = {}
     let count = 0
     selections.forEach(a => {
       if (a.className !== 'default text') {
-        const holder = arr[count++].toLowerCase()
-        data[holder] = a.innerHTML
-      } else {
-        count++
+        const holder = arr[count].toLowerCase()
+        data[holder] = a.innerText
       }
+      count++
     })
     if (data.length !== 0) {
-      const { allCars, updateCarList } = this.props
-      const arr = []
       allCars.forEach(elem => {
         let isQualified = true
         for (const key in data) {
@@ -40,10 +39,10 @@ class Search extends React.Component {
           }
         }
         if (isQualified) {
-          arr.push(elem)
+          updatedList.push(elem)
         }
       })
-      updateCarList(arr)
+      updateCarList(updatedList)
     }
   }
 
@@ -99,13 +98,13 @@ class Search extends React.Component {
       const valueArr = []
       let count = 0
       for (const item of set) {
-        let a
+        let val
         if (typeof (item) === 'string') {
-          a = item
+          val = item
         } else {
-          a = count++
+          val = count++
         }
-        valueArr.push({key: a, value: a, text: item})
+        valueArr.push({key: val, value: val, text: item})
       }
       dropdownArray.push(valueArr)
     }

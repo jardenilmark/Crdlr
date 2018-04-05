@@ -9,7 +9,8 @@ const mapStateToProps = (state) => {
     fnError: state.error.fnError,
     lnError: state.error.lnError,
     phoneError: state.error.phoneError,
-    genderError: state.error.genderError
+    genderError: state.error.genderError,
+    genderOptions: state.user.genderOptions
   }
 }
 

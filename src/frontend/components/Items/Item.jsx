@@ -2,21 +2,12 @@ import React from 'react'
 import ContactView from '../Views/ContactView'
 import { TextArea, Input, Icon, Modal, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { storage } from '../../../backend/database'
+import { loadImage } from '../../documentHandler'
 
 class Item extends React.Component {
-  async loadImage (imageId) {
-    const { id } = this.props
-    const { image, model, location } = this.props.item
-    const url = await storage.ref().child(`cars/${image}`).getDownloadURL()
-    const imgURL = document.getElementById(imageId)
-    if (imgURL) {
-      imgURL.src = url
-    }
-  }
-
   render () {
     const { item, id } = this.props
+    const { image } = item
     const imageId = `img${item.model}${item.location}${id}`
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
@@ -27,7 +18,7 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image verticalAlign='middle' id={imageId} style={{height: 250}} src={this.loadImage(imageId)}/>
+          <Image verticalAlign='middle' id={imageId} style={{height: 250}} src={loadImage(imageId, image)}/>
           <Divider/>
           <Header size='medium' textAlign='center'>
             {item.price}

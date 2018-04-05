@@ -13,9 +13,6 @@ describe('<Item />', () => {
   it('renders <Item>', () => {
     expect(wrapper).toHaveLength(1)
   })
-  it('lets load image not return anything', async () => {
-    expect(await wrapper.instance().loadImage()).toBeUndefined()
-  })
   it('renders <Image>', async () => {
     expect(wrapper.find(Image)).toHaveLength(1)
   })

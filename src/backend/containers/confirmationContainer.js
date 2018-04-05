@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
     phoneError: state.error.phoneError,
     genderError: state.error.genderError,
     creditCardError: state.error.creditCardError,
-    addressError: state.error.addressError
+    addressError: state.error.addressError,
+    genderOptions: state.user.genderOptions
   }
 }
 
