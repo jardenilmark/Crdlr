@@ -21,7 +21,7 @@ class Item extends React.Component {
           <Image verticalAlign='middle' id={imageId} style={{height: 250}} src={loadImage(imageId, image)}/>
           <Divider/>
           <Header size='medium' textAlign='center'>
-            {item.price}
+            P{item.price}
           </Header>
           <Button.Group widths='3' size='small'>
             <Button as={Link} to={{pathname: '/Contact', state: {owner: item.owner, image: item.image}}} primary>

@@ -27,8 +27,8 @@ class Confirmation extends React.Component {
         location: location,
         carModel: model,
         type: type,
-        price: parseFloat(price.slice(1)) * 0.98,
-        advertisementFee: parseFloat(price.slice(1)) * 0.02,
+        price: parseFloat(price) * 0.98,
+        advertisementFee: parseFloat(price) * 0.02,
         transactionDate: new Date(),
         status: 'bought'
       }

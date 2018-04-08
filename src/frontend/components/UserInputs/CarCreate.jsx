@@ -84,7 +84,7 @@ class CarCreate extends React.Component {
               <Form>
                 <Form.Group>
                   <Form.Input id='model' placeholder='Car Model' width={12}/>
-                  <Form.Input id='price' placeholder='Price' type='number' width={6}/>
+                  <Form.Input id='price' placeholder='Price in php' type='number' width={6}/>
                 </Form.Group>
                 <Form.Group>
                   <Form.Dropdown id='brand' selection placeholder='Brand' options={brands} width={8}/>
