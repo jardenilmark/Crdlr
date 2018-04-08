@@ -9,7 +9,7 @@ class Validator {
       return value.length > 6 && value.length < 12 && /[^a-zA-Z0-9]/g.test(value) === false
     } else if (name === 'firstName' || name === 'lastName') {
       return /[^a-zA-Z]/g.test(value) === false
-    } else if (name === 'address') {
+    } else if (name === 'address' || name === 'message') {
       return /[^a-zA-Z0-9\s]/g.test(value) === false
     } else if (name === 'gender') {
       return value === 'Male' || value === 'Female'

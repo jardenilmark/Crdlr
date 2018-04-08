@@ -2,6 +2,7 @@ import React from 'react'
 import { Header, Modal, Card, Image, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { storage } from '../../../backend/database'
+import { getCollectionUID, updateCollection } from '../../firestoreActions'
 import history from '../../../backend/history'
 
 class Mail extends React.Component {
@@ -18,11 +19,12 @@ class Mail extends React.Component {
       let count = 0
       obj.forEach(elem => {
         let imageSrc = '../../images/male.jpg'
+        const innerCount = count
         if (elem.gender === 'Female') {
           imageSrc = '../../images/female.png'
         }
         toRender.push(
-          <Card key={count++}>
+          <Card key={innerCount}>
             <Card.Content>
               <Image floated='right' size='mini' src={require('../../images/male.jpg')} />
               <Card.Header>
@@ -33,19 +35,31 @@ class Mail extends React.Component {
               </Card.Meta>
               <Card.Description>
                 {elem.message}<br/>
-                Contact Number: {elem.contactNumber}
+                Contact Number: {elem.phone}
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <Button fluid basic color='green'>Set Date</Button>
+              <Button onClick={() => this.onClickHandler(innerCount)}
+                fluid basic color='green'>MARKED AS READ</Button>
             </Card.Content>
           </Card>
-        ) // add set date
+        )
+        count++
       })
       return toRender
     } catch (e) {
       return null
     }
+  }
+
+  async onClickHandler (count) {
+    const { obj, setPeopleModalVisibility, id, getCarsAdvertised, arrayId } = this.props
+    const people = await getCollectionUID('peopleInterested', arrayId)
+    const peopleData = people.data().people
+    peopleData.splice(count, 1)
+    await updateCollection('peopleInterested', arrayId, {people: peopleData})
+    await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+    setPeopleModalVisibility(id, {visibility: false})
   }
 
   render () {

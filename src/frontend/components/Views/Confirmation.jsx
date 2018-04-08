@@ -5,7 +5,6 @@ import { addToDb, updateCollection, getCollection } from '../../firestoreActions
 import { onKeyPressHandler, onChangeHandler, getColor, isError } from '../../errorHandler'
 import { getDocumentValues } from '../../documentHandler'
 import alertify from 'alertify.js'
-import swal from 'sweetalert'
 import Validator from '../../validator'
 
 class Confirmation extends React.Component {
@@ -28,8 +27,8 @@ class Confirmation extends React.Component {
         location: location,
         carModel: model,
         type: type,
-        price: parseFloat(price.slice(1)) * 0.95,
-        advertisementFee: parseFloat(price.slice(1)) * 0.05,
+        price: parseFloat(price.slice(1)) * 0.98,
+        advertisementFee: parseFloat(price.slice(1)) * 0.02,
         transactionDate: new Date(),
         status: 'bought'
       }

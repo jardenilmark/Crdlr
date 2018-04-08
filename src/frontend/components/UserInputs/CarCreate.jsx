@@ -40,15 +40,16 @@ class CarCreate extends React.Component {
     }
   }
 
-  onClickHandler (id) {
+  async onClickHandler (id) {
     const { file, setProgressBar, progress } = this.props
     const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
+    const db = await addToDb('peopleInterested', {people: []})
     const car = {
       ...getDocumentValues(dropArr),
       available: true,
       image: id,
       owner: JSON.parse(localStorage.getItem('user')).uid,
-      peopleInterested: []
+      peopleInterested: db.id
     }
     let isAllValid = true
     for (const key in car) {

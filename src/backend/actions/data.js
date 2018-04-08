@@ -29,3 +29,11 @@ export async function fetchFromDbFilter (name, field, data, isIdIncluded) {
   })
   return arr
 }
+
+export async function fetchFromDbDoc (name, id) {
+  const doc = await firestore.collection(name).doc(id).get()
+  if (doc.exists) {
+    return doc.data()
+  }
+  return null
+}

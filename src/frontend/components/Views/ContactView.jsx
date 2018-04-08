@@ -2,6 +2,11 @@ import React from 'react'
 import { Modal, Divider, Input, Button, Header, TextArea, Icon, Container, Segment, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { onKeyPressHandler, onChangeHandler, getColor, isError } from '../../errorHandler'
+import { getDocumentValues } from '../../documentHandler'
+import { getCollection, updateCollection, getCollectionUID } from '../../firestoreActions'
+import swal from 'sweetalert'
+import Validator from '../../validator' 
+import alertify from 'alertify.js'
 
 class ContactView extends React.Component {
   autoFillForm () {
@@ -20,7 +25,7 @@ class ContactView extends React.Component {
   async initialize () {
     const { setSuccess, getUser, history } = this.props
     try {
-      const { owner } = history.location.state.item
+      const { owner } = history.location.state
       const message = `You can't contact yourself`
       if (await isError(owner, message) === false) {
       const user = JSON.parse(localStorage.getItem('user'))
@@ -31,6 +36,32 @@ class ContactView extends React.Component {
       // do nothing
     }
     setSuccess()
+  }
+
+  async onClickHandler () {
+    const { history } = this.props
+    const inputArr = ['firstName', 'lastName', 'gender', 'phone', 'message']
+    const values = getDocumentValues(inputArr)
+    const validator = new Validator()
+    let isAllValid = true
+    for (const key in values) {
+      if (!validator.isValid(key, values[key])) {
+        isAllValid = false
+        break
+      }
+    }
+    if (isAllValid) {
+      values['owner'] = history.location.state.owner
+      const car = await getCollection('cars', 'image', history.location.state.image)
+      const arrId = car.docs[0].data().peopleInterested
+      const peopleInterested = await getCollectionUID('peopleInterested', arrId)
+      const dataToSend = {people: [...peopleInterested.data().people, values]}
+      await updateCollection('peopleInterested', arrId, dataToSend)
+      history.push('/Search')
+      alertify.success(`Message has been sent`, 3)
+    } else {
+      swal('Error!', 'Please fill up all inputs', 'error')
+    }
   }
 
   componentDidMount () {
@@ -64,10 +95,10 @@ class ContactView extends React.Component {
               <Input fluid id='phone' placeholder='Contact Number' inverted transparent style={{color: getColor(phoneError)}}
                 type='number' min={0} max={99999999999} onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)} />
               <Divider />
-              <TextArea autoHeight style={{width: '100%'}} rows={5} placeholder='Message'
+              <TextArea id='message' autoHeight style={{width: '100%'}} rows={5} placeholder='Message'
                 style={{background: 'transparent', width: '100%', color: 'white'}} />
               <Divider hidden />
-              <Button fluid inverted>Confirm</Button>
+              <Button onClick={() => this.onClickHandler()} fluid inverted>Confirm</Button>
             </Modal.Content>
           </Segment>
         </Modal>

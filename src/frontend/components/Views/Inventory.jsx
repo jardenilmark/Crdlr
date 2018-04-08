@@ -40,7 +40,7 @@ class Inventory extends React.Component {
         await getCarsAdvertised(userUID)
         const user = await getCollectionUID('users', userUID)
         const userData = user.data()
-        const transaction = {
+        const transaction = { // To prevent them from having a transaction in real life and then just cancelling for free advertisment
           ...userData,
           fee: parseInt(obj.Price.slice(1)) * 0.02,
           transactionDate: new Date(),
@@ -84,7 +84,7 @@ class Inventory extends React.Component {
         if (peopleModals) {
           return(
             <Table.Cell key={count}>
-              <Mail id={num} obj={obj} message={message}/>
+              <Mail id={num} obj={obj} arrayId={cars[num]['arrayId']} message={message}/>
             </Table.Cell>
           )
         }

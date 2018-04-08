@@ -24,7 +24,7 @@ class Item extends React.Component {
             {item.price}
           </Header>
           <Button.Group widths='3' size='small'>
-            <Button as={Link} to={{pathname: '/Contact', state: {item: item}}} primary>
+            <Button as={Link} to={{pathname: '/Contact', state: {owner: item.owner, image: item.image}}} primary>
               CONTACT USER
             </Button>
             <Button.Or/>

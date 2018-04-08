@@ -1,22 +1,28 @@
-import { getData, fetchFromDb, fetchFromDbFilter } from './data'
+import { getData, fetchFromDbDoc, fetchFromDb, fetchFromDbFilter } from './data'
 
 async function fetchCarsConnected (uid) {
   const collection = await fetchFromDbFilter('cars', 'owner', uid, true)
   const toSend = []
-  collection.forEach(e => {
-    const obj = {
-      Brand: e.brand,
-      Location: e.location,
-      Model: e.model,
-      Price: e.price,
-      Type: e.type,
-      ImageId: e.image,
-      Id: e.id,
-      peopleInterested: e.peopleInterested,
-      Sold: !e.available
-    }
-    toSend.push(obj)
-  })
+  await Promise.all(
+    collection.map(
+      async e => {
+        const peopleInterested = await fetchFromDbDoc('peopleInterested', e.peopleInterested)
+        const obj = {
+          Brand: e.brand,
+          Location: e.location,
+          Model: e.model,
+          Price: e.price,
+          Type: e.type,
+          ImageId: e.image,
+          Id: e.id,
+          arrayId: e.peopleInterested,
+          peopleInterested: peopleInterested.people,
+          Sold: !e.available
+        }
+        toSend.push(obj)
+      }
+    )
+  )
   return toSend
 }
 
