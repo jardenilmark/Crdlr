@@ -3,7 +3,8 @@ import "firebase/storage"
 import shallow from './Enzyme.js'
 import Search from '../frontend/components/Views/Search'
 import { getFromDb } from '../backend/actions/carAction'
-import { Dropdown, Dimmer, Loader, Header } from 'semantic-ui-react'
+import { Dimmer, Loader, Header } from 'semantic-ui-react'
+import Dropdown from '../backend/containers/dropdownContainer'
 import Item from '../frontend/components/Items/Item'
 
 describe('<Search />', () => {
@@ -21,19 +22,6 @@ describe('<Search />', () => {
   it('renders <Search>', () => {
     expect(wrapper).toHaveLength(1)
   })
-  it('gets array for dropdown', () => {
-    wrapper.setProps({allCars: allCars})
-    const values = wrapper.instance().getDropdownValues(arr)
-    expect(values).toHaveLength(4)
-  })
-  it('gets loader', () => {
-    wrapper.setProps({loader: false})
-    expect(wrapper.find(Dimmer)).toHaveLength(1)
-  })
-  it('gets No Available Cars sign', () => {
-    wrapper.setProps({loader: true})
-    expect(wrapper.find(Header)).toHaveLength(1)
-  })
   it('renders Item', () => {
     wrapper.setProps({allCars: allCars, itemModals: true})
     const value = wrapper.instance().renderItems()
@@ -41,7 +29,6 @@ describe('<Search />', () => {
   })
   it('renders dropdown', () => {
     wrapper.setProps({allCars: allCars})
-    wrapper.instance().getDropdownValues(arr)
-    expect(wrapper.find(Dropdown)).toHaveLength(4)
+    expect(wrapper.find(Dropdown)).toHaveLength(1)
   })
 })

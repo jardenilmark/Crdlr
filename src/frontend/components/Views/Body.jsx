@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
-class BodyListener extends React.Component {
+class Body extends React.Component {
   componentWillMount () {
     const { setItemName, history } = this.props
     this.unlisten = history.listen((location, action) => {
@@ -24,4 +24,4 @@ class BodyListener extends React.Component {
   }
 }
 
-export default withRouter(BodyListener)
+export default withRouter(Body)

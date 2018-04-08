@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchCars, updateList, updateLoader } from '../actions/carAction'
+import { fetchCars, updateLoader } from '../actions/carAction'
 import Search from '../../frontend/components/Views/Search'
 
 function mapStateToProps (state) {
@@ -14,9 +14,6 @@ function mapDispatchToProps (dispatch) {
   return ({
     async getCars () {
       await dispatch(fetchCars())
-    },
-    updateCarList (filtered) {
-      dispatch(updateList(filtered))
     },
     updateLoader (loader) {
       dispatch(updateLoader(loader))

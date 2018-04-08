@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
-import { setCollection } from '../../firestoreActions'
+import { setDocument } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'
 import { getDocumentValues } from '../../documentHandler'
 import { Link } from 'react-router-dom'
@@ -27,8 +27,6 @@ class SignUp extends React.Component {
     const toCheck =  {...user, email: email, pass: pass}
     let isAllValid = true
     for (const key in toCheck) {
-      console.log(key, toCheck[key])
-      console.log(validator.isValid(key, toCheck[key]))
       if (!validator.isValid(key, toCheck[key])) {
         isAllValid = false
       }
@@ -37,7 +35,7 @@ class SignUp extends React.Component {
       try {
         const create = await auth.createUserWithEmailAndPassword(email, pass)
         const id = create.uid
-        setCollection('users', id, user)
+        setDocument('users', id, user)
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
           this.addAction()

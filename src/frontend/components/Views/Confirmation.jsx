@@ -1,9 +1,9 @@
 import React from 'react'
 import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } from 'semantic-ui-react'
 import history from '../../../backend/history'
-import { addToDb, updateCollection, getCollection } from '../../firestoreActions'
-import { onKeyPressHandler, onChangeHandler, getColor, isError } from '../../errorHandler'
-import { getDocumentValues } from '../../documentHandler'
+import { addToDb, updateDocument, getDocument } from '../../firestoreActions'
+import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
+import { getDocumentValues, autoFillForm } from '../../documentHandler'
 import alertify from 'alertify.js'
 import Validator from '../../validator'
 
@@ -33,11 +33,11 @@ class Confirmation extends React.Component {
         status: 'bought'
       }
       addToDb('transactions', obj)
-      const cars = await getCollection('cars')
+      const cars = await getDocument('cars')
       for (let i = 0; i < cars.docs.length; i++) {
         const data = cars.docs[i].data()
         if (JSON.stringify(data) === JSON.stringify(item)) {
-          updateCollection('cars', cars.docs[i].id, { available: false })
+          updateDocument('cars', cars.docs[i].id, { available: false })
           alertify.success(`Transaction Completed`, 3)
           history.push('/Search')
         }
@@ -50,10 +50,12 @@ class Confirmation extends React.Component {
     try {
       const { owner } = item
       const message = `You can't purchase your own vehicle`
-      if (await isError(owner, message) === false) {
+      if (await isItemError(owner, message) === false) {
       const parsedUser = JSON.parse(localStorage.getItem('user'))
       await getUser(parsedUser.uid, parsedUser.email)
-      this.autoFillForm()
+      const { email, lastName, firstName, phone, gender } = this.props.user
+      const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
+      autoFillForm(values)
     }
     } catch (e) {
       // do nothing
@@ -63,19 +65,6 @@ class Confirmation extends React.Component {
 
   componentDidMount () {
     this.initialize()
-  }
-
-  autoFillForm () {
-    const { email, lastName, firstName, phone, gender } = this.props.user
-    const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
-    for (const key in values) {
-      if (document.getElementById(key).className.includes('dropdown')) {
-        document.getElementById(key).innerText = values[key]
-      } else {
-        document.getElementById(key).value = values[key]
-        document.getElementById(key).readOnly = true
-      }
-    }
   }
 
   render () {

@@ -19,3 +19,14 @@ export function getDocumentValues (arr) {
   })
   return obj
 }
+
+export function autoFillForm (values) {
+  for (const key in values) {
+    if (document.getElementById(key).className.includes('dropdown')) {
+      document.getElementById(key).innerText = values[key]
+    } else {
+      document.getElementById(key).value = values[key]
+      document.getElementById(key).readOnly = true
+    }
+  }
+}

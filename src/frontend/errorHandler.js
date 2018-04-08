@@ -22,7 +22,7 @@ export function getColor (error) {
   return 'white'
 }
 
-export async function isError (owner, message) {
+export async function isItemError (owner, message) {
   try {
     const user = localStorage.getItem('user')
     if (user && JSON.parse(user).uid === owner) {

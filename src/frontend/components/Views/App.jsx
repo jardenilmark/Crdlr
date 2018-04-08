@@ -5,18 +5,18 @@ import SignUpContainer from '../../../backend/containers/signUpContainer'
 import CreateContainer from '../../../backend/containers/createContainer'
 import InventoryContainer from '../../../backend/containers/inventoryContainer'
 import TitleBar from '../../../backend/containers/titleBarContainer'
-import BodyListener from '../../../backend/containers/bodyContainer'
+import Body from '../../../backend/containers/bodyContainer'
 import ContactView from '../../../backend/containers/contactContainer'
 import { Container } from 'semantic-ui-react'
 import { Route } from 'react-router-dom'
 import Purchase from './Purchase'
 
-class Body extends React.Component {
+class App extends React.Component {
   render () {
     return (
       <Container fluid>
         <TitleBar/>
-        <BodyListener>
+        <Body>
           <Route exact path='/' component={Home} />
           <Route exact path='/Search' component={CarContainer} />
           <Route exact path='/SignUp' component={SignUpContainer} />
@@ -24,10 +24,10 @@ class Body extends React.Component {
           <Route exact path='/Purchase' component={Purchase} />
           <Route exact path='/Inventory' component={InventoryContainer} />
           <Route exact path='/Contact' component={ContactView} />
-        </BodyListener>
+        </Body>
       </Container>
     )
   }
 }
 
-export default Body
+export default App

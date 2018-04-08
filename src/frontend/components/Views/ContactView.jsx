@@ -1,36 +1,25 @@
 import React from 'react'
 import { Modal, Divider, Input, Button, Header, TextArea, Icon, Container, Segment, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { onKeyPressHandler, onChangeHandler, getColor, isError } from '../../errorHandler'
-import { getDocumentValues } from '../../documentHandler'
-import { getCollection, updateCollection, getCollectionUID } from '../../firestoreActions'
+import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
+import { getDocumentValues, autoFillForm } from '../../documentHandler'
+import { getDocument, updateDocument, getDocumentUID } from '../../firestoreActions'
 import swal from 'sweetalert'
 import Validator from '../../validator' 
 import alertify from 'alertify.js'
 
 class ContactView extends React.Component {
-  autoFillForm () {
-    const { lastName, firstName, phone, gender } = this.props.user
-    const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
-    for (const key in values) {
-      if (document.getElementById(key).className.includes('dropdown')) {
-        document.getElementById(key).innerText = values[key]
-      } else {
-        document.getElementById(key).value = values[key]
-        document.getElementById(key).readOnly = true
-      }
-    }
-  }
-
   async initialize () {
     const { setSuccess, getUser, history } = this.props
     try {
       const { owner } = history.location.state
       const message = `You can't contact yourself`
-      if (await isError(owner, message) === false) {
+      if (await isItemError(owner, message) === false) {
       const user = JSON.parse(localStorage.getItem('user'))
       await getUser(user.uid, user.email)
-      this.autoFillForm()
+      const { lastName, firstName, phone, gender } = this.props.user
+      const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
+      autoFillForm(values)
       }
     } catch (e) {
       // do nothing
@@ -52,11 +41,11 @@ class ContactView extends React.Component {
     }
     if (isAllValid) {
       values['owner'] = history.location.state.owner
-      const car = await getCollection('cars', 'image', history.location.state.image)
+      const car = await getDocument('cars', 'image', history.location.state.image)
       const arrId = car.docs[0].data().peopleInterested
-      const peopleInterested = await getCollectionUID('peopleInterested', arrId)
+      const peopleInterested = await getDocumentUID('peopleInterested', arrId)
       const dataToSend = {people: [...peopleInterested.data().people, values]}
-      await updateCollection('peopleInterested', arrId, dataToSend)
+      await updateDocument('peopleInterested', arrId, dataToSend)
       history.push('/Search')
       alertify.success(`Message has been sent`, 3)
     } else {
