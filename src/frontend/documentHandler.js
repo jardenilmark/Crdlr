@@ -30,3 +30,15 @@ export function autoFillForm (values) {
     }
   }
 }
+
+export function getDate (date) {
+  let month = date.getMonth()
+  let day = date.getDate()
+  if (date.getMonth() < 10) {
+    month = `0${date.getMonth()}`
+  }
+  if (date.getDate() < 10) {
+    day = `0${date.getDate()}`
+  }
+  return `${date.getFullYear()}-${month}-${day}`
+}

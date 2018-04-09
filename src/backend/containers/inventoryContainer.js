@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getCarsAdvertised } from '../actions/carAction'
 import { setPeopleModals } from '../actions/itemAction'
-import Inventory from '../../frontend/components/Views/Inventory';
+import Inventory from '../../frontend/components/Views/Inventory'
 
 const mapStateToProps = (state) => {
   return {

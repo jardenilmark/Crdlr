@@ -74,7 +74,7 @@ class SignUp extends React.Component {
                 <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}
                   onKeyUp={() => onKeyPressHandler('pass', 'GET_ERROR_PASS', setError)}/>
                 <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}
-                  onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
+                  onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/> {/* should add more parameters */}
                 <Form.Select id='gender' fluid options={genderOptions} placeholder='Gender' error={genderError}
                   onChange={() => onChangeHandler('gender', 'GET_ERROR_GENDER', setError)}/>
                 <Button color='black' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>

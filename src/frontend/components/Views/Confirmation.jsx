@@ -97,15 +97,15 @@ class Confirmation extends React.Component {
               <Divider/>
               <Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' transparent inverted
                 size='massive' type='number' min={0} max={99999999999} style={{color: getColor(phoneError)}}
-                onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
+                onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/> {/* should add more parameters */}
               <Divider/>
               <Input id='address' fluid icon='home' iconPosition='left' placeholder='Home Address'
                 size='massive' transparent inverted style={{color: getColor(addressError)}}
                 onKeyUp={() => onKeyPressHandler('address', 'GET_ERROR_ADDRESS', setError)}/>
               <Divider/>
-              <Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number' 
+              <Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number'
                 size='massive' transparent inverted style={{color: getColor(creditCardError)}}
-                onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/>
+                onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/> {/* should add more parameters */}
               <Divider/>
               <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
             </Segment>

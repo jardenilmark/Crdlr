@@ -4,6 +4,7 @@ import { isAcceptedKey } from '../../inventoryActions'
 import { deleteDocument, getDocumentUID, addToDb } from '../../firestoreActions'
 import { loadImage } from '../../documentHandler'
 import { storage } from '../../../backend/database'
+import { getDate } from '../../documentHandler'
 import Mail from '../../../backend/containers/mailContainer'
 import swal from 'sweetalert'
 
@@ -86,6 +87,7 @@ class InventoryBody extends React.Component {
       })
       if (await confirmation) {
         const userUID = JSON.parse(localStorage.getItem('user')).uid
+        await deleteDocument('peopleInterested', obj.arrayId)
         await deleteDocument('cars', id)
         await storage.ref().child(`cars/${imageId}`).delete()
         await getCarsAdvertised(userUID)
@@ -94,7 +96,7 @@ class InventoryBody extends React.Component {
         const transaction = { // To prevent them from having a transaction in real life and then just cancelling for free advertisment
           ...userData,
           fee: parseInt(obj.Price.slice(1)) * 0.02,
-          transactionDate: new Date(),
+          transactionDate: getDate(new Date()),
           status: 'cancelled'
         }
         addToDb('transactions', transaction)

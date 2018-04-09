@@ -1,8 +1,8 @@
 import React from 'react'
-import { Modal, Divider, Input, Button, Header, TextArea, Icon, Container, Segment, Dropdown } from 'semantic-ui-react'
+import { Label, Modal, Divider, Input, Button, Header, TextArea, Icon, Container, Segment, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
-import { getDocumentValues, autoFillForm } from '../../documentHandler'
+import { getDocumentValues, autoFillForm, getDate } from '../../documentHandler'
 import { getDocument, updateDocument, getDocumentUID } from '../../firestoreActions'
 import swal from 'sweetalert'
 import Validator from '../../validator'
@@ -41,6 +41,7 @@ class ContactView extends React.Component {
     }
     if (isAllValid) {
       values['owner'] = history.location.state.owner
+      values['date'] = document.getElementById('date').value
       const car = await getDocument('cars', 'image', history.location.state.image)
       const arrId = car.docs[0].data().peopleInterested
       const peopleInterested = await getDocumentUID('peopleInterested', arrId)
@@ -59,6 +60,8 @@ class ContactView extends React.Component {
 
   render () {
     const { setError, fnError, lnError, genderError, phoneError, genderOptions } = this.props
+    const dateNow = new Date()
+    const minDate = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1)
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../images/e.jpg')})`}}>
         <Modal open basic size='small' style={{top: '45%'}}>
@@ -83,6 +86,13 @@ class ContactView extends React.Component {
               <Divider />
               <Input fluid id='phone' placeholder='Contact Number' inverted transparent style={{color: getColor(phoneError)}}
                 type='number' min={0} max={99999999999} onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)} />
+              <Divider />
+              <Label style={{background: 'transparent'}}>
+                <Header size='small' style={{color: 'white'}}>
+                    Preferred date of meet up
+                </Header>
+              </Label>
+              <Input fluid id='date' inverted transparent type='date' min={getDate(minDate)} value={getDate(minDate)} />
               <Divider />
               <TextArea id='message' autoHeight style={{width: '100%'}} rows={5} placeholder='Message'
                 style={{background: 'transparent', width: '100%', color: 'white'}} />

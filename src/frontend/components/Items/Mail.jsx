@@ -33,7 +33,8 @@ class Mail extends React.Component {
               </Card.Meta>
               <Card.Description>
                 {elem.message}<br/>
-                Contact Number: {elem.phone}
+                Contact Number: {elem.phone}<br/>
+                Preferred Date of Meet Up: {elem.date}
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
@@ -51,13 +52,12 @@ class Mail extends React.Component {
   }
 
   async onClickHandler (count) {
-    const { setPeopleModalVisibility, id, getCarsAdvertised, arrayId } = this.props
+    const { getCarsAdvertised, arrayId } = this.props
     const people = await getDocumentUID('peopleInterested', arrayId)
     const peopleData = people.data().people
     peopleData.splice(count, 1)
     await updateDocument('peopleInterested', arrayId, {people: peopleData})
     await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
-    setPeopleModalVisibility(id, {visibility: false})
   }
 
   render () {

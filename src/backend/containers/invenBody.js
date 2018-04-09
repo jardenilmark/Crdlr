@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { getCarsAdvertised } from '../actions/carAction'
 import InventoryBody from '../../frontend/components/Items/InventoryBody'
 
 function mapStateToProps (state) {
@@ -8,4 +9,12 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(InventoryBody)
+function mapDispatchToProps (dispatch) {
+  return ({
+    async getCarsAdvertised (uid) {
+      await dispatch(getCarsAdvertised(uid))
+    }
+  })
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(InventoryBody)
