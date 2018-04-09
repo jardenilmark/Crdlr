@@ -8,13 +8,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot --inline",
     "build": "webpack",
-    "test": "jest",
-    "jest": {
-      "transform": {
-        "^.+\\.jsx$": "babel-jest",
-        "^.+\\.js$": "babel-jest"
-      }
-    }
+    "test": "jest"
   },
   "dependencies": {
     "alertify.js": "^1.0.12",
