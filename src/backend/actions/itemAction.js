@@ -20,6 +20,6 @@ export function setPeopleModals (modalArr) {
 
 export function setPeopleModalVisibility (num, visibility) {
   return (dispatch) => {
-    dispatch(getData('SET_PEOPLE_VISIBILITY', {num: num, visibility:visibility}))
+    dispatch(getData('SET_PEOPLE_VISIBILITY', {num: num, visibility: visibility}))
   }
 }

@@ -88,7 +88,7 @@ class InventoryBody extends React.Component {
       })
       if (await confirmation) {
         const userUID = JSON.parse(localStorage.getItem('user')).uid
-        await deleteDocument('peopleInterested', obj.arrayId)
+        await deleteDocument('contacts', obj.arrayId)
         await deleteDocument('cars', id)
         await storage.ref().child(`cars/${imageId}`).delete()
         await getCarsAdvertised(userUID)

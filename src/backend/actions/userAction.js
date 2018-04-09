@@ -1,5 +1,5 @@
 import { firestore } from '../database'
-import { getData, fetchFromDb } from './data'
+import { getData } from './data'
 
 export function setCurrentUser (name) {
   return (dispatch) => {
@@ -18,10 +18,10 @@ async function getUserFromDB (uid, email) { // wont change this or else will que
   const user = await firestore.collection('users').doc(uid).get()
   const data = user.data()
   return {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      gender: data.gender,
-      phone: data.phone,
-      email: email
-    }
+    firstName: data.firstName,
+    lastName: data.lastName,
+    gender: data.gender,
+    phone: data.phone,
+    email: email
+  }
 }

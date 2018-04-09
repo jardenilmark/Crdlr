@@ -20,7 +20,7 @@ describe('<SearchView />', () => {
     expect(wrapper).toHaveLength(1)
   })
   it('renders Item', () => {
-    wrapper.setProps({allCars: allCars, itemModals: true})
+    wrapper.setProps({filteredCars: allCars, itemModals: true})
     const value = wrapper.instance().renderItems()
     expect(value).toHaveLength(3)
   })

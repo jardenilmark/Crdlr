@@ -1,5 +1,6 @@
 import React from 'react'
 import { Dropdown, Grid } from 'semantic-ui-react'
+import { compareData } from '../../../backend/sort'
 
 class DropdownCustom extends React.Component {
   getDropdownValues (arr) {
@@ -39,6 +40,7 @@ class DropdownCustom extends React.Component {
     dropDownArr.forEach(e => {
       const placeholder = placeholders[count++]
       const array = [...e]
+      compareData(array, 'text')
       array.push({key: 'Show All', value: 'Show All', text: 'Show All'})
       toRenderArr.push(
         <Grid.Column name={placeholder} key={placeholder} >

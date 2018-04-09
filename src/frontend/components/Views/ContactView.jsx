@@ -44,9 +44,9 @@ class ContactView extends React.Component {
       values['date'] = document.getElementById('date').value
       const car = await getDocument('cars', 'image', history.location.state.image)
       const arrId = car.docs[0].data().peopleInterested
-      const peopleInterested = await getDocumentUID('peopleInterested', arrId)
+      const peopleInterested = await getDocumentUID('contacts', arrId)
       const dataToSend = {people: [...peopleInterested.data().people, values]}
-      await updateDocument('peopleInterested', arrId, dataToSend)
+      await updateDocument('contacts', arrId, dataToSend)
       history.push('/SearchView')
       alertify.success(`Message has been sent`, 3)
     } else {

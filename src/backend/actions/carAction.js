@@ -1,4 +1,5 @@
 import { getData, fetchFromDbDoc, fetchFromDb, fetchFromDbFilter } from './data'
+import { compareData } from '../sort'
 
 async function fetchCarsConnected (uid) {
   const collection = await fetchFromDbFilter('cars', 'owner', uid, true)
@@ -6,7 +7,7 @@ async function fetchCarsConnected (uid) {
   await Promise.all(
     collection.map(
       async e => {
-        const peopleInterested = await fetchFromDbDoc('peopleInterested', e.peopleInterested)
+        const contacts = await fetchFromDbDoc('contacts', e.peopleInterested)
         const obj = {
           Brand: e.brand,
           Location: e.location,
@@ -16,7 +17,7 @@ async function fetchCarsConnected (uid) {
           ImageId: e.image,
           Id: e.id,
           arrayId: e.peopleInterested,
-          peopleInterested: peopleInterested.people,
+          peopleInterested: contacts.people,
           Sold: !e.available
         }
         toSend.push(obj)
@@ -29,6 +30,7 @@ async function fetchCarsConnected (uid) {
 export function getCarsAdvertised (uid) {
   return async (dispatch) => {
     const arr = await fetchCarsConnected(uid)
+    compareData(arr, 'Brand')
     dispatch(getData('GET_CARS_OWNER', arr))
   }
 }
@@ -36,16 +38,18 @@ export function getCarsAdvertised (uid) {
 export function fetchCars () {
   return async (dispatch) => {
     const arr = await fetchFromDbFilter('cars', 'available', true)
+    compareData(arr, 'brand')
     dispatch(getData('GET_CARS', arr))
   }
 }
 
 export function fetchCarTypes () {
   return async (dispatch) => {
-    const brands = await fetchFromDb('carTypes')
+    const types = await fetchFromDb('carTypes')
+    compareData(types, 'type')
     const arr = []
-    brands.forEach(e => {
-      arr.push({key: e.type.substring(0, 3), text: e.type, value: e.type})
+    types.forEach(e => {
+      arr.push({key: e.type, text: e.type, value: e.type})
     })
     dispatch(getData('GET_CAR_TYPES', arr))
   }
@@ -54,9 +58,10 @@ export function fetchCarTypes () {
 export function fetchCarBrands () {
   return async (dispatch) => {
     const brands = await fetchFromDb('carBrands')
+    compareData(brands, 'brand')
     const arr = []
     brands.forEach(e => {
-      arr.push({key: e.brand.substring(0, 3), text: e.brand, value: e.brand})
+      arr.push({key: e.brand, text: e.brand, value: e.brand})
     })
     dispatch(getData('GET_CAR_BRANDS', arr))
   }

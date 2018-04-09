@@ -30,7 +30,7 @@ class CarCreate extends React.Component {
   async onClickHandler (id) {
     const { file, setProgressBar, progress } = this.props
     const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
-    const db = await addToDb('peopleInterested', {people: []})
+    const db = await addToDb('contacts', {people: []})
     const car = {
       ...getDocumentValues(dropArr),
       available: true,

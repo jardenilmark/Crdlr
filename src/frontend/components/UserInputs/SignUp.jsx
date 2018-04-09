@@ -34,6 +34,7 @@ class SignUp extends React.Component {
       try {
         const create = await auth.createUserWithEmailAndPassword(email, pass)
         const id = create.uid
+        user['isAdmin'] = false
         setDocument('users', id, user)
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
