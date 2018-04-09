@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getCarsAdvertised } from '../actions/carAction'
 import { setPeopleModals } from '../actions/itemAction'
-import Inventory from '../../frontend/components/Views/Inventory'
+import InventoryView from '../../frontend/components/Views/InventoryView'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,4 +20,4 @@ function mapDispatchToProps (dispatch) {
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Inventory)
+export default connect(mapStateToProps, mapDispatchToProps)(InventoryView)

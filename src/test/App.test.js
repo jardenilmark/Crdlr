@@ -1,17 +1,17 @@
 import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
-import App from '../frontend/components/Views/App'
+import AppView from '../frontend/components/Views/AppView'
 import TitleBar from '../backend/containers/titleBarContainer'
 import BodyListener from '../backend/containers/bodyContainer'
 import { Route } from 'react-router-dom'
 
-describe('<App />', () => {
+describe('<AppView />', () => {
   let wrapper
   beforeEach(() => {
-    wrapper = shallow(<App setCurrentUser={jest.fn()}/>)
+    wrapper = shallow(<AppView setCurrentUser={jest.fn()}/>)
   })
-  it('renders <App>', () => {
+  it('renders <AppView>', () => {
     expect(wrapper).toHaveLength(1)
   })
   it('accepts props', () => {

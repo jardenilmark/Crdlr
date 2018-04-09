@@ -47,7 +47,7 @@ class ContactView extends React.Component {
       const peopleInterested = await getDocumentUID('peopleInterested', arrId)
       const dataToSend = {people: [...peopleInterested.data().people, values]}
       await updateDocument('peopleInterested', arrId, dataToSend)
-      history.push('/Search')
+      history.push('/SearchView')
       alertify.success(`Message has been sent`, 3)
     } else {
       swal('Error!', 'Please fill up all inputs', 'error')
@@ -66,7 +66,7 @@ class ContactView extends React.Component {
       <Container fluid style={{height: '100%', background: `url(${require('../../images/e.jpg')})`}}>
         <Modal open basic size='small' style={{top: '45%'}}>
           <Modal.Actions>
-            <Button as={Link} to={{pathname: '/Search'}} inverted color='black'>
+            <Button as={Link} to={{pathname: '/SearchView'}} inverted color='black'>
               <Icon name='remove' /> BACK
             </Button>
           </Modal.Actions>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextArea, Input, Icon, Modal, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
+import { Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { loadImage } from '../../documentHandler'
 
@@ -27,7 +27,7 @@ class Item extends React.Component {
               CONTACT USER
             </Button>
             <Button.Or/>
-            <Button as={Link} to={{pathname: '/Purchase', state: {item: item}}} color='black'>
+            <Button as={Link} to={{pathname: '/PurchaseView', state: {item: item}}} color='black'>
               SELECT
             </Button>
           </Button.Group>

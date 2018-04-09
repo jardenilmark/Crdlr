@@ -1,12 +1,12 @@
 import React from 'react'
 import { Label, Popup, Header, Icon, Table, Image, Container, Button } from 'semantic-ui-react'
 import { isUserError } from '../../errorHandler'
-import InventoryHeader from '../../../backend/containers/invenHeader'
-import InventoryBody from '../../../backend/containers/invenBody'
-import InventoryFooter from '../../../backend/containers/invenFooter'
+import InventoryHeader from '../../../backend/containers/invenHeaderContainer'
+import InventoryBody from '../../../backend/containers/invenBodyContainer'
+import InventoryFooter from '../../../backend/containers/invenFooterContainer'
 import { setModalArr } from '../../inventoryActions'
 
-class Inventory extends React.Component {
+class InventoryView extends React.Component {
   componentDidMount () {
     this.initialize()
   }
@@ -41,4 +41,4 @@ class Inventory extends React.Component {
   }
 }
 
-export default Inventory
+export default InventoryView

@@ -12,7 +12,7 @@ class SignOut extends React.Component {
     setUser()
     alertify.error('User Signed Out')
     const path = history.location.pathname
-    if (path === '/CarCreate' || path === '/Inventory') {
+    if (path === '/CarCreate' || path === '/InventoryView') {
       history.push('/')
     }
   }

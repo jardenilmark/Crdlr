@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Container } from 'semantic-ui-react'
 
-class Home extends React.Component {
+class HomeView extends React.Component {
   render () {
     return (
       <div>
@@ -16,4 +16,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+export default HomeView

@@ -4,7 +4,7 @@ import { Dimmer, Container, Header, Grid, Segment, Divider, Menu } from 'semanti
 import Dropdown from '../../../backend/containers/dropdownContainer'
 import Loader from '../../../backend/containers/loaderContainer'
 
-class Search extends React.Component {
+class SearchView extends React.Component {
   async intialize () {
     const { getCars, updateLoader } = this.props
     setTimeout(() => {
@@ -58,4 +58,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search
+export default SearchView

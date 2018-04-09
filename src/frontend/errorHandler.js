@@ -27,20 +27,20 @@ export async function isItemError (owner, message) {
     if (user && JSON.parse(user).uid === owner) {
       const confirmation = swal('Error!', message, 'error')
       if (await confirmation) {
-        history.push('/Search')
+        history.push('/SearchView')
         return true
       } else { // incase the user uses escape
-        history.push('/Search')
+        history.push('/SearchView')
         return true
       }
     }
   } catch (e) {
     const confirmation = swal('Error!', `No Item Selected`, 'error')
     if (await confirmation) {
-      history.push('/Search')
+      history.push('/SearchView')
       return true
     } else {
-      history.push('/Search')
+      history.push('/SearchView')
       return true
     }
   }

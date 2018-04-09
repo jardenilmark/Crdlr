@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { fetchCars, updateLoader } from '../actions/carAction'
-import Search from '../../frontend/components/Views/Search'
+import SearchView from '../../frontend/components/Views/SearchView'
 
 function mapStateToProps (state) {
   return {
@@ -21,4 +21,4 @@ function mapDispatchToProps (dispatch) {
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchView)

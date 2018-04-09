@@ -7,7 +7,7 @@ import { getDocumentValues, autoFillForm } from '../../documentHandler'
 import alertify from 'alertify.js'
 import Validator from '../../validator'
 
-class Confirmation extends React.Component {
+class ConfirmationView extends React.Component {
   async onClickHandler () {
     const { item } = this.props
     const { brand, location, model, price, type } = item
@@ -39,7 +39,7 @@ class Confirmation extends React.Component {
         if (JSON.stringify(data) === JSON.stringify(item)) {
           await updateDocument('cars', cars.docs[i].id, { available: false })
           alertify.success(`Transaction Completed`, 3)
-          history.push('/Search')
+          history.push('/SearchView')
         }
       }
     }
@@ -116,4 +116,4 @@ class Confirmation extends React.Component {
   }
 }
 
-export default Confirmation
+export default ConfirmationView

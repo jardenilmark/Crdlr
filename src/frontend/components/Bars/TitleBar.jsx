@@ -33,8 +33,8 @@ class TitleBar extends React.Component {
           </Header>
         </Menu.Item>
         <Menu.Item />
-        <Menu.Item as={Link} to='/' name='Home' active={activeItem === '/' || activeItem === ''}/>
-        <Menu.Item as={Link} to='/Search' name='Search' active={activeItem === 'Search'}/>
+        <Menu.Item as={Link} to='/' name='HomeView' active={activeItem === '/' || activeItem === ''}/>
+        <Menu.Item as={Link} to='/SearchView' name='SearchView' active={activeItem === 'SearchView'}/>
         {this.getComponent()}
       </Menu>
     )

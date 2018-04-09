@@ -9,8 +9,8 @@ class SignIn extends React.Component {
     const { activeItem, setCurrentUser } = this.props
     return (
       <Menu.Menu position='right'>
-        <Menu.Item name='Inventory' active={activeItem === 'Inventory'} as={Link} to='/Inventory'>
-          Inventory
+        <Menu.Item name='InventoryView' active={activeItem === 'InventoryView'} as={Link} to='/InventoryView'>
+          InventoryView
         </Menu.Item>
         <Menu.Item name='CarCreate' active={activeItem === 'CarCreate'} as={Link} to='/CarCreate'>
           Register Car

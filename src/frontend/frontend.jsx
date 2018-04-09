@@ -4,7 +4,7 @@ import store from '../backend/store'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
 import history from '../backend/history'
-import App from './components/Views/App'
+import AppView from './components/Views/AppView'
 
 function renderComponent (Component) {
   ReactDOM.render(
@@ -17,4 +17,4 @@ function renderComponent (Component) {
   )
 }
 
-renderComponent(App)
+renderComponent(AppView)

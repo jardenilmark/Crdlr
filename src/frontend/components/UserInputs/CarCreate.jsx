@@ -2,8 +2,9 @@ import React from 'react'
 import { storage } from '../../../backend/database'
 import { Modal, Progress, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb } from '../../firestoreActions'
-import { getDocumentValues } from '../../documentHandler'
+import { getDocumentValues, generateRandomNum } from '../../documentHandler'
 import { isUserError } from '../../errorHandler'
+import ProgressBar from '../../../backend/containers/progressBarCOntainer'
 import alertify from 'alertify.js'
 
 class CarCreate extends React.Component {
@@ -20,23 +21,10 @@ class CarCreate extends React.Component {
       setProgressBar(-1)
     }
   }
+
   onChangeHandler (file) {
     const { setImageFile } = this.props
     setImageFile(file)
-  }
-
-  generateRandomPicId () {
-    return Math.floor(Math.random() * 900000000)
-  }
-
-  showProgressBar () {
-    const { progress } = this.props
-    if (progress >= 0 && progress < 100) {
-      return <Progress percent={progress} active/>
-    } else if (progress === 100) {
-      const prog = progress
-      return <Progress percent={prog} success/>
-    }
   }
 
   async onClickHandler (id) {
@@ -71,14 +59,14 @@ class CarCreate extends React.Component {
   }
 
   render () {
-    const picId = this.generateRandomPicId()
+    const picId = generateRandomNum(900000000)
     const { brands, types, locations, progress } = this.props
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../images/d.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}}>
         <Grid textAlign='center' verticalAlign='middle' style={{ paddingTop: '7%' }}>
           <Grid.Column style={{ maxWidth: '40%', paddingTop: 60 }}>
             <Segment piled textAlign='center' color='grey'>
-              {this.showProgressBar()}
+              <ProgressBar/>
               <Form>
                 <Form.Group>
                   <Form.Input id='model' placeholder='Car Model' width={12}/>

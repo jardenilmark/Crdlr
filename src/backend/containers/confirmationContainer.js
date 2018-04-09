@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getUser } from '../actions/userAction'
 import { setError, setSuccess } from '../actions/errorAction'
-import Confirmation from '../../frontend/components/Views/Confirmation'
+import ConfirmationView from '../../frontend/components/Views/ConfirmationView'
 
 const mapStateToProps = (state) => {
   return {
@@ -31,4 +31,4 @@ function mapDispatchToProps (dispatch) {
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Confirmation)
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmationView)

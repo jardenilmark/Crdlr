@@ -3,7 +3,7 @@ import { fetchCarTypes, fetchCarBrands } from '../actions/carAction'
 import { setImageFile } from '../actions/imgAction'
 import { setProgressBar } from '../actions/itemAction'
 import { fetchLocations } from '../actions/locationAction'
-import CarCreate from '../../frontend/components/UserInputs/CarCreate';
+import CarCreate from '../../frontend/components/UserInputs/CarCreate'
 
 const mapStateToProps = (state) => {
   return {

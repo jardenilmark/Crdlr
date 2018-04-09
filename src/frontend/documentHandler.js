@@ -42,3 +42,7 @@ export function getDate (date) {
   }
   return `${date.getFullYear()}-${month}-${day}`
 }
+
+export function generateRandomNum (limit) {
+  return Math.floor(Math.random() * limit)
+}
