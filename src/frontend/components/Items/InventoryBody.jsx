@@ -2,9 +2,8 @@ import React from 'react'
 import { Icon, Table, Image, Popup } from 'semantic-ui-react'
 import { isAcceptedKey } from '../../inventoryActions'
 import { deleteDocument, getDocumentUID, addToDb } from '../../firestoreActions'
-import { loadImage } from '../../documentHandler'
+import { loadImage, getDate } from '../../documentHandler'
 import { storage } from '../../../backend/database'
-import { getDate } from '../../documentHandler'
 import Mail from '../../../backend/containers/mailContainer'
 import swal from 'sweetalert'
 
@@ -15,7 +14,9 @@ class InventoryBody extends React.Component {
     if (isAcceptedKey(key)) {
       return (<Table.Cell key={count}>{obj}</Table.Cell>)
     } else if (key === 'peopleInterested') {
-      if (obj.length === 0) {
+      if (cars[num]['Sold']) {
+        return (<Table.Cell key={count}>N/A</Table.Cell>)
+      } else if (obj.length === 0) {
         return (<Table.Cell key={count}>None</Table.Cell>)
       } else {
         let message = 'people interested'
