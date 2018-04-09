@@ -6,11 +6,13 @@ import Loader from '../../../backend/containers/loaderContainer'
 
 class SearchView extends React.Component {
   async intialize () {
-    const { getCars, updateLoader } = this.props
+    const { getCars, updateLoader, updateCarList } = this.props
     setTimeout(() => {
       updateLoader(true)
     }, 6000)
     await getCars()
+    const { allCars } = this.props
+    updateCarList(allCars)
   }
 
   componentDidMount () {
@@ -18,14 +20,12 @@ class SearchView extends React.Component {
   }
 
   renderItems () {
-    const { allCars, filteredCars } = this.props
+    const { filteredCars } = this.props
     const toRenderArr = []
     let carArr = []
     let count = 0
     if (filteredCars) {
       carArr = filteredCars
-    } else if (allCars) {
-      carArr = allCars
     }
     carArr.forEach(e => {
       toRenderArr.push(<Item item={e} id={count} key={count}/>)
