@@ -1,4 +1,3 @@
-import { setError } from '../backend/actions/errorAction'
 import history from '../backend/history'
 import Validator from '../frontend/validator'
 import swal from 'sweetalert'
@@ -18,7 +17,7 @@ export function onChangeHandler (name, type, func) {
 export function getColor (error) {
   if (error) {
     return 'red'
-  } 
+  }
   return 'white'
 }
 

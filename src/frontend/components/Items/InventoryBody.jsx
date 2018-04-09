@@ -1,8 +1,7 @@
 import React from 'react'
 import { Icon, Table, Image, Popup } from 'semantic-ui-react'
 import { isAcceptedKey } from '../../inventoryActions'
-import { getDocument, deleteDocument } from '../../firestoreActions'
-import { getDocumentUID, addToDb } from '../../firestoreActions'
+import { deleteDocument, getDocumentUID, addToDb } from '../../firestoreActions'
 import { loadImage } from '../../documentHandler'
 import { storage } from '../../../backend/database'
 import Mail from '../../../backend/containers/mailContainer'
@@ -13,17 +12,17 @@ class InventoryBody extends React.Component {
     const { peopleModals, cars } = this.props
     const obj = cars[num][key]
     if (isAcceptedKey(key)) {
-      return(<Table.Cell key={count}>{obj}</Table.Cell>)
+      return (<Table.Cell key={count}>{obj}</Table.Cell>)
     } else if (key === 'peopleInterested') {
       if (obj.length === 0) {
-        return(<Table.Cell key={count}>None</Table.Cell>)
+        return (<Table.Cell key={count}>None</Table.Cell>)
       } else {
         let message = 'people interested'
         if (obj.length === 1) {
           message = 'person interested'
         }
         if (peopleModals) {
-          return(
+          return (
             <Table.Cell key={count}>
               <Mail id={num} obj={obj} arrayId={cars[num]['arrayId']} message={message}/>
             </Table.Cell>
@@ -50,7 +49,7 @@ class InventoryBody extends React.Component {
             <Table.Cell key={count++}>
               <Popup trigger={<Icon color='red' name='close' size='large'
                 onClick={() => this.onClickHandler(cars[num]['ImageId'], cars[num]['Id'], cars[num])}/>}
-                content='**Click on this icon to cancel advertisment'/>
+              content='**Click on this icon to cancel advertisment'/>
             </Table.Cell>
           )
         } else {
@@ -66,7 +65,6 @@ class InventoryBody extends React.Component {
     const { cars } = this.props
     if (cars && cars.length > 0) {
       const toRender = []
-      let count = 0
       for (let i = 0; i < cars.length; i++) {
         toRender.push(<Table.Row key={i}>{this.getRowContents(i)}</Table.Row>)
       }
@@ -78,13 +76,13 @@ class InventoryBody extends React.Component {
   async onClickHandler (imageId, id, obj) {
     const { getCarsAdvertised } = this.props
     const option = swal(
-      "Warning!",
-      "You will be charged a 2% cancellation fee if you wish to continue",
-      "warning"
+      'Warning!',
+      'You will be charged a 2% cancellation fee if you wish to continue',
+      'warning'
     )
     if (await option) {
-      const confirmation = swal("Advertisment has been cancelled!", {
-        icon: "success"
+      const confirmation = swal('Advertisment has been cancelled!', {
+        icon: 'success'
       })
       if (await confirmation) {
         const userUID = JSON.parse(localStorage.getItem('user')).uid

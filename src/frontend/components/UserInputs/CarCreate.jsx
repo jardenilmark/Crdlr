@@ -1,11 +1,10 @@
 import React from 'react'
 import { storage } from '../../../backend/database'
-import { Modal, Progress, Input, Dropdown, Card, Image, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
+import { Modal, Progress, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb } from '../../firestoreActions'
 import { getDocumentValues } from '../../documentHandler'
 import { isUserError } from '../../errorHandler'
 import alertify from 'alertify.js'
-import swal from 'sweetalert'
 
 class CarCreate extends React.Component {
   componentDidMount () {
@@ -53,18 +52,18 @@ class CarCreate extends React.Component {
     }
     let isAllValid = true
     for (const key in car) {
-      if ((!car[key] && key !== 'details') || car[key] === 'Brand' 
-        || car[key] === 'Location' || car[key] === 'Type' || !file) {
+      if ((!car[key] && key !== 'details') || car[key] === 'Brand' ||
+        car[key] === 'Location' || car[key] === 'Type' || !file) {
         isAllValid = false
         break
       }
     }
     if (isAllValid && (progress === -1 || progress === 100)) {
-      storage.ref(`cars/${id}`).put(file).on('state_changed', (snapshot) => {
+      storage.ref(`cars/${id}`).put(file).on('state_changed', async (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         setProgressBar(progress)
         if (progress === 100) {
-          addToDb('cars', car)
+          await addToDb('cars', car)
           alertify.success(`Car has been placed on sale`, 3)
         }
       })
@@ -72,7 +71,6 @@ class CarCreate extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const picId = this.generateRandomPicId()
     const { brands, types, locations, progress } = this.props
     return (
@@ -93,10 +91,7 @@ class CarCreate extends React.Component {
                 <Form.Dropdown id='location' selection placeholder='Location' options={locations}/>
               </Form>
               <Input type='file' onChange={ (e) => this.onChangeHandler(e.target.files[0], picId) } />
-              <Form.TextArea id='desc' placeholder='Additional Details' style={{marginTop: 20, width: '100%', height: '10%'}} />
-              <div style={{textAlign: 'left', paddingBottom: 10, paddingTop: 10}}>
-                <Form.Checkbox label='I agree to the Terms and Conditions' />
-              </div>
+              <Form.TextArea id='desc' placeholder='Additional Details' style={{marginTop: 20, marginBottom: 20, width: '100%', height: '10%'}} />
               <Button loading={progress > -1 && progress < 100} onClick={() => this.onClickHandler(picId)} content='Submit' secondary fluid/>
             </Segment>
           </Grid.Column>

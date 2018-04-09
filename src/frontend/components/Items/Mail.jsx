@@ -1,7 +1,5 @@
 import React from 'react'
 import { Header, Modal, Card, Image, Button, Icon } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import { storage } from '../../../backend/database'
 import { getDocumentUID, updateDocument } from '../../firestoreActions'
 import history from '../../../backend/history'
 
@@ -18,15 +16,15 @@ class Mail extends React.Component {
       const toRender = []
       let count = 0
       obj.forEach(elem => {
-        let imageSrc = '../../images/male.jpg'
+        let imageSrc = require('../../images/male.jpg')
         const innerCount = count
         if (elem.gender === 'Female') {
-          imageSrc = '../../images/female.png'
+          imageSrc = require('../../images/female.png')
         }
         toRender.push(
           <Card key={innerCount}>
             <Card.Content>
-              <Image floated='right' size='mini' src={require('../../images/male.jpg')} />
+              <Image floated='right' size='mini' src={imageSrc} />
               <Card.Header>
                 {elem.firstName} {elem.lastName}
               </Card.Header>
@@ -53,7 +51,7 @@ class Mail extends React.Component {
   }
 
   async onClickHandler (count) {
-    const { obj, setPeopleModalVisibility, id, getCarsAdvertised, arrayId } = this.props
+    const { setPeopleModalVisibility, id, getCarsAdvertised, arrayId } = this.props
     const people = await getDocumentUID('peopleInterested', arrayId)
     const peopleData = people.data().people
     peopleData.splice(count, 1)

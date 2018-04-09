@@ -10,8 +10,8 @@ import Validator from '../../validator'
 class Confirmation extends React.Component {
   async onClickHandler () {
     const { item } = this.props
-    const { brand, location, model, price, type, owner } = item
-    const  arr = ['firstName', 'lastName', 'email', 'phone', 'gender', 'creditCard', 'address']
+    const { brand, location, model, price, type } = item
+    const arr = ['firstName', 'lastName', 'email', 'phone', 'gender', 'creditCard', 'address']
     const toCheck = getDocumentValues(arr)
     const validator = new Validator()
     let isAllValid = true
@@ -32,12 +32,12 @@ class Confirmation extends React.Component {
         transactionDate: new Date(),
         status: 'bought'
       }
-      addToDb('transactions', obj)
+      await addToDb('transactions', obj)
       const cars = await getDocument('cars')
       for (let i = 0; i < cars.docs.length; i++) {
         const data = cars.docs[i].data()
         if (JSON.stringify(data) === JSON.stringify(item)) {
-          updateDocument('cars', cars.docs[i].id, { available: false })
+          await updateDocument('cars', cars.docs[i].id, { available: false })
           alertify.success(`Transaction Completed`, 3)
           history.push('/Search')
         }
@@ -46,17 +46,17 @@ class Confirmation extends React.Component {
   }
 
   async initialize () {
-    const { setSuccess, getUser, history, item } = this.props
+    const { setSuccess, getUser, item } = this.props
     try {
       const { owner } = item
       const message = `You can't purchase your own vehicle`
       if (await isItemError(owner, message) === false) {
-      const parsedUser = JSON.parse(localStorage.getItem('user'))
-      await getUser(parsedUser.uid, parsedUser.email)
-      const { email, lastName, firstName, phone, gender } = this.props.user
-      const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
-      autoFillForm(values)
-    }
+        const parsedUser = JSON.parse(localStorage.getItem('user'))
+        await getUser(parsedUser.uid, parsedUser.email)
+        const { email, lastName, firstName, phone, gender } = this.props.user
+        const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
+        autoFillForm(values)
+      }
     } catch (e) {
       // do nothing
     }
@@ -85,11 +85,11 @@ class Confirmation extends React.Component {
               <Divider/>
               <Input id='lastName' fluid placeholder='LastName' style={{color: getColor(lnError)}}
                 size='massive' transparent inverted
-                onKeyUp={() => onKeyPressHandler('lastName','GET_ERROR_LASTNAME', setError)}/>
+                onKeyUp={() => onKeyPressHandler('lastName', 'GET_ERROR_LASTNAME', setError)}/>
               <Divider/>
               <Dropdown style={{fontSize: 20, background: 'transparent', color: getColor(genderError)}} id='gender' selection
                 fluid options={genderOptions} placeholder={'Gender'}
-                onChange={() => onChangeHandler('gender','GET_ERROR_GENDER', setError)} />
+                onChange={() => onChangeHandler('gender', 'GET_ERROR_GENDER', setError)} />
               <Divider/>
               <Input id='email' fluid icon='user' iconPosition='left' placeholder='Email-Address'
                 size='massive' transparent inverted style={{color: getColor(emailError)}}
@@ -99,7 +99,7 @@ class Confirmation extends React.Component {
                 size='massive' type='number' min={0} max={99999999999} style={{color: getColor(phoneError)}}
                 onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
               <Divider/>
-              <Input id='address' fluid icon='home' iconPosition='left' placeholder='Home Address' 
+              <Input id='address' fluid icon='home' iconPosition='left' placeholder='Home Address'
                 size='massive' transparent inverted style={{color: getColor(addressError)}}
                 onKeyUp={() => onKeyPressHandler('address', 'GET_ERROR_ADDRESS', setError)}/>
               <Divider/>

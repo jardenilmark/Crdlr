@@ -3,7 +3,6 @@ import LoginContainer from '../../../backend/containers/loginContainer'
 import SignOut from '../UserInputs/SignOut'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import Inventory from './Inventory';
 
 class SignIn extends React.Component {
   render () {

@@ -12,7 +12,7 @@ export function getNumberCarsSold (arr) {
   let numSold = 0
   arr.forEach(e => {
     for (const key in e) {
-      if (key === 'Sold' && e[key] === true) { 
+      if (key === 'Sold' && e[key] === true) {
         numSold++
       }
     }

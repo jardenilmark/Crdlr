@@ -5,7 +5,7 @@ import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../..
 import { getDocumentValues, autoFillForm } from '../../documentHandler'
 import { getDocument, updateDocument, getDocumentUID } from '../../firestoreActions'
 import swal from 'sweetalert'
-import Validator from '../../validator' 
+import Validator from '../../validator'
 import alertify from 'alertify.js'
 
 class ContactView extends React.Component {
@@ -15,11 +15,11 @@ class ContactView extends React.Component {
       const { owner } = history.location.state
       const message = `You can't contact yourself`
       if (await isItemError(owner, message) === false) {
-      const user = JSON.parse(localStorage.getItem('user'))
-      await getUser(user.uid, user.email)
-      const { lastName, firstName, phone, gender } = this.props.user
-      const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
-      autoFillForm(values)
+        const user = JSON.parse(localStorage.getItem('user'))
+        await getUser(user.uid, user.email)
+        const { lastName, firstName, phone, gender } = this.props.user
+        const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
+        autoFillForm(values)
       }
     } catch (e) {
       // do nothing
@@ -77,9 +77,9 @@ class ContactView extends React.Component {
               <Input fluid id='lastName' placeholder='Last Name' inverted transparent style={{color: getColor(lnError)}}
                 onKeyUp={() => onKeyPressHandler('lastName', 'GET_ERROR_LASTNAME', setError)} />
               <Divider />
-              <Dropdown style={{ background: 'transparent', color: getColor(genderError)}} id='gender' selection
+              <Dropdown style={{background: 'transparent', color: getColor(genderError)}} id='gender' selection
                 fluid options={genderOptions} placeholder={'Gender'}
-                onChange={() => onChangeHandler('gender','GET_ERROR_GENDER', setError)} />
+                onChange={() => onChangeHandler('gender', 'GET_ERROR_GENDER', setError)} />
               <Divider />
               <Input fluid id='phone' placeholder='Contact Number' inverted transparent style={{color: getColor(phoneError)}}
                 type='number' min={0} max={99999999999} onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)} />

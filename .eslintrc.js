@@ -1,16 +1,11 @@
 module.exports = {
     "extends": [
-      "standard",
-      "plugin:react/recommended"
+      "standard"
     ],
     "env": { 
       jest: true,
       node: true,
       browser: true,
       es6: true
-    },
-    "plugins": [
-      "react",
-      "jsx"
-    ]
-};
+    }
+}

@@ -4,10 +4,9 @@ import { auth } from '../../../backend/database'
 import { setDocument } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'
 import { getDocumentValues } from '../../documentHandler'
-import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
 import history from '../../../backend/history'
-import Validator from '../../validator' 
+import Validator from '../../validator'
 
 class SignUp extends React.Component {
   addAction () {
@@ -24,7 +23,7 @@ class SignUp extends React.Component {
     const userArr = ['firstName', 'lastName', 'gender', 'phone']
     const user = getDocumentValues(userArr)
     const validator = new Validator()
-    const toCheck =  {...user, email: email, pass: pass}
+    const toCheck = {...user, email: email, pass: pass}
     let isAllValid = true
     for (const key in toCheck) {
       if (!validator.isValid(key, toCheck[key])) {

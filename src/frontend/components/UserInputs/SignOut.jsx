@@ -11,7 +11,7 @@ class SignOut extends React.Component {
     localStorage.clear()
     setUser()
     alertify.error('User Signed Out')
-    const path = history.location.pathname 
+    const path = history.location.pathname
     if (path === '/CarCreate' || path === '/Inventory') {
       history.push('/')
     }

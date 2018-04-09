@@ -1,5 +1,4 @@
 import React from 'react'
-import ContactView from '../Views/ContactView'
 import { TextArea, Input, Icon, Modal, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { loadImage } from '../../documentHandler'

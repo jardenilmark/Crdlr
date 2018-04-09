@@ -1,6 +1,5 @@
 import React from 'react'
 import { Image, Container } from 'semantic-ui-react'
-import { storage } from '../../../backend/database'
 
 class Home extends React.Component {
   render () {

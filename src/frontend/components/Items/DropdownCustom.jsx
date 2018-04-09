@@ -40,12 +40,13 @@ class DropdownCustom extends React.Component {
       const placeholder = placeholders[count++]
       const array = [...e]
       array.push({key: 'Show All', value: 'Show All', text: 'Show All'})
-      toRenderArr.push(                
-      <Grid.Column name={placeholder} key={placeholder} >
-        <Dropdown button noResultsMessage='No Results Found' placeholder={placeholder}
-          onClose={() => this.getFilteredList(placeholders)}
-          search options={array} selection id={placeholder}/>
-      </Grid.Column>)
+      toRenderArr.push(
+        <Grid.Column name={placeholder} key={placeholder} >
+          <Dropdown button noResultsMessage='No Results Found' placeholder={placeholder}
+            onClose={() => this.getFilteredList(placeholders)}
+            search options={array} selection id={placeholder}/>
+        </Grid.Column>
+      )
     })
     return toRenderArr
   }

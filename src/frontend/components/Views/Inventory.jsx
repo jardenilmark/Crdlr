@@ -1,17 +1,10 @@
 import React from 'react'
 import { Label, Popup, Header, Icon, Table, Image, Container, Button } from 'semantic-ui-react'
-import { getDocument, deleteDocument } from '../../firestoreActions'
-import { storage } from '../../../backend/database'
-import { Link } from 'react-router-dom'
 import { isUserError } from '../../errorHandler'
-import { getDocumentUID, addToDb } from '../../firestoreActions'
-import { loadImage } from '../../documentHandler'
 import InventoryHeader from '../../../backend/containers/invenHeader'
 import InventoryBody from '../../../backend/containers/invenBody'
 import InventoryFooter from '../../../backend/containers/invenFooter'
 import { setModalArr } from '../../inventoryActions'
-import Mail from '../../../backend/containers/mailContainer'
-import swal from 'sweetalert'
 
 class Inventory extends React.Component {
   componentDidMount () {

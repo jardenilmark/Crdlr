@@ -26,7 +26,6 @@ class InventoryHeader extends React.Component {
     return <div/>
   }
 
-
   render () {
     return (
       this.getLoader()

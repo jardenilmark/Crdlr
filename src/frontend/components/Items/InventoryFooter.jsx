@@ -17,11 +17,11 @@ class InventoryFooter extends React.Component {
           <Table.HeaderCell><Header size='medium'>Number Sold:</Header></Table.HeaderCell>
           <Table.HeaderCell><Header size='medium'>{getNumberCarsSold(cars)}</Header></Table.HeaderCell>
         </Table.Row>
-        )
+      )
       return toRender
     }
     return <Table.Row/>
-  }  
+  }
 
   render () {
     return (

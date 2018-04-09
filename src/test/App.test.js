@@ -2,7 +2,6 @@ import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
 import App from '../frontend/components/Views/App'
-import localStorage from './localStorageMock'
 import TitleBar from '../backend/containers/titleBarContainer'
 import BodyListener from '../backend/containers/bodyContainer'
 import { Route } from 'react-router-dom'
