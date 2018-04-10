@@ -23,6 +23,7 @@ class ConfirmationView extends React.Component {
     if (isAllValid) {
       const obj = {
         ...toCheck,
+        expirationDate: document.getElementById('expirationDate').value,
         brand: brand,
         location: location,
         carModel: model,
@@ -53,8 +54,16 @@ class ConfirmationView extends React.Component {
       if (await isItemError(owner, message) === false) {
         const parsedUser = JSON.parse(localStorage.getItem('user'))
         await getUser(parsedUser.uid, parsedUser.email)
-        const { email, lastName, firstName, phone, gender } = this.props.user
-        const values = { firstName: firstName, lastName: lastName, email: email, phone: phone, gender: gender }
+        const { email, lastName, firstName, phone, gender, creditCard, expiration } = this.props.user
+        const values = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phone: phone,
+          gender: gender,
+          creditCard: creditCard,
+          expirationDate: expiration
+        }
         autoFillForm(values)
       }
     } catch (e) {
@@ -97,7 +106,7 @@ class ConfirmationView extends React.Component {
               <Divider/>
               <Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' transparent inverted
                 size='massive' type='number' min={0} max={99999999999} style={{color: getColor(phoneError)}}
-                onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/> {/* should add more parameters */}
+                onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
               <Divider/>
               <Input id='address' fluid icon='home' iconPosition='left' placeholder='Home Address'
                 size='massive' transparent inverted style={{color: getColor(addressError)}}
@@ -105,7 +114,10 @@ class ConfirmationView extends React.Component {
               <Divider/>
               <Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' type='password' placeholder='Credit Card Number'
                 size='massive' transparent inverted style={{color: getColor(creditCardError)}}
-                onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/> {/* should add more parameters */}
+                onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/>
+              <Divider/>
+              <Input id='expirationDate' fluid icon='calendar' iconPosition='left' type='date'
+                size='massive' transparent inverted min={getDate(new Date())} value={getDate(new Date())}/>
               <Divider/>
               <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
             </Segment>

@@ -5,9 +5,8 @@ import { loadImage } from '../../documentHandler'
 
 class Item extends React.Component {
   render () {
-    const { item, id } = this.props
+    const { item } = this.props
     const { image } = item
-    const imageId = `img${item.model}${item.location}${id}`
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Segment>
@@ -17,7 +16,7 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image verticalAlign='middle' id={imageId} fluid style={{height: 300}} src={loadImage(imageId, image)}/>
+          <Image verticalAlign='middle' id={image} fluid style={{height: 300}} src={loadImage(image)}/>
           <Divider/>
           <Header size='medium' textAlign='center'>
             P{item.price}

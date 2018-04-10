@@ -26,7 +26,7 @@ export default function reducer (state = {}, action) {
       creditCardError: false,
       addressError: false
     }
-  }  {
+  } else {
     return state
   }
 }

@@ -3,7 +3,7 @@ import { Container, Button, Form, Grid, Header, Segment } from 'semantic-ui-reac
 import { auth } from '../../../backend/database'
 import { setDocument } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'
-import { getDocumentValues } from '../../documentHandler'
+import { getDocumentValues, getDate } from '../../documentHandler'
 import swal from 'sweetalert'
 import history from '../../../backend/history'
 import Validator from '../../validator'
@@ -20,7 +20,7 @@ class SignUp extends React.Component {
     const { setError } = this.props
     const email = document.getElementById('email').value
     const pass = document.getElementById('pass').value
-    const userArr = ['firstName', 'lastName', 'gender', 'phone']
+    const userArr = ['firstName', 'lastName', 'gender', 'phone', 'creditCard']
     const user = getDocumentValues(userArr)
     const validator = new Validator()
     const toCheck = {...user, email: email, pass: pass}
@@ -35,6 +35,7 @@ class SignUp extends React.Component {
         const create = await auth.createUserWithEmailAndPassword(email, pass)
         const id = create.uid
         user['isAdmin'] = false
+        user['expirationDate'] = document.getElementById('expirationDate').value
         setDocument('users', id, user)
         const confirmation = swal('Success!', 'Sign Up Complete', 'success')
         if (await confirmation) {
@@ -56,7 +57,7 @@ class SignUp extends React.Component {
   }
 
   render () {
-    const { fnError, lnError, emailError, passError, phoneError, genderError, setError, genderOptions } = this.props
+    const { fnError, lnError, emailError, passError, phoneError, genderError, setError, creditCardError, genderOptions } = this.props
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/c.png')})`}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
@@ -75,7 +76,11 @@ class SignUp extends React.Component {
                 <Form.Input id='pass' fluid icon='lock' iconPosition='left' placeholder='Password' type='password' error={passError}
                   onKeyUp={() => onKeyPressHandler('pass', 'GET_ERROR_PASS', setError)}/>
                 <Form.Input id='phone' fluid icon='phone' iconPosition='left' placeholder='Phone Number' type='number' min={0} max={99999999999} error={phoneError}
-                  onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/> {/* should add more parameters */}
+                  onKeyUp={() => onKeyPressHandler('phone', 'GET_ERROR_PHONE', setError)}/>
+                <Form.Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' placeholder='Credit Card'
+                  type='password' error={creditCardError} onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/>
+                <Form.Input id='expirationDate' fluid icon='calendar' iconPosition='left'
+                  type='date' min={getDate(new Date())} value={getDate(new Date())}/>
                 <Form.Select id='gender' fluid options={genderOptions} placeholder='Gender' error={genderError}
                   onChange={() => onChangeHandler('gender', 'GET_ERROR_GENDER', setError)}/>
                 <Button color='black' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>

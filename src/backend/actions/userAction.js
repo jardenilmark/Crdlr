@@ -22,6 +22,8 @@ async function getUserFromDB (uid, email) { // wont change this or else will que
     lastName: data.lastName,
     gender: data.gender,
     phone: data.phone,
-    email: email
+    email: email,
+    creditCard: data.creditCard,
+    expiration: data.expirationDate
   }
 }

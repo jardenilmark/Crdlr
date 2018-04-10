@@ -28,7 +28,7 @@ class SearchView extends React.Component {
       carArr = filteredCars
     }
     carArr.forEach(e => {
-      toRenderArr.push(<Item item={e} id={count} key={count}/>)
+      toRenderArr.push(<Item item={e} key={count}/>)
       count++
     })
     return toRenderArr

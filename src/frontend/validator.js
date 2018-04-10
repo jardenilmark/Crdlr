@@ -13,10 +13,12 @@ class Validator {
       return /[^a-zA-Z0-9\s]/g.test(value) === false
     } else if (name === 'gender') {
       return value === 'Male' || value === 'Female'
-    } else if (name === 'phone' || name === 'creditCard') {
+    } else if (name === 'phone') {
       let phone = JSON.stringify(value)
       phone = phone.substring(1, phone.length - 1)
-      return /[^0-9]/g.test(phone) === false && phone.length === 11
+      return /^(\+?63|0)?9\d{9}$/.test(phone)
+    } else if (name === 'creditCard') {
+      return /[^0-9]/g.test(value) === false && value.length === 11
     }
     return false
   }

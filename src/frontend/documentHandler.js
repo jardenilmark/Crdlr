@@ -1,7 +1,7 @@
 import { storage } from '../backend/database'
 
-export async function loadImage (id, imageId) {
-  const url = await storage.ref().child(`cars/${imageId}`).getDownloadURL()
+export async function loadImage (id) {
+  const url = await storage.ref().child(`cars/${id}`).getDownloadURL()
   const imgURL = document.getElementById(id)
   if (imgURL) {
     imgURL.src = url
