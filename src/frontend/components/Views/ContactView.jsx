@@ -94,7 +94,7 @@ class ContactView extends React.Component {
               </Label>
               <Input fluid id='date' inverted transparent type='date' min={getDate(minDate)} value={getDate(minDate)} />
               <Divider />
-              <TextArea id='message' autoHeight style={{width: '100%'}} rows={5} placeholder='Message'
+              <TextArea id='message' autoHeight rows={5} placeholder='Message'
                 style={{background: 'transparent', width: '100%', color: 'white'}} />
               <Divider hidden />
               <Button onClick={() => this.onClickHandler()} fluid inverted>Confirm</Button>

@@ -9,8 +9,6 @@ export default function reducer (state = initialState, action) {
     return {...state, allCars: action.payload}
   } else if (action.type === 'GET_FILTERED') {
     return {...state, filteredCars: action.payload}
-  } else if (action.type === 'GET_LOADER') {
-    return {...state, loader: action.payload}
   } else if (action.type === 'GET_CAR_BRANDS') {
     return {...state, brands: action.payload}
   } else if (action.type === 'GET_CAR_TYPES') {

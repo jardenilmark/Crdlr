@@ -4,22 +4,18 @@ import { isAcceptedKey } from '../../inventoryActions'
 
 class InventoryHeader extends React.Component {
   getHeaders () {
-    const { cars } = this.props
-    if (cars && cars.length > 0) {
-      const toRender = []
-      let count = 0
-      toRender.push(<Table.HeaderCell key={count++}/>)
-      for (const key in cars[0]) {
-        if (isAcceptedKey(key)) {
-          toRender.push(<Table.HeaderCell key={count++}>{key}</Table.HeaderCell>)
-        } else if (key === 'peopleInterested') {
-          toRender.push(<Table.HeaderCell key={count++}>Interested Buyers</Table.HeaderCell>)
-        }
+    const { propertyArray } = this.props
+    const toRender = []
+    let count = 0
+    toRender.push(<Table.HeaderCell key={count++}/>)
+    propertyArray.forEach(e => {
+      if (e === 'peopleInterested') {
+        toRender.push(<Table.HeaderCell key={count++}>Interested Buyers</Table.HeaderCell>)
+      } else {
+        toRender.push(<Table.HeaderCell key={count++}>{e}</Table.HeaderCell>)
       }
-      return toRender
-    } else {
-      return <Table.Cell/>
-    }
+    })
+    return toRender
   }
 
   render () {

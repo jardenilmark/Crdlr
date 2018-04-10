@@ -6,10 +6,11 @@ import alertify from 'alertify.js'
 
 class SignOut extends React.Component {
   async logOutUser () {
-    const { setUser } = this.props
+    const { setUser, setPeopleModals } = this.props
     await auth.signOut()
     localStorage.clear()
     setUser()
+    setPeopleModals([])
     alertify.error('User Signed Out')
     const path = history.location.pathname
     if (path === '/CarCreate' || path === '/InventoryView') {

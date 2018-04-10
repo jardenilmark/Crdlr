@@ -2,7 +2,10 @@ import history from '../history'
 
 const initialState = {
   activeItem: history.location.pathname.slice(1),
-  progress: -1
+  progress: -1,
+  tablePropertyArray: ['Brand', 'Location', 'Model', 'Price', 'Type', 'Interested', 'Sold'],
+  peopleModals: [],
+  loader: false
 }
 
 export default function reducer (state = initialState, action) {
@@ -22,6 +25,8 @@ export default function reducer (state = initialState, action) {
     const newArr = [...state.peopleModals]
     newArr[action.payload.num] = action.payload.visibility
     return {...state, peopleModals: newArr}
+  } else if (action.type === 'GET_LOADER') {
+    return {...state, loader: action.payload}
   } else {
     return state
   }

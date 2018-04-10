@@ -1,6 +1,5 @@
 import React from 'react'
-import LoginContainer from '../../../backend/containers/LoginContainer'
-import SignOut from '../UserInputs/SignOut'
+import SignOut from '../../../backend/containers/SignOutContainer'
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 

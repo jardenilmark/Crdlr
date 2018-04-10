@@ -3,7 +3,8 @@ import InventoryHeader from '../../frontend/components/Items/InventoryHeader'
 
 function mapStateToProps (state) {
   return {
-    cars: state.cars.advertisedCars
+    cars: state.cars.advertisedCars,
+    propertyArray: state.item.tablePropertyArray
   }
 }
 

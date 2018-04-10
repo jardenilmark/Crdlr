@@ -26,14 +26,14 @@ class InventoryView extends React.Component {
         <Table color={'black'} celled fixed>
           <Table.Header>
             <Table.Row>
-              <InventoryHeader/>
+              <InventoryHeader />
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            <InventoryBody/>
+            <InventoryBody />
           </Table.Body>
           <Table.Footer>
-            <InventoryFooter/>
+            <InventoryFooter />
           </Table.Footer>
         </Table>
       </Container>

@@ -6,7 +6,7 @@ function mapStateToProps (state) {
   return {
     allCars: state.cars.allCars,
     filteredCars: state.cars.filteredCars,
-    loader: state.cars.loader
+    loader: state.item.loader
   }
 }
 

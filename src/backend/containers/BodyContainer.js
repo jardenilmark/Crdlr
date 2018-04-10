@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import Body from '../../frontend/components/Views/Body'
 import { setActiveItem } from '../actions/itemAction'
 
-function mapStateToProps (state) { //keeping incase I need to add variables later on
+function mapStateToProps (state) { // keeping incase I need to add variables later on
   return {}
 }
 
