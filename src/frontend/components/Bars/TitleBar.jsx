@@ -1,9 +1,9 @@
 import React from 'react'
-import LoginContainer from '../../../backend/containers/loginContainer'
+import LoginContainer from '../../../backend/containers/LoginContainer'
 import { Button, Menu, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
-import SignedInView from '../../../backend/containers/signedInContainer'
+import SignedInView from '../../../backend/containers/SignedInContainer'
 
 class TitleBar extends React.Component {
   getComponent () {

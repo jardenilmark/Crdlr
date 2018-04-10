@@ -3,7 +3,7 @@ import "firebase/storage"
 import shallow from './Enzyme.js'
 import SearchView from '../frontend/components/Views/SearchView'
 import { Dimmer, Loader, Header } from 'semantic-ui-react'
-import Dropdown from '../backend/containers/dropdownContainer'
+import Dropdown from '../backend/containers/DropdownContainer'
 import Item from '../frontend/components/Items/Item'
 
 describe('<SearchView />', () => {

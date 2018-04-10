@@ -4,7 +4,7 @@ import { Modal, Progress, Input, Button, Form, Grid, Segment, Container } from '
 import { addToDb } from '../../firestoreActions'
 import { getDocumentValues, generateRandomNum } from '../../documentHandler'
 import { isUserError } from '../../errorHandler'
-import ProgressBar from '../../../backend/containers/progressBarCOntainer'
+import ProgressBar from '../../../backend/containers/ProgressBarContainer'
 import alertify from 'alertify.js'
 
 class CarCreate extends React.Component {
@@ -62,7 +62,7 @@ class CarCreate extends React.Component {
     const picId = generateRandomNum(900000000)
     const { brands, types, locations, progress } = this.props
     return (
-      <Container fluid style={{height: '100%', background: `url(${require('../../images/d.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}}>
+      <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/d.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}}>
         <Grid textAlign='center' verticalAlign='middle' style={{ paddingTop: '7%' }}>
           <Grid.Column style={{ maxWidth: '40%', paddingTop: 60 }}>
             <Segment piled textAlign='center' color='grey'>

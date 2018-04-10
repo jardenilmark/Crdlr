@@ -58,7 +58,7 @@ class SignUp extends React.Component {
   render () {
     const { fnError, lnError, emailError, passError, phoneError, genderError, setError, genderOptions } = this.props
     return (
-      <Container fluid style={{height: '100%', background: `url(${require('../../images/c.png')})`}}>
+      <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/c.png')})`}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
           <Grid.Column style={{ maxWidth: 700 }}>
             <Segment inverted style={{margin: 0}}>

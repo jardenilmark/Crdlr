@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Icon, Button, Modal, Container } from 'semantic-ui-react'
-import ConfirmationContainer from '../../../backend/containers/confirmationContainer'
+import ConfirmationContainer from '../../../backend/containers/ConfirmationContainer'
 import { Link } from 'react-router-dom'
 
 class PurchaseView extends React.Component {
@@ -11,7 +11,7 @@ class PurchaseView extends React.Component {
       item = history.location.state.item
     }
     return (
-      <Container fluid style={{height: '100%', background: `url(${require('../../images/e.png')})`}}>
+      <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/e.png')})`}}>
         <Modal basic open>
           <Modal.Actions>
             <Button as={Link} to={{pathname: '/SearchView'}} inverted color='black'>

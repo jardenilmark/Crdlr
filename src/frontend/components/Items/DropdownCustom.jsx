@@ -44,7 +44,7 @@ class DropdownCustom extends React.Component {
       array.push({key: 'Show All', value: 'Show All', text: 'Show All'})
       toRenderArr.push(
         <Grid.Column name={placeholder} key={placeholder} >
-          <Dropdown button noResultsMessage='No Results Found' placeholder={placeholder}
+          <Dropdown fluid button noResultsMessage='No Results Found' placeholder={placeholder}
             onClose={() => this.getFilteredList(placeholders)}
             search options={array} selection id={placeholder}/>
         </Grid.Column>

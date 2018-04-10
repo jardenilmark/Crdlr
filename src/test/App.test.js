@@ -2,8 +2,8 @@ import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
 import AppView from '../frontend/components/Views/AppView'
-import TitleBar from '../backend/containers/titleBarContainer'
-import BodyListener from '../backend/containers/bodyContainer'
+import TitleBar from '../backend/containers/TitleBarContainer'
+import BodyListener from '../backend/containers/BodyContainer'
 import { Route } from 'react-router-dom'
 
 describe('<AppView />', () => {

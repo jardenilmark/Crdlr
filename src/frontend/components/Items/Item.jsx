@@ -17,7 +17,7 @@ class Item extends React.Component {
           <Header size='medium' style={{margin: 0}}>
             {item.brand} {item.model}
           </Header>
-          <Image verticalAlign='middle' id={imageId} style={{height: 250}} src={loadImage(imageId, image)}/>
+          <Image verticalAlign='middle' id={imageId} fluid style={{height: 300}} src={loadImage(imageId, image)}/>
           <Divider/>
           <Header size='medium' textAlign='center'>
             P{item.price}

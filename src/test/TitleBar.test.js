@@ -1,8 +1,8 @@
 import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
-import SignedInView from '../backend/containers/signedInContainer'
-import LoginContainer from '../backend/containers/loginContainer'
+import SignedInView from '../backend/containers/SignedInContainer'
+import LoginContainer from '../backend/containers/LoginContainer'
 import { Menu, Header } from 'semantic-ui-react'
 import TitleBar from '../frontend/components/Bars/TitleBar'
 

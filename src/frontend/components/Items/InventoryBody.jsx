@@ -4,7 +4,7 @@ import { isAcceptedKey } from '../../inventoryActions'
 import { deleteDocument, getDocumentUID, addToDb } from '../../firestoreActions'
 import { loadImage, getDate } from '../../documentHandler'
 import { storage } from '../../../backend/database'
-import Mail from '../../../backend/containers/mailContainer'
+import Mail from '../../../backend/containers/MailContainer'
 import swal from 'sweetalert'
 
 class InventoryBody extends React.Component {

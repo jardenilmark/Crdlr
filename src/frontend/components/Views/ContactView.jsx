@@ -63,7 +63,7 @@ class ContactView extends React.Component {
     const dateNow = new Date()
     const minDate = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() + 1)
     return (
-      <Container fluid style={{height: '100%', background: `url(${require('../../images/e.jpg')})`}}>
+      <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/e.jpg')})`}}>
         <Modal open basic size='small' style={{top: '45%'}}>
           <Modal.Actions>
             <Button as={Link} to={{pathname: '/SearchView'}} inverted color='black'>

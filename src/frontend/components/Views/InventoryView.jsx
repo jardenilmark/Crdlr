@@ -1,9 +1,9 @@
 import React from 'react'
 import { Label, Popup, Header, Icon, Table, Image, Container, Button } from 'semantic-ui-react'
 import { isUserError } from '../../errorHandler'
-import InventoryHeader from '../../../backend/containers/invenHeaderContainer'
-import InventoryBody from '../../../backend/containers/invenBodyContainer'
-import InventoryFooter from '../../../backend/containers/invenFooterContainer'
+import InventoryHeader from '../../../backend/containers/InvenHeaderContainer'
+import InventoryBody from '../../../backend/containers/InvenBodyContainer'
+import InventoryFooter from '../../../backend/containers/InvenFooterContainer'
 import { setModalArr } from '../../inventoryActions'
 
 class InventoryView extends React.Component {

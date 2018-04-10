@@ -1,8 +1,8 @@
 import React from 'react'
 import Item from '../Items/Item'
 import { Dimmer, Container, Header, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
-import Dropdown from '../../../backend/containers/dropdownContainer'
-import Loader from '../../../backend/containers/loaderContainer'
+import Dropdown from '../../../backend/containers/DropdownContainer'
+import Loader from '../../../backend/containers/LoaderContainer'
 
 class SearchView extends React.Component {
   async intialize () {
@@ -37,13 +37,9 @@ class SearchView extends React.Component {
   render () {
     return (
       <Container fluid>
-        <Grid style={{marginTop: 1}} columns='equal'>
+        <Grid style={{marginTop: 1, marginLeft: 10, marginRight: 10}} columns='equal'>
           <Grid.Row>
-            <Grid.Column/>
-            <Grid.Column/>
             <Dropdown/>
-            <Grid.Column/>
-            <Grid.Column/>
           </Grid.Row>
         </Grid>
         <Divider/>

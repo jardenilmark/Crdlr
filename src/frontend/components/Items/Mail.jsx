@@ -16,10 +16,10 @@ class Mail extends React.Component {
       const toRender = []
       let count = 0
       obj.forEach(elem => {
-        let imageSrc = require('../../images/male.jpg')
+        let imageSrc = require('../../../../public/images/male.jpg')
         const innerCount = count
         if (elem.gender === 'Female') {
-          imageSrc = require('../../images/female.png')
+          imageSrc = require('../../../../public/images/female.png')
         }
         toRender.push(
           <Card key={innerCount}>
