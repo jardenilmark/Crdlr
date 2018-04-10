@@ -132,6 +132,7 @@ class InventoryBody extends React.Component {
         await getCarsAdvertised(userUID)
         const user = await getDocumentUID('users', userUID)
         const userData = user.data()
+        delete userData.isAdmin // To not include isAdmin property
         const transaction = { // To prevent them from having a transaction in real life and then just cancelling for free advertisment
           ...userData,
           fee: parseFloat(obj.Price) * 0.02,
