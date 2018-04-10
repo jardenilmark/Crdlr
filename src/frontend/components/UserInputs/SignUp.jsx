@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
 import { setDocument } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'

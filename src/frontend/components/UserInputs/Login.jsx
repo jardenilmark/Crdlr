@@ -1,6 +1,5 @@
 import React from 'react'
-import TitleBar from '../Bars/TitleBar'
-import { Menu, Icon, Popup, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Menu, Icon, Popup, Button, Form, Grid, Message } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'

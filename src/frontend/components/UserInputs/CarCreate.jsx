@@ -1,6 +1,6 @@
 import React from 'react'
 import { storage } from '../../../backend/database'
-import { Modal, Progress, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
+import { Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb } from '../../firestoreActions'
 import { getDocumentValues, generateRandomNum } from '../../documentHandler'
 import { isUserError } from '../../errorHandler'

@@ -1,6 +1,6 @@
 import React from 'react'
 import Item from '../Items/Item'
-import { Dimmer, Container, Header, Grid, Segment, Divider, Menu } from 'semantic-ui-react'
+import { Container, Grid, Divider } from 'semantic-ui-react'
 import Dropdown from '../../../backend/containers/DropdownContainer'
 import Loader from '../../../backend/containers/LoaderContainer'
 

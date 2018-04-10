@@ -134,7 +134,7 @@ class InventoryBody extends React.Component {
         const userData = user.data()
         const transaction = { // To prevent them from having a transaction in real life and then just cancelling for free advertisment
           ...userData,
-          fee: parseInt(obj.Price.slice(1)) * 0.02,
+          fee: parseFloat(obj.Price) * 0.02,
           transactionDate: getDate(new Date()),
           status: 'cancelled'
         }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Progress, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
+import { Progress } from 'semantic-ui-react'
 
 class ProgressBar extends React.Component {
   getProgressBar () {

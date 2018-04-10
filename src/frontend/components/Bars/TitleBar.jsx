@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginContainer from '../../../backend/containers/LoginContainer'
-import { Button, Menu, Header } from 'semantic-ui-react'
+import { Menu, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
 import SignedInView from '../../../backend/containers/SignedInContainer'

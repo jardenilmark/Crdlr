@@ -1,5 +1,5 @@
 import React from 'react'
-import { Label, Popup, Header, Icon, Table, Image, Container, Button } from 'semantic-ui-react'
+import { Table, Container } from 'semantic-ui-react'
 import { isUserError } from '../../errorHandler'
 import InventoryHeader from '../../../backend/containers/InvenHeaderContainer'
 import InventoryBody from '../../../backend/containers/InvenBodyContainer'

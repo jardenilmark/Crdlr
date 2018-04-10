@@ -3,7 +3,7 @@ import { Divider, Header, Input, Dropdown, Segment, Button, Container, Grid } fr
 import history from '../../../backend/history'
 import { addToDb, updateDocument, getDocument } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
-import { getDocumentValues, autoFillForm } from '../../documentHandler'
+import { getDocumentValues, autoFillForm, getDate } from '../../documentHandler'
 import alertify from 'alertify.js'
 import Validator from '../../validator'
 
@@ -29,7 +29,7 @@ class ConfirmationView extends React.Component {
         type: type,
         price: parseFloat(price) * 0.98,
         advertisementFee: parseFloat(price) * 0.02,
-        transactionDate: new Date(),
+        transactionDate: getDate(new Date()),
         status: 'bought'
       }
       await addToDb('transactions', obj)

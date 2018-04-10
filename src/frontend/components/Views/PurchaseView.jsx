@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Icon, Button, Modal, Container } from 'semantic-ui-react'
+import { Icon, Button, Modal, Container } from 'semantic-ui-react'
 import ConfirmationContainer from '../../../backend/containers/ConfirmationContainer'
 import { Link } from 'react-router-dom'
 
