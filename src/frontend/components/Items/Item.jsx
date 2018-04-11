@@ -30,7 +30,7 @@ class Item extends React.Component {
             <Card.Content>
               <Divider/>
               <Header size='medium' textAlign='center'>
-                P{item.price}
+                ₱{item.price}
               </Header>
               <Button.Group widths='3' size='small'>
                 <Button as={Link} to={{pathname: '/Contact', state: {owner: item.owner, image: item.image}}} primary>
