@@ -12,7 +12,8 @@ function mapStateToProps (state) {
     phoneError: state.error.phoneError,
     genderError: state.error.genderError,
     genderOptions: state.user.genderOptions,
-    creditCardError: state.error.creditCardError
+    creditCardError: state.error.creditCardError,
+    expirationDateError: state.error.expirationDateError
   }
 }
 

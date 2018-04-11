@@ -2,9 +2,7 @@ import React from 'react'
 import "firebase/storage"
 import shallow from './Enzyme.js'
 import SearchView from '../frontend/components/Views/SearchView'
-import { Dimmer, Loader, Header } from 'semantic-ui-react'
 import Dropdown from '../backend/containers/DropdownContainer'
-import Item from '../frontend/components/Items/Item'
 
 describe('<SearchView />', () => {
   let wrapper
@@ -13,7 +11,8 @@ describe('<SearchView />', () => {
   const car2 = {brand: 'Honda', model: 'RAV5', type: 'SUV', location: 'iloilo'}
   const car3 = {brand: 'Toyota', model: 'RAV6', type: 'Car', location: 'Manila'}
   beforeEach(() => {
-    wrapper = shallow(<SearchView initialize={jest.fn()}/>)
+    wrapper = shallow(<SearchView getCars={jest.fn()}
+      updateLoader={jest.fn()} updateCarList={jest.fn()}/>)
     allCars = [car, car2, car3]
   })
   it('renders <SearchView>', () => {

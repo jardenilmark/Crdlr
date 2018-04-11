@@ -9,7 +9,7 @@ import Validator from '../../validator'
 
 class ConfirmationView extends React.Component {
   async onClickHandler () {
-    const { item } = this.props
+    const { setError, item } = this.props
     const { brand, location, model, price, type } = item
     const arr = ['firstName', 'lastName', 'email', 'phone', 'gender', 'creditCard', 'address']
     const toCheck = getDocumentValues(arr)
@@ -19,6 +19,12 @@ class ConfirmationView extends React.Component {
       if (!validator.isValid(key, toCheck[key])) {
         isAllValid = false
       }
+    }
+    if (!document.getElementById('expirationDate').value) {
+      setError(true, 'GET_ERROR_EXPIRATIONDATE')
+      isAllValid = false
+    } else {
+      setError(false, 'GET_ERROR_EXPIRATIONDATE')
     }
     if (isAllValid) {
       const obj = {
@@ -78,7 +84,7 @@ class ConfirmationView extends React.Component {
 
   render () {
     const { fnError, lnError, emailError, phoneError, genderOptions,
-      genderError, creditCardError, addressError, setError } = this.props
+      genderError, creditCardError, addressError, setError, expirationDateError } = this.props
     return (
       <Container fluid style={{paddingTop: 20}}>
         <Grid textAlign='center' verticalAlign='middle'>
@@ -116,8 +122,8 @@ class ConfirmationView extends React.Component {
                 size='massive' transparent inverted style={{color: getColor(creditCardError)}}
                 onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/>
               <Divider/>
-              <Input id='expirationDate' fluid icon='calendar' iconPosition='left' type='date'
-                size='massive' transparent inverted min={getDate(new Date())} value={getDate(new Date())}/>
+              <Input id='expirationDate' fluid icon='calendar' iconPosition='left' type='date' style={{color: getColor(expirationDateError)}}
+                size='massive' transparent inverted min={getDate(new Date())}/>
               <Divider/>
               <Button fluid size='large' onClick={() => this.onClickHandler()}>Confirm</Button>
             </Segment>

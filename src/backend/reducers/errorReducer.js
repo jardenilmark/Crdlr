@@ -19,6 +19,8 @@ export default function reducer (state = initialState, action) {
     return {...state, creditCardError: action.payload}
   } else if (action.type === 'GET_ERROR_ADDRESS') {
     return {...state, addressError: action.payload}
+  } else if (action.type === 'GET_ERROR_EXPIRATIONDATE') {
+    return {...state, expirationDateError: action.payload}
   } else if (action.type === 'GET_SUCCESS') {
     return {...state,
       emailError: false,

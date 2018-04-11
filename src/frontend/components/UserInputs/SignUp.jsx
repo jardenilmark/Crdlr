@@ -30,6 +30,12 @@ class SignUp extends React.Component {
         isAllValid = false
       }
     }
+    if (!document.getElementById('expirationDate').value) {
+      isAllValid = false
+      setError(true, 'GET_ERROR_EXPIRATIONDATE')
+    } else {
+      setError(false, 'GET_ERROR_EXPIRATIONDATE')
+    }
     if (isAllValid) {
       try {
         const create = await auth.createUserWithEmailAndPassword(email, pass)
@@ -57,7 +63,8 @@ class SignUp extends React.Component {
   }
 
   render () {
-    const { fnError, lnError, emailError, passError, phoneError, genderError, setError, creditCardError, genderOptions } = this.props
+    console.log(this.props)
+    const { fnError, lnError, emailError, passError, phoneError, genderError, setError, creditCardError, genderOptions, expirationDateError } = this.props
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/c.png')})`}}>
         <Grid textAlign='center' verticalAlign='middle' style={{height: '80%'}}>
@@ -80,7 +87,7 @@ class SignUp extends React.Component {
                 <Form.Input id='creditCard' fluid icon='credit card alternative' iconPosition='left' placeholder='Credit Card'
                   type='password' error={creditCardError} onKeyUp={() => onKeyPressHandler('creditCard', 'GET_ERROR_CREDITCARD', setError)}/>
                 <Form.Input id='expirationDate' fluid icon='calendar' iconPosition='left'
-                  type='date' min={getDate(new Date())} value={getDate(new Date())}/>
+                  type='date' min={getDate(new Date())} error={expirationDateError}/>
                 <Form.Select id='gender' fluid options={genderOptions} placeholder='Gender' error={genderError}
                   onChange={() => onChangeHandler('gender', 'GET_ERROR_GENDER', setError)}/>
                 <Button color='black' fluid size='large' onClick={() => this.addUser()}>Confirm</Button>

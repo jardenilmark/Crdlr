@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
     genderError: state.error.genderError,
     creditCardError: state.error.creditCardError,
     addressError: state.error.addressError,
-    genderOptions: state.user.genderOptions
+    genderOptions: state.user.genderOptions,
+    expirationDateError: state.error.expirationDateError
   }
 }
 
