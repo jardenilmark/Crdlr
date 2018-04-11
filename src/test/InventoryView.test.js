@@ -1,5 +1,5 @@
 import React from 'react'
-import "firebase/storage"
+import 'firebase/storage'
 import localStorage from './localStorageMock'
 import shallow from './Enzyme.js'
 import InventoryView from '../frontend/components/Views/InventoryView'

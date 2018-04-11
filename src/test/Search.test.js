@@ -1,5 +1,5 @@
 import React from 'react'
-import "firebase/storage"
+import 'firebase/storage'
 import shallow from './Enzyme.js'
 import SearchView from '../frontend/components/Views/SearchView'
 import Dropdown from '../backend/containers/DropdownContainer'

@@ -1,5 +1,5 @@
 import React from 'react'
-import "firebase/storage"
+import 'firebase/storage'
 import shallow from './Enzyme.js'
 import AppView from '../frontend/components/Views/AppView'
 import TitleBar from '../backend/containers/TitleBarContainer'
