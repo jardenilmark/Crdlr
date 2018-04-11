@@ -75,7 +75,7 @@ class CarCreate extends React.Component {
         backgroundSize: '100% 100%'
       }}>
         <Grid textAlign='center' verticalAlign='middle' style={{ paddingTop: '7%' }}>
-          <Grid.Column style={{ maxWidth: '40%', paddingTop: 60 }}>
+          <Grid.Column style={{ maxWidth: '35%', paddingTop: 60 }}>
             <Segment piled textAlign='center' color='grey'>
               <ProgressBar/>
               <Form>
@@ -90,7 +90,8 @@ class CarCreate extends React.Component {
                 <Form.Dropdown id='location' selection placeholder='Location' options={locations}/>
               </Form>
               <Input type='file' onChange={ (e) => this.onChangeHandler(e.target.files[0], picId) } />
-              <Form.TextArea id='desc' placeholder='Additional Details' style={{marginTop: 20, marginBottom: 20, width: '100%', height: '10%'}} />
+              <Form.TextArea id='desc' placeholder='Additional Details' maxLength="255"
+                style={{marginTop: 20, marginBottom: 20, width: '100%', height: '10%'}} />
               <Button loading={progress > -1 && progress < 100} onClick={() => this.onClickHandler(picId)} content='Submit' secondary fluid/>
               {this.getWarningSign()}
             </Segment>
