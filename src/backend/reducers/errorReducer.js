@@ -1,4 +1,8 @@
-export default function reducer (state = {}, action) {
+const initialState = {
+  carFormErrors: []
+}
+
+export default function reducer (state = initialState, action) {
   if (action.type === 'GET_ERROR_EMAIL') {
     return {...state, emailError: action.payload}
   } else if (action.type === 'GET_ERROR_FIRSTNAME') {
@@ -26,6 +30,8 @@ export default function reducer (state = {}, action) {
       creditCardError: false,
       addressError: false
     }
+  } else if (action.type === 'GET_CARFORM_ERROR') {
+    return {...state, carFormErrors: action.payload}
   } else {
     return state
   }

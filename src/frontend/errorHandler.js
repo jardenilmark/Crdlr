@@ -59,3 +59,30 @@ export async function isUserError (history) {
   }
   return true
 }
+
+export function isCarCreateError (car, func, file) {
+  const errorMessages = []
+  if (!car['desc']) {
+    errorMessages.push('Please add more addition details to your car')
+  }
+  if (!car['price'] && /[^0-9]/g.test(car['price'])) {
+    errorMessages.push('Please place a valid price for your car')
+  }
+  if (car['brand'] === 'Brand') {
+    errorMessages.push('Please select the brand of your car')
+  }
+  if (car['type'] === 'Type') {
+    errorMessages.push('Please select the type of car')
+  }
+  if (car['location'] === 'Location') {
+    errorMessages.push('Please select the region of your car')
+  }
+  if (!file) {
+    errorMessages.push('Upload a picture of your car')
+  }
+  if (!car['model'] && /[^a-zA-Z0-9]/g.test(car['model'])) {
+    errorMessages.push('Specify the model of your car')
+  }
+  func(errorMessages, 'GET_CARFORM_ERROR')
+  return errorMessages.length === 0
+}

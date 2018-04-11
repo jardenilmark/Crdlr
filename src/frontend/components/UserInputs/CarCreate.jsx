@@ -1,9 +1,9 @@
 import React from 'react'
 import { storage } from '../../../backend/database'
-import { Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
+import { Message, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb } from '../../firestoreActions'
 import { getDocumentValues, generateRandomNum } from '../../documentHandler'
-import { isUserError } from '../../errorHandler'
+import { isUserError, isCarCreateError } from '../../errorHandler'
 import ProgressBar from '../../../backend/containers/ProgressBarContainer'
 import alertify from 'alertify.js'
 
@@ -28,33 +28,39 @@ class CarCreate extends React.Component {
   }
 
   async onClickHandler (id) {
-    const { file, setProgressBar, progress } = this.props
-    const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
-    const db = await addToDb('contacts', {people: []})
-    const car = {
-      ...getDocumentValues(dropArr),
-      available: true,
-      image: id,
-      owner: JSON.parse(localStorage.getItem('user')).uid,
-      peopleInterested: db.id
-    }
-    let isAllValid = true
-    for (const key in car) {
-      if ((!car[key] && key !== 'details') || car[key] === 'Brand' ||
-        car[key] === 'Location' || car[key] === 'Type' || !file) {
-        isAllValid = false
-        break
+    const { file, setProgressBar, progress, setUploadStatus, setError } = this.props
+    if (progress === -1 || progress === 100) {
+      const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
+      const car = {
+        ...getDocumentValues(dropArr),
+        available: true,
+        image: id,
+        owner: JSON.parse(localStorage.getItem('user')).uid
       }
+      if (isCarCreateError(car, setError, file)) {
+        storage.ref(`cars/${id}`).put(file).on('state_changed', async (snapshot) => {
+          let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          setProgressBar(progress)
+          if (progress === 100) {
+            const db = await addToDb('contacts', {people: []})
+            car['peopleInterested'] = db.id
+            await addToDb('cars', car)
+            alertify.success(`Car has been placed on sale`, 3)
+            setUploadStatus('done')
+          }
+        })
+      }
+    } else {
+      setUploadStatus('processing')
     }
-    if (isAllValid && (progress === -1 || progress === 100)) {
-      storage.ref(`cars/${id}`).put(file).on('state_changed', async (snapshot) => {
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        setProgressBar(progress)
-        if (progress === 100) {
-          await addToDb('cars', car)
-          alertify.success(`Car has been placed on sale`, 3)
-        }
-      })
+  }
+
+  getWarningSign () {
+    const { uploadStatus, carFormErrors } = this.props
+    if (uploadStatus === 'processing') {
+      return <Message error header='Unable to Comply!' content='Please wait until the data has been uploaded'/>
+    } else if (carFormErrors.length > 0) {
+      return <Message error header='There were some errors with your submission' list={carFormErrors}/>
     }
   }
 
@@ -62,7 +68,12 @@ class CarCreate extends React.Component {
     const picId = generateRandomNum(900000000)
     const { brands, types, locations, progress } = this.props
     return (
-      <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/d.jpg')})`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%'}}>
+      <Container fluid style={{
+        height: '100%',
+        background: `url(${require('../../../../public/images/d.jpg')})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100% 100%'
+      }}>
         <Grid textAlign='center' verticalAlign='middle' style={{ paddingTop: '7%' }}>
           <Grid.Column style={{ maxWidth: '40%', paddingTop: 60 }}>
             <Segment piled textAlign='center' color='grey'>
@@ -81,6 +92,7 @@ class CarCreate extends React.Component {
               <Input type='file' onChange={ (e) => this.onChangeHandler(e.target.files[0], picId) } />
               <Form.TextArea id='desc' placeholder='Additional Details' style={{marginTop: 20, marginBottom: 20, width: '100%', height: '10%'}} />
               <Button loading={progress > -1 && progress < 100} onClick={() => this.onClickHandler(picId)} content='Submit' secondary fluid/>
+              {this.getWarningSign()}
             </Segment>
           </Grid.Column>
         </Grid>

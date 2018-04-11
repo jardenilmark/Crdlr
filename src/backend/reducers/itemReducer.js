@@ -5,7 +5,8 @@ const initialState = {
   progress: -1,
   tablePropertyArray: ['Brand', 'Location', 'Model', 'Price', 'Type', 'Interested', 'Sold'],
   peopleModals: [],
-  loader: false
+  loader: false,
+  uploadStatus: 'done'
 }
 
 export default function reducer (state = initialState, action) {
@@ -27,6 +28,8 @@ export default function reducer (state = initialState, action) {
     return {...state, peopleModals: newArr}
   } else if (action.type === 'GET_LOADER') {
     return {...state, loader: action.payload}
+  } else if (action.type === 'GET_UPLOAD_STATUS') {
+    return {...state, uploadStatus: action.payload}
   } else {
     return state
   }

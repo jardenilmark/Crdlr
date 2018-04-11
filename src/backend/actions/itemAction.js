@@ -23,3 +23,9 @@ export function setPeopleModalVisibility (num, visibility) {
     dispatch(getData('SET_PEOPLE_VISIBILITY', {num: num, visibility: visibility}))
   }
 }
+
+export function setUploadStatus (status) {
+  return (dispatch) => {
+    dispatch(getData('GET_UPLOAD_STATUS', status))
+  }
+}
