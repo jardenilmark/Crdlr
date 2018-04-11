@@ -1,6 +1,8 @@
 const initialState = {
   brands: [],
   types: [],
+  filteredCars: [],
+  allCars: [],
   advertisedCars: []
 }
 
