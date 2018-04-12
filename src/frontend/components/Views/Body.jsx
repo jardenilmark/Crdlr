@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 class Body extends React.Component {
-  unlisten () {
+  getActiveItem () {
     const { setItemName, history } = this.props
     history.listen((location, action) => {
       let loc = location.pathname
@@ -14,7 +14,7 @@ class Body extends React.Component {
   }
 
   componentDidMount () {
-    this.unlisten()
+    this.getActiveItem()
   }
 
   render () {
