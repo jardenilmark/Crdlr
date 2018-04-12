@@ -1,6 +1,6 @@
 import React from 'react'
 import 'firebase/storage'
-import localStorage from './localStorageMock'
+import './localStorageMock'
 import shallow from './Enzyme.js'
 import Login from '../frontend/components/UserInputs/Login'
 import { Message } from 'semantic-ui-react'

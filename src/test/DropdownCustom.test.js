@@ -1,6 +1,6 @@
 import React from 'react'
 import 'firebase/storage'
-import localStorage from './localStorageMock'
+import './localStorageMock'
 import shallow from './Enzyme.js'
 import DropdownCustom from '../frontend/components/Items/DropdownCustom'
 import { Grid, Dropdown } from 'semantic-ui-react'

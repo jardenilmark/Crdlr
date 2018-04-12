@@ -63,7 +63,6 @@ class SignUp extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const { fnError, lnError, emailError, passError, phoneError, genderError, setError, creditCardError, genderOptions, expirationDateError } = this.props
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/c.png')})`}}>

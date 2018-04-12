@@ -1,6 +1,6 @@
 import React from 'react'
 import 'firebase/storage'
-import localStorage from './localStorageMock'
+import './localStorageMock'
 import shallow from './Enzyme.js'
 import ConfirmationView from '../frontend/components/Views/ConfirmationView'
 

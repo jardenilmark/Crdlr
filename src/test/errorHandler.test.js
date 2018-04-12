@@ -1,6 +1,6 @@
 import 'firebase/storage'
 import { getColor, isItemError, isCarCreateError } from '../frontend/errorHandler'
-import localStorage from './localStorageMock'
+import './localStorageMock'
 
 describe('errorHandler methods', () => {
   it('returns red if there is an error', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import 'firebase/storage'
+import './localStorageMock'
 import shallow from './Enzyme.js'
-import SignedInView from '../backend/containers/SignedInContainer'
 import LoginContainer from '../backend/containers/LoginContainer'
 import { Menu, Header } from 'semantic-ui-react'
 import TitleBar from '../frontend/components/Bars/TitleBar'
@@ -17,10 +17,6 @@ describe('<TitleBar /> ', () => {
   it('allows us to set props', () => {
     wrapper.setProps({foo: 'foo'})
     expect(wrapper.instance().props.foo).toBe('foo')
-  })
-  it('contains <SignedInView>', () => {
-    wrapper.setProps({currentUser: 'dummy user'})
-    expect(wrapper.find(SignedInView)).toHaveLength(1)
   })
   it('contains <LoginContainer>', () => {
     expect(wrapper.find(LoginContainer)).toHaveLength(1)
