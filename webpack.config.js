@@ -1,4 +1,5 @@
 const path = require('path')
+require('webpack')
 
 module.exports = {
   entry: path.join(__dirname, 'src/frontend/') +
