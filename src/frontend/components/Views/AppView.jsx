@@ -7,6 +7,7 @@ import InventoryContainer from '../../../backend/containers/InventoryContainer'
 import TitleBar from '../../../backend/containers/TitleBarContainer'
 import Body from '../../../backend/containers/BodyContainer'
 import ContactView from '../../../backend/containers/ContactContainer'
+import ReceiptView from '../../../backend/containers/ReceiptContainer'
 import { Container } from 'semantic-ui-react'
 import { Route } from 'react-router-dom'
 import PurchaseView from './PurchaseView'
@@ -24,6 +25,7 @@ class AppView extends React.Component {
           <Route exact path='/PurchaseView' component={PurchaseView} />
           <Route exact path='/InventoryView' component={InventoryContainer} />
           <Route exact path='/Contact' component={ContactView} />
+          <Route exact path='/ReceiptView' component={ReceiptView} />
         </Body>
       </Container>
     )

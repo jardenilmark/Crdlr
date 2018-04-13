@@ -4,12 +4,11 @@ import history from '../../../backend/history'
 import { addToDb, updateDocument, getDocument } from '../../firestoreActions'
 import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
 import { getDocumentValues, autoFillForm, getDate } from '../../documentHandler'
-import alertify from 'alertify.js'
 import Validator from '../../validator'
 
 class ConfirmationView extends React.Component {
   async onClickHandler () {
-    const { setError, item } = this.props
+    const { setError, item, setReceipt } = this.props
     const { brand, location, model, price, type } = item
     const arr = ['firstName', 'lastName', 'email', 'phone', 'gender', 'creditCard', 'address']
     const toCheck = getDocumentValues(arr)
@@ -45,8 +44,9 @@ class ConfirmationView extends React.Component {
         const data = cars.docs[i].data()
         if (JSON.stringify(data) === JSON.stringify(item)) {
           await updateDocument('cars', cars.docs[i].id, { available: false })
-          alertify.success(`Transaction Completed`, 3)
-          history.push('/SearchView')
+          obj.totalPrice = parseFloat(price)
+          setReceipt(obj)
+          history.push('/ReceiptView')
         }
       }
     }
@@ -90,7 +90,7 @@ class ConfirmationView extends React.Component {
         <Grid textAlign='center' verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: '80%' }}>
             <Segment stacked basic>
-              <Segment style={{background: 'transparent'}}>
+              <Segment basic>
                 <Header inverted size='huge'>CONFIRM PURCHASE</Header>
               </Segment>
               <Divider/>

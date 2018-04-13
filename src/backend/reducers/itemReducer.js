@@ -30,6 +30,16 @@ export default function reducer (state = initialState, action) {
     return {...state, loader: action.payload}
   } else if (action.type === 'GET_UPLOAD_STATUS') {
     return {...state, uploadStatus: action.payload}
+  } else if (action.type === 'GET_RECIEPT_INFO') {
+    return {
+      ...state,
+      receiptName: `${action.payload.firstName} ${action.payload.lastName}`,
+      receiptEmail: action.payload.email,
+      receiptLocation: action.payload.location,
+      totalPrice: action.payload.totalPrice,
+      receiptCar: `${action.payload.brand} ${action.payload.carModel}`,
+      transactionDate: action.payload.transactionDate
+    }
   } else {
     return state
   }

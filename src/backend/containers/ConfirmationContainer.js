@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getUser } from '../actions/userAction'
+import { setReceipt } from '../actions/itemAction'
 import { setError, setSuccess } from '../actions/errorAction'
 import ConfirmationView from '../../frontend/components/Views/ConfirmationView'
 
@@ -28,6 +29,9 @@ function mapDispatchToProps (dispatch) {
     },
     setSuccess () {
       dispatch(setSuccess())
+    },
+    setReceipt (obj) {
+      dispatch(setReceipt(obj))
     }
   })
 }

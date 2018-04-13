@@ -29,3 +29,9 @@ export function setUploadStatus (status) {
     dispatch(getData('GET_UPLOAD_STATUS', status))
   }
 }
+
+export function setReceipt (obj) {
+  return (dispatch) => {
+    dispatch(getData('GET_RECIEPT_INFO', obj))
+  }
+}
