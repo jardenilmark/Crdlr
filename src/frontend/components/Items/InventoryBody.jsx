@@ -149,7 +149,7 @@ class InventoryBody extends React.Component {
         delete userData.isAdmin // To not include isAdmin property
         const transaction = { // To prevent them from having a transaction in real life and then just cancelling for free advertisment
           ...userData,
-          fee: parseFloat(obj.Price) * 0.02,
+          fee: parseFloat(obj.price) * 0.02,
           transactionDate: getDate(new Date()),
           status: 'cancelled'
         }
