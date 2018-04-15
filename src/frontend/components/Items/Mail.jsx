@@ -5,7 +5,8 @@ import history from '../../../backend/history'
 
 class Mail extends React.Component {
   componentDidMount () {
-    if (!localStorage.getItem('user')) {
+    const { currentUser } = this.props
+    if (!currentUser) {
       history.push('/')
     }
   }
@@ -52,12 +53,12 @@ class Mail extends React.Component {
   }
 
   async onClickHandler (count) {
-    const { getCarsAdvertised, arrayId } = this.props
+    const { getCarsAdvertised, arrayId, currentUser } = this.props
     const people = await getDocumentUID('contacts', arrayId)
     const peopleData = people.data().people
     peopleData.splice(count, 1)
     await updateDocument('contacts', arrayId, {people: peopleData})
-    await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+    await getCarsAdvertised(JSON.parse(currentUser).uid)
   }
 
   render () {
@@ -68,7 +69,8 @@ class Mail extends React.Component {
         <Header size='tiny' onClick={() => setPeopleModalVisibility(id, true)}>
           <Icon name='mail'/>{obj.length} {message}
         </Header>
-      } open={visibility} onClose={() => setPeopleModalVisibility(id, false)} basic size='fullscreen' style={{top: '20%'}}>
+      } open={visibility} dimmer='blurring' onClose={() => setPeopleModalVisibility(id, false)}
+      basic size='fullscreen' style={{top: '20%'}}>
         <Modal.Actions>
           <Button onClick={() => setPeopleModalVisibility(id, false)} inverted color='black'>
             <Icon name='remove'/> BACK

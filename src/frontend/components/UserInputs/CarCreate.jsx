@@ -28,13 +28,13 @@ class CarCreate extends React.Component {
   }
 
   async onClickHandler () {
-    const { file, setProgressBar, progress, setUploadStatus, setError } = this.props
+    const { file, setProgressBar, progress, setUploadStatus, setError, currentUser } = this.props
     if (progress === -1 || progress === 100) {
       const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
       const car = {
         ...getDocumentValues(dropArr),
         available: true,
-        owner: JSON.parse(localStorage.getItem('user')).uid
+        owner: JSON.parse(currentUser).uid
       }
       if (isCarCreateError(car, setError, file)) {
         const db = await addToDb('contacts', {people: []})

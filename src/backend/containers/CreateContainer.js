@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
     file: state.img.file,
     progress: state.item.progress,
     uploadStatus: state.item.uploadStatus,
-    carFormErrors: state.error.carFormErrors
+    carFormErrors: state.error.carFormErrors,
+    currentUser: state.user.currentUser
   }
 }
 

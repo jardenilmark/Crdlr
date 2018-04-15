@@ -128,7 +128,7 @@ class InventoryBody extends React.Component {
   }
 
   async onClickHandler (imageId, obj) {
-    const { getCarsAdvertised } = this.props
+    const { getCarsAdvertised, currentUser } = this.props
     const option = swal(
       'Warning!',
       'You will be charged a 2% cancellation fee if you wish to continue',
@@ -139,7 +139,7 @@ class InventoryBody extends React.Component {
         icon: 'success'
       })
       if (await confirmation) {
-        const userUID = JSON.parse(localStorage.getItem('user')).uid
+        const userUID = JSON.parse(currentUser).uid
         await deleteDocument('contacts', obj.arrayId)
         await deleteDocument('cars', imageId)
         await storage.ref().child(`cars/${imageId}`).delete()

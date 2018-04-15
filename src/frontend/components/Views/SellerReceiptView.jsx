@@ -11,7 +11,7 @@ class SellerReceiptView extends React.Component {
         <Header size='tiny' onClick={() => setReceiptModalVisibility(num, true)}>
           Show Receipt
         </Header>
-      } open={receipt.visibility} basic size='fullscreen'>
+      } dimmer='blurring' open={receipt.visibility} basic size='fullscreen'>
         <Grid textAlign='center' verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: '50%' }}>
             <Segment stacked basic>

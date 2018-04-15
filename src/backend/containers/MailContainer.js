@@ -5,7 +5,8 @@ import Mail from '../../frontend/components/Items/Mail'
 
 function mapStateToProps (state) {
   return {
-    peopleModals: state.item.peopleModals
+    peopleModals: state.item.peopleModals,
+    currentUser: state.user.currentUser
   }
 }
 

@@ -50,12 +50,12 @@ class ConfirmationView extends React.Component {
   }
 
   async initialize () {
-    const { setSuccess, getUser, item } = this.props
+    const { setSuccess, getUser, item, currentUser } = this.props
     try {
       const { owner } = item
       const message = `You can't purchase your own vehicle`
       if (await isItemError(owner, message) === false) {
-        const parsedUser = JSON.parse(localStorage.getItem('user'))
+        const parsedUser = JSON.parse(currentUser)
         await getUser(parsedUser.uid, parsedUser.email)
         const { email, lastName, firstName, phone, gender, creditCard, expiration } = this.props.user
         const values = {

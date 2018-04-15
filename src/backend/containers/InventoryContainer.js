@@ -5,7 +5,8 @@ import InventoryView from '../../frontend/components/Views/InventoryView'
 
 const mapStateToProps = (state) => {
   return {
-    cars: state.cars.advertisedCars
+    cars: state.cars.advertisedCars,
+    currentUser: state.user.currentUser
   }
 }
 

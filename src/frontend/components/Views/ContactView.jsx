@@ -10,12 +10,12 @@ import alertify from 'alertify.js'
 
 class ContactView extends React.Component {
   async initialize () {
-    const { setSuccess, getUser, history } = this.props
+    const { setSuccess, getUser, history, currentUser } = this.props
     try {
       const { owner } = history.location.state
       const message = `You can't contact yourself`
       if (await isItemError(owner, message) === false) {
-        const user = JSON.parse(localStorage.getItem('user'))
+        const user = JSON.parse(currentUser)
         await getUser(user.uid, user.email)
         const { lastName, firstName, phone, gender } = this.props.user
         const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }

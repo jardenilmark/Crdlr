@@ -11,7 +11,8 @@ import Validator from '../../validator'
 class SignUp extends React.Component {
   addAction () {
     const { setCurrentUser } = this.props
-    localStorage.setItem('user', JSON.stringify(auth.currentUser)) // stringified since it will return [Object: object] when refreshed
+    localStorage.setItem('user',
+      JSON.stringify({uid: auth.currentUser.uid, email: auth.currentUser.email})) // stringified since it will return [Object: object] when refreshed
     setCurrentUser(auth.currentUser)
     history.push('/')
   }

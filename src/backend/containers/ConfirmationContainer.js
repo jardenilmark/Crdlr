@@ -16,7 +16,8 @@ const mapStateToProps = (state) => {
     addressError: state.error.addressError,
     genderOptions: state.user.genderOptions,
     expirationDateError: state.error.expirationDateError,
-    buyerReceiptModal: state.item.buyerReceiptModal
+    buyerReceiptModal: state.item.buyerReceiptModal,
+    currentUser: state.user.currentUser
   }
 }
 

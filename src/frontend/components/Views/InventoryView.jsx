@@ -12,9 +12,9 @@ class InventoryView extends React.Component {
   }
 
   async initialize () {
-    const { getCarsAdvertised, history } = this.props
+    const { getCarsAdvertised, history, currentUser } = this.props
     if (await isUserError(history)) {
-      await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
+      await getCarsAdvertised(JSON.parse(currentUser).uid)
       const { setPeopleModals, cars, setReceiptModals } = this.props
       await setPeopleModalArr(setPeopleModals, cars)
       await setReceiptModalArr(setReceiptModals, cars)
