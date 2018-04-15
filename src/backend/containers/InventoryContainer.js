@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getCarsAdvertised } from '../actions/carAction'
-import { setPeopleModals } from '../actions/itemAction'
+import { setPeopleModals, setReceiptModals } from '../actions/itemAction'
 import InventoryView from '../../frontend/components/Views/InventoryView'
 
 const mapStateToProps = (state) => {
@@ -16,6 +16,9 @@ function mapDispatchToProps (dispatch) {
     },
     setPeopleModals (modalArr) {
       dispatch(setPeopleModals(modalArr))
+    },
+    setReceiptModals (modalArr) {
+      dispatch(setReceiptModals(modalArr))
     }
   })
 }

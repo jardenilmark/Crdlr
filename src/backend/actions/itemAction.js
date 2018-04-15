@@ -1,4 +1,4 @@
-import { getData } from './data'
+import { getData, fetchFromDbDoc } from '../data'
 
 export function setActiveItem (name) {
   return (dispatch) => {
@@ -24,6 +24,18 @@ export function setPeopleModalVisibility (num, visibility) {
   }
 }
 
+export function setReceiptModals (modalArr) {
+  return (dispatch) => {
+    dispatch(getData('SET_RECEIPT_ARR', modalArr))
+  }
+}
+
+export function setReceiptModalVisibility (num, visibility) {
+  return (dispatch) => {
+    dispatch(getData('SET_RECEIPT_VISIBILITY', {num: num, visibility: visibility}))
+  }
+}
+
 export function setUploadStatus (status) {
   return (dispatch) => {
     dispatch(getData('GET_UPLOAD_STATUS', status))
@@ -31,7 +43,15 @@ export function setUploadStatus (status) {
 }
 
 export function setReceipt (obj) {
+  return async (dispatch) => {
+    const car = await fetchFromDbDoc('cars', obj.carId)
+    const toSend = {...obj, location: `${car.location}`, car: `${car.brand} ${car.model}`}
+    dispatch(getData('GET_RECIEPT_INFO', toSend))
+  }
+}
+
+export function setBuyerReceiptModalVisibility (visibility) {
   return (dispatch) => {
-    dispatch(getData('GET_RECIEPT_INFO', obj))
+    dispatch(getData('SET_RECEIPT_BUYER_VISIBILITY', visibility))
   }
 }

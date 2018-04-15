@@ -6,7 +6,7 @@ import { loadImage } from '../../documentHandler'
 class Item extends React.Component {
   render () {
     const { item } = this.props
-    const { image } = item
+    const { imageId } = item
     return (
       <Grid.Column mobile={16} tablet={8} computer={4}>
         <Card fluid>
@@ -19,7 +19,7 @@ class Item extends React.Component {
             </Header>
             <Reveal animated='fade' style={{margin: 0}}>
               <Reveal.Content visible style={{background: 'white', height: 300, width: '100%'}}>
-                <Image verticalAlign='middle' id={image} fluid src={loadImage(image)}/>
+                <Image verticalAlign='middle' id={imageId} fluid src={loadImage(imageId)}/>
               </Reveal.Content>
               <Reveal.Content hidden style={{height: 300}}>
                 <br/><br/>
@@ -33,7 +33,7 @@ class Item extends React.Component {
                 ₱{item.price}
               </Header>
               <Button.Group widths='3' size='small'>
-                <Button as={Link} to={{pathname: '/Contact', state: {owner: item.owner, image: item.image}}} primary>
+                <Button as={Link} to={{pathname: '/Contact', state: {owner: item.owner, imageId: item.imageId}}} primary>
                   CONTACT USER
                 </Button>
                 <Button.Or/>

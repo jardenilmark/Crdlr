@@ -1,24 +1,24 @@
-import { getData, fetchFromDbDoc, fetchFromDb, fetchFromDbFilter } from './data'
+import { getData, fetchFromDbDoc, fetchFromDb, fetchFromDbFilter } from '../data'
 import { compareData } from '../sort'
 
 async function fetchCarsConnected (uid) {
-  const collection = await fetchFromDbFilter('cars', 'owner', uid, true)
+  const collection = await fetchFromDbFilter('cars', 'owner', uid)
   const toSend = []
   await Promise.all(
     collection.map(
       async e => {
         const contacts = await fetchFromDbDoc('contacts', e.peopleInterested)
+        const car = await fetchFromDbFilter('cars', 'imageId', e.imageId)
         const obj = {
-          Brand: e.brand,
-          Location: e.location,
-          Model: e.model,
-          Price: e.price,
-          Type: e.type,
-          ImageId: e.image,
-          Id: e.id,
+          brand: car[0].brand,
+          location: car[0].location,
+          model: car[0].model,
+          price: car[0].price,
+          type: car[0].type,
+          imageId: e.imageId,
           arrayId: e.peopleInterested,
           peopleInterested: contacts.people,
-          Sold: !e.available
+          sold: !e.available
         }
         toSend.push(obj)
       }
@@ -30,7 +30,7 @@ async function fetchCarsConnected (uid) {
 export function getCarsAdvertised (uid) {
   return async (dispatch) => {
     const arr = await fetchCarsConnected(uid)
-    compareData(arr, 'Brand')
+    compareData(arr, 'brand')
     dispatch(getData('GET_CARS_OWNER', arr))
   }
 }
@@ -66,6 +66,7 @@ export function fetchCarBrands () {
     dispatch(getData('GET_CAR_BRANDS', arr))
   }
 }
+
 export function updateLoader (loader) {
   return (dispatch) => {
     dispatch(getData('GET_LOADER', loader))

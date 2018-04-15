@@ -1,4 +1,4 @@
-import { getData } from './data'
+import { getData } from '../data'
 
 export function setError (error, type) {
   return (dispatch) => {

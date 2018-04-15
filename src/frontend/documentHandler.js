@@ -1,19 +1,15 @@
 import { storage } from '../backend/database'
 
 export function getDate (date) {
-  let month = date.getMonth()
+  let month = date.getMonth() + 1
   let day = date.getDate()
-  if (date.getMonth() < 10) {
-    month = `0${date.getMonth()}`
+  if (month < 10) {
+    month = `0${month}`
   }
-  if (date.getDate() < 10) {
-    day = `0${date.getDate()}`
+  if (day < 10) {
+    day = `0${day}`
   }
-  return `${date.getFullYear()}-${month + 1}-${day}`
-}
-
-export function generateRandomNum (limit) {
-  return Math.floor(Math.random() * limit)
+  return `${date.getFullYear()}-${month}-${day}`
 }
 
 export function getDocumentValues (arr) {

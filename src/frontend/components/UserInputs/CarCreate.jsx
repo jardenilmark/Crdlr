@@ -1,8 +1,8 @@
 import React from 'react'
 import { storage } from '../../../backend/database'
 import { Message, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
-import { addToDb } from '../../firestoreActions'
-import { getDocumentValues, generateRandomNum } from '../../documentHandler'
+import { addToDb, updateDocument } from '../../../backend/data'
+import { getDocumentValues } from '../../documentHandler'
 import { isUserError, isCarCreateError } from '../../errorHandler'
 import ProgressBar from '../../../backend/containers/ProgressBarContainer'
 import alertify from 'alertify.js'
@@ -27,24 +27,24 @@ class CarCreate extends React.Component {
     setImageFile(file)
   }
 
-  async onClickHandler (id) {
+  async onClickHandler () {
     const { file, setProgressBar, progress, setUploadStatus, setError } = this.props
     if (progress === -1 || progress === 100) {
       const dropArr = ['brand', 'location', 'type', 'model', 'price', 'desc']
       const car = {
         ...getDocumentValues(dropArr),
         available: true,
-        image: id,
         owner: JSON.parse(localStorage.getItem('user')).uid
       }
       if (isCarCreateError(car, setError, file)) {
-        storage.ref(`cars/${id}`).put(file).on('state_changed', async (snapshot) => {
+        const db = await addToDb('contacts', {people: []})
+        car['peopleInterested'] = db.id
+        const carDb = await addToDb('cars', car)
+        await updateDocument('cars', carDb.id, {imageId: carDb.id})
+        storage.ref(`cars/${carDb.id}`).put(file).on('state_changed', async (snapshot) => {
           let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           setProgressBar(progress)
           if (progress === 100) {
-            const db = await addToDb('contacts', {people: []})
-            car['peopleInterested'] = db.id
-            await addToDb('cars', car)
             alertify.success(`Car has been placed on sale`, 3)
             setUploadStatus('done')
           }
@@ -65,7 +65,6 @@ class CarCreate extends React.Component {
   }
 
   render () {
-    const picId = generateRandomNum(900000000)
     const { brands, types, locations, progress } = this.props
     return (
       <Container fluid style={{
@@ -89,10 +88,10 @@ class CarCreate extends React.Component {
                 </Form.Group>
                 <Form.Dropdown id='location' selection placeholder='Location' options={locations}/>
               </Form>
-              <Input type='file' onChange={ (e) => this.onChangeHandler(e.target.files[0], picId) } />
+              <Input type='file' onChange={ (e) => this.onChangeHandler(e.target.files[0]) } />
               <Form.TextArea id='desc' placeholder='Additional Details' maxLength="255"
                 style={{marginTop: 20, marginBottom: 20, width: '100%', height: '10%'}} />
-              <Button loading={progress > -1 && progress < 100} onClick={() => this.onClickHandler(picId)} content='Submit' secondary fluid/>
+              <Button loading={progress > -1 && progress < 100} onClick={() => this.onClickHandler()} content='Submit' secondary fluid/>
               {this.getWarningSign()}
             </Segment>
           </Grid.Column>

@@ -4,7 +4,7 @@ import { isUserError } from '../../errorHandler'
 import InventoryHeader from '../../../backend/containers/InvenHeaderContainer'
 import InventoryBody from '../../../backend/containers/InvenBodyContainer'
 import InventoryFooter from '../../../backend/containers/InvenFooterContainer'
-import { setModalArr } from '../../inventoryActions'
+import { setPeopleModalArr, setReceiptModalArr } from '../../inventoryActions'
 
 class InventoryView extends React.Component {
   componentDidMount () {
@@ -15,8 +15,9 @@ class InventoryView extends React.Component {
     const { getCarsAdvertised, history } = this.props
     if (await isUserError(history)) {
       await getCarsAdvertised(JSON.parse(localStorage.getItem('user')).uid)
-      const { setPeopleModals, cars } = this.props
-      setModalArr(setPeopleModals, cars)
+      const { setPeopleModals, cars, setReceiptModals } = this.props
+      await setPeopleModalArr(setPeopleModals, cars)
+      await setReceiptModalArr(setReceiptModals, cars)
     }
   }
 

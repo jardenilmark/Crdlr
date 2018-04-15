@@ -9,13 +9,13 @@ describe('inventoryAction methods', () => {
     })
   })
   it('returns false if key is in the banned keys', () => {
-    const arr = ['peopleInterested', 'Id']
+    const arr = ['peopleInterested', 'id']
     arr.forEach(e => {
       expect(isAcceptedKey(e)).toBeFalsy()
     })
   })
   it('gets the number of cars sold in the array', () => {
-    const arr = [{Sold: false}, {Sold: true}, {Sold: false}]
+    const arr = [{sold: false}, {sold: true}, {sold: false}]
     expect(getNumberCarsSold(arr)).toEqual(1)
   })
 })

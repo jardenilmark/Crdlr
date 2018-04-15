@@ -1,7 +1,7 @@
 import React from 'react'
-import { Icon, Button, Modal, Container } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import ConfirmationContainer from '../../../backend/containers/ConfirmationContainer'
-import { Link } from 'react-router-dom'
+import BuyerReceiptContainer from '../../../backend/containers/BuyerReceiptContainer'
 
 class PurchaseView extends React.Component {
   render () {
@@ -12,14 +12,8 @@ class PurchaseView extends React.Component {
     }
     return (
       <Container fluid style={{height: '100%', background: `url(${require('../../../../public/images/e.png')})`}}>
-        <Modal basic open>
-          <Modal.Actions>
-            <Button as={Link} to={{pathname: '/SearchView'}} inverted color='black'>
-              <Icon name='remove' /> BACK
-            </Button>
-          </Modal.Actions>
-          <ConfirmationContainer item={item} num={num}/>
-        </Modal>
+        <ConfirmationContainer item={item} num={num} />
+        <BuyerReceiptContainer />
       </Container>
     )
   }

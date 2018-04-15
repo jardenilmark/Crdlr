@@ -3,7 +3,7 @@ import itemReducer from '../backend/reducers/itemReducer'
 describe('itemReducer ', () => {
   let data
   beforeEach(() => {
-    data = { type: '', payload: 'test', num: 0, visibility: true }
+    data = {type: '', payload: 'test'}
   })
   it('returns active item data', () => {
     data.type = 'GET_ITEM'
@@ -13,21 +13,14 @@ describe('itemReducer ', () => {
     data.type = 'GET_PROGRESS'
     expect(itemReducer({}, data)).toEqual({progress: 'test'})
   })
-  it('returns itemModals data', () => {
-    data.type = 'SET_MODAL_ARR'
-    expect(itemReducer({}, data)).toEqual({itemModals: 'test'})
-  })
-  it('updates itemModals array', () => {
-    data.type = 'SET_MODAL_VISIBILITY'
-    expect(itemReducer({itemModals: [{visibility: false}]}, data)).toEqual({itemModals: [{visibility: false}]})
-  })
-  it('returns itemModals data', () => {
+  it('returns peopleModals data', () => {
     data.type = 'SET_PEOPLE_ARR'
     expect(itemReducer({}, data)).toEqual({peopleModals: 'test'})
   })
   it('updates peopleModals array', () => {
     data.type = 'SET_PEOPLE_VISIBILITY'
-    expect(itemReducer({peopleModals: [{visibility: false}]}, data)).toEqual({peopleModals: [{visibility: false}]})
+    data.payload = {visibility: true, num: 0}
+    expect(itemReducer({peopleModals: [{visibility: false}]}, data)).toEqual({peopleModals: [{visibility: true}]})
   })
   it('returns loader data', () => {
     data.type = 'GET_LOADER'

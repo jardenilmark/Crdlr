@@ -6,7 +6,8 @@ function mapStateToProps (state) {
   return {
     cars: state.cars.advertisedCars,
     peopleModals: state.item.peopleModals,
-    propertyArray: state.item.tablePropertyArray
+    propertyArray: state.item.tablePropertyArray,
+    receiptModals: state.item.receiptModals
   }
 }
 

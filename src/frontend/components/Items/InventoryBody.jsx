@@ -1,9 +1,10 @@
 import React from 'react'
 import { Icon, Table, Image, Popup } from 'semantic-ui-react'
 import { isAcceptedKey } from '../../inventoryActions'
-import { deleteDocument, getDocumentUID, addToDb } from '../../firestoreActions'
+import { deleteDocument, getDocumentUID, addToDb } from '../../../backend/data'
 import { loadImage, getDate } from '../../documentHandler'
 import { storage } from '../../../backend/database'
+import Receipt from '../../../backend/containers/SellerReceiptContainer'
 import Mail from '../../../backend/containers/MailContainer'
 import swal from 'sweetalert'
 
@@ -15,7 +16,7 @@ class InventoryBody extends React.Component {
       return (<Table.Cell key={this.keyCount++}>{obj}</Table.Cell>)
     }
     if (key === 'peopleInterested') {
-      if (cars[num]['Sold']) {
+      if (cars[num]['sold']) {
         return (
           <Table.Cell key={this.keyCount++}>
             N/A
@@ -44,9 +45,9 @@ class InventoryBody extends React.Component {
   }
 
   getRowContents (num) {
-    const { cars } = this.props
+    const { cars, receiptModals } = this.props
     const toRender = []
-    const imageKey = `${cars[num]['ImageId']}`
+    const imageKey = `${cars[num]['imageId']}`
     toRender.push(
       <Table.Cell key={this.keyCount++}>
         <Image id={imageKey} rounded size='small' src={loadImage(imageKey)}/>
@@ -64,13 +65,26 @@ class InventoryBody extends React.Component {
         toRender.push(
           <Table.Cell key={this.keyCount++}>
             <Popup trigger={<Icon color='red' name='close' size='large'
-              onClick={() => this.onClickHandler(cars[num]['ImageId'], cars[num]['Id'], cars[num])}/>}
+              onClick={() => this.onClickHandler(cars[num]['imageId'], cars[num])}/>}
             content='**Click on this icon to cancel advertisment'/>
           </Table.Cell>
         )
       } else {
         toRender.push(this.getRowSubContents(key, num))
       }
+    }
+    if (cars[num]['sold'] && receiptModals.length !== 0) {
+      toRender.push(
+        <Table.Cell key={this.keyCount++}>
+          <Receipt num={this.receiptCount++}/>
+        </Table.Cell>
+      )
+    } else {
+      toRender.push(
+        <Table.Cell key={this.keyCount++}>
+          N/A
+        </Table.Cell>
+      )
     }
     return toRender
   }
@@ -87,6 +101,7 @@ class InventoryBody extends React.Component {
           {propertyArray.map(e => {
             return (<Table.Cell key={this.keyCount++}/>)
           })}
+          <Table.Cell/>
         </Table.Row>
       )
     }
@@ -99,6 +114,7 @@ class InventoryBody extends React.Component {
     const minSize = 8
     let count = 0
     this.keyCount = 0
+    this.receiptCount = 0
     cars.forEach(e => {
       arr.push(
         <Table.Row key={this.keyCount}>
@@ -111,7 +127,7 @@ class InventoryBody extends React.Component {
     return toRender
   }
 
-  async onClickHandler (imageId, id, obj) {
+  async onClickHandler (imageId, obj) {
     const { getCarsAdvertised } = this.props
     const option = swal(
       'Warning!',
@@ -125,7 +141,7 @@ class InventoryBody extends React.Component {
       if (await confirmation) {
         const userUID = JSON.parse(localStorage.getItem('user')).uid
         await deleteDocument('contacts', obj.arrayId)
-        await deleteDocument('cars', id)
+        await deleteDocument('cars', imageId)
         await storage.ref().child(`cars/${imageId}`).delete()
         await getCarsAdvertised(userUID)
         const user = await getDocumentUID('users', userUID)

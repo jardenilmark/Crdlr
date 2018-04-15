@@ -6,7 +6,7 @@ class InventoryHeader extends React.Component {
     const { propertyArray } = this.props
     const toRender = []
     let count = 0
-    toRender.push(<Table.HeaderCell key={count++}/>)
+    toRender.push(<Table.HeaderCell key={count++} />)
     propertyArray.forEach(e => {
       if (e === 'peopleInterested') {
         toRender.push(<Table.HeaderCell key={count++}>Interested Buyers</Table.HeaderCell>)
@@ -14,6 +14,7 @@ class InventoryHeader extends React.Component {
         toRender.push(<Table.HeaderCell key={count++}>{e}</Table.HeaderCell>)
       }
     })
+    toRender.push(<Table.HeaderCell key={count++}>Receipt</Table.HeaderCell>)
     return toRender
   }
 

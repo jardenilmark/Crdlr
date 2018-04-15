@@ -12,7 +12,7 @@ class InventoryFooter extends React.Component {
       numberSold = getNumberCarsSold(cars)
     }
     let count = 0
-    for (let i = 0; i < propertyArray.length - 1; i++) {
+    for (let i = 0; i < propertyArray.length; i++) {
       renderEmptyRows.push(<Table.HeaderCell key={count++}/>)
     }
     toRender.push(

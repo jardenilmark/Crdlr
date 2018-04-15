@@ -1,4 +1,4 @@
-import { getData, fetchFromDb } from './data'
+import { getData, fetchFromDb } from '../data'
 import { compareData } from '../sort'
 
 export function fetchLocations (data) {

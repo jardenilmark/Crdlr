@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getUser } from '../actions/userAction'
-import { setReceipt } from '../actions/itemAction'
+import { setReceipt, setBuyerReceiptModalVisibility } from '../actions/itemAction'
 import { setError, setSuccess } from '../actions/errorAction'
 import ConfirmationView from '../../frontend/components/Views/ConfirmationView'
 
@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
     creditCardError: state.error.creditCardError,
     addressError: state.error.addressError,
     genderOptions: state.user.genderOptions,
-    expirationDateError: state.error.expirationDateError
+    expirationDateError: state.error.expirationDateError,
+    buyerReceiptModal: state.item.buyerReceiptModal
   }
 }
 
@@ -32,6 +33,9 @@ function mapDispatchToProps (dispatch) {
     },
     setReceipt (obj) {
       dispatch(setReceipt(obj))
+    },
+    setBuyerReceiptModalVisibility (visibility) {
+      dispatch(setBuyerReceiptModalVisibility(visibility))
     }
   })
 }

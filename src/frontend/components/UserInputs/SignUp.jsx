@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import { auth } from '../../../backend/database'
-import { setDocument } from '../../firestoreActions'
+import { setDocument } from '../../../backend/data'
 import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'
 import { getDocumentValues, getDate } from '../../documentHandler'
 import swal from 'sweetalert'

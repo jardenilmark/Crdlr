@@ -1,4 +1,37 @@
-import { firestore } from '../backend/database'
+import { firestore } from './database'
+
+export function getData (type, data) {
+  return {
+    type: type,
+    payload: data
+  }
+}
+
+export async function fetchFromDb (name) {
+  const collection = await firestore.collection(name).get()
+  const arr = []
+  collection.forEach(e => {
+    arr.push(e.data())
+  })
+  return arr
+}
+
+export async function fetchFromDbFilter (name, field, data) {
+  const collection = await firestore.collection(name).where(field, '==', data).get()
+  const arr = []
+  collection.forEach(e => {
+    arr.push(e.data())
+  })
+  return arr
+}
+
+export async function fetchFromDbDoc (name, id) {
+  const doc = await firestore.collection(name).doc(id).get()
+  if (doc.exists) {
+    return doc.data()
+  }
+  return null
+}
 
 export function addToDb (collection, object) {
   return firestore.collection(collection).add(object)

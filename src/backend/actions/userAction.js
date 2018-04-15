@@ -1,5 +1,5 @@
 import { firestore } from '../database'
-import { getData } from './data'
+import { getData } from '../data'
 
 export function setCurrentUser (name) {
   return (dispatch) => {

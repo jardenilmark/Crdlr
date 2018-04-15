@@ -3,7 +3,7 @@ import { Label, Modal, Divider, Input, Button, Header, TextArea, Icon, Container
 import { Link } from 'react-router-dom'
 import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
 import { getDocumentValues, autoFillForm, getDate } from '../../documentHandler'
-import { getDocument, updateDocument, getDocumentUID } from '../../firestoreActions'
+import { getDocument, updateDocument, getDocumentUID } from '../../../backend/data'
 import swal from 'sweetalert'
 import Validator from '../../validator'
 import alertify from 'alertify.js'
@@ -42,7 +42,7 @@ class ContactView extends React.Component {
     if (isAllValid) {
       values['owner'] = history.location.state.owner
       values['date'] = document.getElementById('date').value
-      const car = await getDocument('cars', 'image', history.location.state.image)
+      const car = await getDocument('cars', 'imageId', history.location.state.imageId)
       const arrId = car.docs[0].data().peopleInterested
       const peopleInterested = await getDocumentUID('contacts', arrId)
       const dataToSend = {people: [...peopleInterested.data().people, values]}
@@ -92,7 +92,7 @@ class ContactView extends React.Component {
                     Preferred date of meet up
                 </Header>
               </Label>
-              <Input fluid id='date' inverted transparent type='date' min={getDate(minDate)} value={getDate(minDate)} />
+              <Input fluid id='date' inverted transparent type='date' min={getDate(minDate)}/>
               <Divider />
               <TextArea id='message' autoHeight rows={5} placeholder='Message'
                 style={{background: 'transparent', width: '100%', color: 'white'}} />

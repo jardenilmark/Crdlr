@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Modal, Card, Image, Button, Icon } from 'semantic-ui-react'
-import { getDocumentUID, updateDocument } from '../../firestoreActions'
+import { getDocumentUID, updateDocument } from '../../../backend/data'
 import history from '../../../backend/history'
 
 class Mail extends React.Component {
@@ -65,12 +65,12 @@ class Mail extends React.Component {
     const visibility = peopleModals[id].visibility
     return (
       <Modal trigger={
-        <Header size='tiny' onClick={() => setPeopleModalVisibility(id, {visibility: true})}>
+        <Header size='tiny' onClick={() => setPeopleModalVisibility(id, true)}>
           <Icon name='mail'/>{obj.length} {message}
         </Header>
-      } open={visibility} onClose={() => setPeopleModalVisibility(id, {visibility: false})} basic size='fullscreen' style={{top: '20%'}}>
+      } open={visibility} onClose={() => setPeopleModalVisibility(id, false)} basic size='fullscreen' style={{top: '20%'}}>
         <Modal.Actions>
-          <Button onClick={() => setPeopleModalVisibility(id, {visibility: false})} inverted color='black'>
+          <Button onClick={() => setPeopleModalVisibility(id, false)} inverted color='black'>
             <Icon name='remove'/> BACK
           </Button>
         </Modal.Actions>
