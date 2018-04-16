@@ -7,7 +7,8 @@ function mapStateToProps (state) {
     cars: state.cars.advertisedCars,
     peopleModals: state.item.peopleModals,
     propertyArray: state.item.tablePropertyArray,
-    receiptModals: state.item.receiptModals
+    receiptModals: state.item.receiptModals,
+    currentUser: state.user.currentUser
   }
 }
 
