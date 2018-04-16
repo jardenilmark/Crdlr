@@ -11,8 +11,7 @@ describe('<SearchView />', () => {
   const car2 = {brand: 'Honda', model: 'RAV5', type: 'SUV', location: 'iloilo'}
   const car3 = {brand: 'Toyota', model: 'RAV6', type: 'Car', location: 'Manila'}
   beforeEach(() => {
-    wrapper = shallow(<SearchView getCars={jest.fn()}
-      updateLoader={jest.fn()} updateCarList={jest.fn()}/>)
+    wrapper = shallow(<SearchView getCars={jest.fn()} updateCarList={jest.fn()}/>)
     allCars = [car, car2, car3]
   })
   it('renders <SearchView>', () => {

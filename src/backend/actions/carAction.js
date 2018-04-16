@@ -35,11 +35,15 @@ export function getCarsAdvertised (uid) {
   }
 }
 
-export function fetchCars () {
+export function fetchCars (uid) {
   return async (dispatch) => {
     const arr = await fetchFromDbFilter('cars', 'available', true)
-    compareData(arr, 'brand')
-    dispatch(getData('GET_CARS', arr))
+    let filteredArr = arr
+    if (uid) {
+      filteredArr = arr.filter(e => e.owner !== uid)
+    }
+    compareData(filteredArr, 'brand')
+    dispatch(getData('GET_CARS', filteredArr))
   }
 }
 
@@ -51,6 +55,7 @@ export function fetchCarTypes () {
     types.forEach(e => {
       arr.push({key: e.type, text: e.type, value: e.type})
     })
+    dispatch(getData('GET_LOADER', true))
     dispatch(getData('GET_CAR_TYPES', arr))
   }
 }
@@ -64,12 +69,6 @@ export function fetchCarBrands () {
       arr.push({key: e.brand, text: e.brand, value: e.brand})
     })
     dispatch(getData('GET_CAR_BRANDS', arr))
-  }
-}
-
-export function updateLoader (loader) {
-  return (dispatch) => {
-    dispatch(getData('GET_LOADER', loader))
   }
 }
 

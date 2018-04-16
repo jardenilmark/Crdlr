@@ -6,11 +6,14 @@ import Loader from '../../../backend/containers/LoaderContainer'
 
 class SearchView extends React.Component {
   async intialize () {
-    const { getCars, updateLoader, updateCarList } = this.props
-    setTimeout(() => {
-      updateLoader(true)
-    }, 6000)
-    await getCars()
+    const { getCars, updateCarList, currentUser } = this.props
+    let uid
+    try {
+      uid = JSON.parse(currentUser).uid
+    } catch (e) {
+      // do nothing
+    }
+    await getCars(uid)
     const { allCars } = this.props
     updateCarList(allCars)
   }

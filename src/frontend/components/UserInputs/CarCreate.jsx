@@ -2,7 +2,7 @@ import React from 'react'
 import { storage } from '../../../backend/database'
 import { Message, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
 import { addToDb, updateDocument } from '../../../backend/data'
-import { getDocumentValues } from '../../documentHandler'
+import { getDocumentValues, getNum } from '../../documentHandler'
 import { isUserError, isCarCreateError } from '../../errorHandler'
 import ProgressBar from '../../../backend/containers/ProgressBarContainer'
 import alertify from 'alertify.js'
@@ -39,6 +39,8 @@ class CarCreate extends React.Component {
       if (isCarCreateError(car, setError, file)) {
         const db = await addToDb('contacts', {people: []})
         car['peopleInterested'] = db.id
+        const num = car['price']
+        car['price'] = getNum(JSON.parse(num))
         const carDb = await addToDb('cars', car)
         await updateDocument('cars', carDb.id, {imageId: carDb.id})
         storage.ref(`cars/${carDb.id}`).put(file).on('state_changed', async (snapshot) => {

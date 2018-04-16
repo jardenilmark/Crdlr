@@ -42,3 +42,7 @@ export function autoFillForm (values) {
     }
   }
 }
+
+export function getNum (num) {
+  return num.toLocaleString()
+}
