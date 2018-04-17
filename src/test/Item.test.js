@@ -7,7 +7,7 @@ import { Image } from 'semantic-ui-react'
 describe('<Item />', () => {
   let wrapper
   beforeEach(() => {
-    const item = {brand: 'Toyota', model: 'RAV4', type: 'Car', location: 'Cebu', imageId: '352171216'}
+    const item = {brand: 'Toyota', model: 'RAV4', type: 'Car', price: '4000', location: 'Cebu', imageId: '352171216'}
     wrapper = shallow(<Item item={item} id={0}/>)
   })
   it('renders <Item>', () => {
