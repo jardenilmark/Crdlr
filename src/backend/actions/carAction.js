@@ -1,5 +1,6 @@
 import { getData, fetchFromDbDoc, fetchFromDb, fetchFromDbFilter } from '../data'
 import { compareData } from '../sort'
+import { getNum } from '../../frontend/documentHandler'
 
 async function fetchCarsConnected (uid) {
   const collection = await fetchFromDbFilter('cars', 'owner', uid)
@@ -13,7 +14,7 @@ async function fetchCarsConnected (uid) {
           brand: car[0].brand,
           location: car[0].location,
           model: car[0].model,
-          price: car[0].price,
+          price: getNum(JSON.parse(car[0].price)),
           type: car[0].type,
           imageId: e.imageId,
           arrayId: e.peopleInterested,

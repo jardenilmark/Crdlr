@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { loadImage } from '../../documentHandler'
+import { loadImage, getNum } from '../../documentHandler'
 
 class Item extends React.Component {
   render () {
@@ -30,7 +30,7 @@ class Item extends React.Component {
             <Card.Content>
               <Divider/>
               <Header size='medium' textAlign='center'>
-                ₱{item.price}
+                ₱{getNum(JSON.parse(item.price))}
               </Header>
               <Button.Group widths='3' size='small'>
                 <Button as={Link} to={{pathname: '/Contact', state: {owner: item.owner, imageId: item.imageId}}} primary>
