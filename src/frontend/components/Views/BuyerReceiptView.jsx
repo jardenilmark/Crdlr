@@ -5,10 +5,9 @@ import alertify from 'alertify.js'
 
 class ReceiptView extends React.Component {
   onClickHandler () {
-    const { history, setBuyerReceiptModalVisibility } = this.props
+    const { setBuyerReceiptModalVisibility } = this.props
     alertify.success(`Transaction Completed`, 3)
     setBuyerReceiptModalVisibility(false)
-    history.push('/SearchView')
   }
 
   render () {
