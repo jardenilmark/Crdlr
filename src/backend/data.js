@@ -9,20 +9,12 @@ export function getData (type, data) {
 
 export async function fetchFromDb (name) {
   const collection = await firestore.collection(name).get()
-  const arr = []
-  collection.forEach(e => {
-    arr.push(e.data())
-  })
-  return arr
+  return collection.docs.map(e => e.data())
 }
 
 export async function fetchFromDbFilter (name, field, data) {
   const collection = await firestore.collection(name).where(field, '==', data).get()
-  const arr = []
-  collection.forEach(e => {
-    arr.push(e.data())
-  })
-  return arr
+  return collection.docs.map(e => e.data())
 }
 
 export async function fetchFromDbDoc (name, id) {

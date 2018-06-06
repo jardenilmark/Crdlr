@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
+import { logOutUser } from '../actions/logAction'
 import SignOut from '../../frontend/components/UserInputs/SignOut'
-import { setPeopleModals } from '../actions/itemAction'
 
 function mapStateToProps (state) {
   return {}
@@ -8,8 +8,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return ({
-    setPeopleModals (user) {
-      dispatch(setPeopleModals(user))
+    logOutUser () {
+      dispatch(logOutUser())
     }
   })
 }

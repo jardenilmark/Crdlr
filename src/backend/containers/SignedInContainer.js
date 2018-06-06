@@ -1,16 +1,15 @@
 import { connect } from 'react-redux'
+import { logOutUser } from '../actions/logAction'
 import SignedIn from '../../frontend/components/Views/SignedInView'
-import { setCurrentUser } from '../actions/userAction'
+
 function mapStateToProps (state) {
-  return {
-    activeItem: state.item.activeItem
-  }
+  return {}
 }
 
 function mapDispatchToProps (dispatch) {
   return ({
-    setCurrentUser (user) {
-      dispatch(setCurrentUser(user))
+    logOutUser () {
+      dispatch(logOutUser())
     }
   })
 }

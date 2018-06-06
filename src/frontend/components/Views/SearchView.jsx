@@ -5,6 +5,10 @@ import Dropdown from '../../../backend/containers/DropdownContainer'
 import Loader from '../../../backend/containers/LoaderContainer'
 
 class SearchView extends React.Component {
+  componentDidMount () {
+    this.intialize()
+  }
+
   async intialize () {
     const { getCars, updateCarList, currentUser } = this.props
     let uid
@@ -14,27 +18,18 @@ class SearchView extends React.Component {
       // do nothing
     }
     await getCars(uid)
-    const { allCars } = this.props
+    const { allCars } = this.props // separated because of getCars
     updateCarList(allCars)
-  }
-
-  componentDidMount () {
-    this.intialize()
   }
 
   renderItems () {
     const { filteredCars } = this.props
-    const toRenderArr = []
     let carArr = []
     let count = 0
     if (filteredCars) {
       carArr = filteredCars
     }
-    carArr.forEach(e => {
-      toRenderArr.push(<Item item={e} key={count}/>)
-      count++
-    })
-    return toRenderArr
+    return carArr.map(e => <Item item={e} key={count++}/>)
   }
 
   render () {

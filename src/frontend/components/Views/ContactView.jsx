@@ -1,57 +1,23 @@
 import React from 'react'
 import { Label, Modal, Divider, Input, Button, Header, TextArea, Icon, Container, Segment, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { onKeyPressHandler, onChangeHandler, getColor, isItemError } from '../../errorHandler'
-import { getDocumentValues, autoFillForm, getDate } from '../../documentHandler'
-import { getDocument, updateDocument, getDocumentUID } from '../../../backend/data'
-import swal from 'sweetalert'
-import Validator from '../../validator'
-import alertify from 'alertify.js'
+import { onKeyPressHandler, onChangeHandler, getColor } from '../../errorHandler'
+import { autoFillForm, getDate } from '../../documentHandler'
+import { contactHandler } from '../../contactHandler'
 
 class ContactView extends React.Component {
   async initialize () {
-    const { setSuccess, getUser, history, currentUser } = this.props
+    const { setSuccess, getUser, currentUser } = this.props
     try {
-      const { owner } = history.location.state
-      const message = `You can't contact yourself`
-      if (await isItemError(owner, message) === false) {
-        const user = JSON.parse(currentUser)
-        await getUser(user.uid, user.email)
-        const { lastName, firstName, phone, gender } = this.props.user
-        const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
-        autoFillForm(values)
-      }
+      const user = JSON.parse(currentUser)
+      await getUser(user.uid, user.email)
+      const { lastName, firstName, phone, gender } = this.props.user
+      const values = { firstName: firstName, lastName: lastName, phone: phone, gender: gender }
+      autoFillForm(values) // ui purposes
     } catch (e) {
       // do nothing
     }
     setSuccess()
-  }
-
-  async onClickHandler () {
-    const { history } = this.props
-    const inputArr = ['firstName', 'lastName', 'gender', 'phone', 'message']
-    const values = getDocumentValues(inputArr)
-    const validator = new Validator()
-    let isAllValid = true
-    for (const key in values) {
-      if (!validator.isValid(key, values[key])) {
-        isAllValid = false
-        break
-      }
-    }
-    if (isAllValid) {
-      values['owner'] = history.location.state.owner
-      values['date'] = document.getElementById('date').value
-      const car = await getDocument('cars', 'imageId', history.location.state.imageId)
-      const arrId = car.docs[0].data().peopleInterested
-      const peopleInterested = await getDocumentUID('contacts', arrId)
-      const dataToSend = {people: [...peopleInterested.data().people, values]}
-      await updateDocument('contacts', arrId, dataToSend)
-      history.push('/SearchView')
-      alertify.success(`Message has been sent`, 3)
-    } else {
-      swal('Error!', 'Please fill up all inputs', 'error')
-    }
   }
 
   componentDidMount () {
@@ -97,7 +63,7 @@ class ContactView extends React.Component {
               <TextArea id='message' autoHeight rows={5} placeholder='Message'
                 style={{background: 'transparent', width: '100%', color: 'white'}} />
               <Divider hidden />
-              <Button onClick={() => this.onClickHandler()} fluid inverted>Confirm</Button>
+              <Button onClick={() => contactHandler()} fluid inverted>Confirm</Button>
             </Modal.Content>
           </Segment>
         </Modal>

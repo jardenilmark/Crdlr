@@ -14,10 +14,6 @@ describe('<TitleBar /> ', () => {
   it('renders <TitleBar>', () => {
     expect(wrapper).toHaveLength(1)
   })
-  it('allows us to set props', () => {
-    wrapper.setProps({foo: 'foo'})
-    expect(wrapper.instance().props.foo).toBe('foo')
-  })
   it('contains <LoginContainer>', () => {
     expect(wrapper.find(LoginContainer)).toHaveLength(1)
   })

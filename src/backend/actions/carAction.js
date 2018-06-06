@@ -52,12 +52,8 @@ export function fetchCarTypes () {
   return async (dispatch) => {
     const types = await fetchFromDb('carTypes')
     compareData(types, 'type')
-    const arr = []
-    types.forEach(e => {
-      arr.push({key: e.type, text: e.type, value: e.type})
-    })
     dispatch(getData('GET_LOADER', true))
-    dispatch(getData('GET_CAR_TYPES', arr))
+    dispatch(getData('GET_CAR_TYPES', types.map(e => ({key: e.type, text: e.type, value: e.type}))))
   }
 }
 
@@ -65,11 +61,7 @@ export function fetchCarBrands () {
   return async (dispatch) => {
     const brands = await fetchFromDb('carBrands')
     compareData(brands, 'brand')
-    const arr = []
-    brands.forEach(e => {
-      arr.push({key: e.brand, text: e.brand, value: e.brand})
-    })
-    dispatch(getData('GET_CAR_BRANDS', arr))
+    dispatch(getData('GET_CAR_BRANDS', brands.map(e => ({key: e.brand, text: e.brand, value: e.brand}))))
   }
 }
 

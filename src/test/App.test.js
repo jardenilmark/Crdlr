@@ -14,10 +14,6 @@ describe('<AppView />', () => {
   it('renders <AppView>', () => {
     expect(wrapper).toHaveLength(1)
   })
-  it('accepts props', () => {
-    wrapper.setProps({app: 'app'})
-    expect(wrapper.instance().props.app).toEqual('app')
-  })
   it('renders <TitleBar>', () => {
     expect(wrapper.find(TitleBar)).toHaveLength(1)
   })

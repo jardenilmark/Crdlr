@@ -2,7 +2,6 @@ import React from 'react'
 import 'firebase/storage'
 import shallow from './Enzyme.js'
 import SignedInView from '../frontend/components/Views/SignedInView'
-import SignOut from '../backend/containers/SignOutContainer'
 import { Menu } from 'semantic-ui-react'
 
 describe('<SearchView />', () => {
@@ -16,8 +15,5 @@ describe('<SearchView />', () => {
   it('should have Menu.Menu and Menu.Items', () => {
     expect(wrapper.find(Menu.Menu).length).toBeGreaterThanOrEqual(1)
     expect(wrapper.find(Menu.Item).length).toBeGreaterThanOrEqual(1)
-  })
-  it('should have a <SignOut>', () => {
-    expect(wrapper.find(SignOut)).toHaveLength(1)
   })
 })
