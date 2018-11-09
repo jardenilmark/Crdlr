@@ -5,31 +5,38 @@ import { Link } from 'react-router-dom'
 import history from '../../../backend/history'
 import SignedInView from '../../../backend/containers/SignedInContainer'
 
-const component = props => {
-	const { currentUser } = props
-	const component = currentUser ? <SignedInView /> : <LoginContainer />
-	return component
+const component = (props) => {
+  const { currentUser } = props
+  if (currentUser) {
+    return <SignedInView/>
+  }
+  return <LoginContainer/>
 }
 
-const highlight = props => {
-	let { activeItem } = props
-	return !activeItem ? history.location.pathname.slice(1) : activeItem
+const highlight = (props) => {
+  let { activeItem } = props
+  if (!activeItem) {
+    activeItem = history.location.pathname.slice(1)
+  }
+  return activeItem
 }
 
-const TitleBar = props => {
-	const activeItem = highlight(props)
-	return (
-		<Menu inverted borderless compact attached="top" style={{ margin: -1 }} stackable>
-			<Menu.Item />
-			<Menu.Item header>
-				<Header inverted>CRDLR</Header>
-			</Menu.Item>
-			<Menu.Item />
-			<Menu.Item as={Link} to="/" name="Home" active={activeItem === '/' || activeItem === ''} />
-			<Menu.Item as={Link} to="/SearchView" name="Search" active={activeItem === 'SearchView'} />
-			{component(props)}
-		</Menu>
-	)
+const TitleBar = (props) => {
+  const activeItem = highlight(props)
+  return (
+    <Menu inverted borderless compact attached='top' style={{margin: -1}} stackable>
+      <Menu.Item />
+      <Menu.Item header>
+        <Header inverted>
+          CRDLR
+        </Header>
+      </Menu.Item>
+      <Menu.Item />
+      <Menu.Item as={Link} to='/' name='Home' active={activeItem === '/' || activeItem === ''}/>
+      <Menu.Item as={Link} to='/SearchView' name='Search' active={activeItem === 'SearchView'}/>
+      {component(props)}
+    </Menu>
+  )
 }
 
 export default TitleBar

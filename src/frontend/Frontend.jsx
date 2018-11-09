@@ -6,15 +6,15 @@ import { Router } from 'react-router-dom'
 import history from '../backend/history'
 import AppView from './components/Views/AppView'
 
-function renderComponent(Component) {
-	ReactDOM.render(
-		<Provider store={store}>
-			<Router history={history}>
-				<Component />
-			</Router>
-		</Provider>,
-		document.getElementById('mount')
-	)
+function renderComponent (Component) {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Router history={history}>
+        <Component />
+      </Router>
+    </Provider>,
+    document.getElementById('mount')
+  )
 }
 
 renderComponent(AppView)
