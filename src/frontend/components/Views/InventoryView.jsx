@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Container } from 'semantic-ui-react'
-import { isUserError } from '../../errorHandler'
+import { isUserError } from '../../helpers/errorHandler'
 import InventoryHeader from '../../../backend/containers/InvenHeaderContainer'
 import InventoryBody from '../../../backend/containers/InvenBodyContainer'
 import InventoryFooter from '../../../backend/containers/InvenFooterContainer'

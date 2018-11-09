@@ -7,18 +7,13 @@ import SignedInView from '../../../backend/containers/SignedInContainer'
 
 const component = props => {
 	const { currentUser } = props
-	if (currentUser) {
-		return <SignedInView />
-	}
-	return <LoginContainer />
+	const component = currentUser ? <SignedInView /> : <LoginContainer />
+	return component
 }
 
 const highlight = props => {
 	let { activeItem } = props
-	if (!activeItem) {
-		activeItem = history.location.pathname.slice(1)
-	}
-	return activeItem
+	return !activeItem ? history.location.pathname.slice(1) : activeItem
 }
 
 const TitleBar = props => {

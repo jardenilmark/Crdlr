@@ -1,4 +1,4 @@
-import history from '../backend/history'
+import history from '../../backend/history'
 import Validator from './handlers/validator'
 import swal from 'sweetalert'
 

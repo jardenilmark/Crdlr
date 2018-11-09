@@ -24,11 +24,8 @@ class SearchView extends React.Component {
 
 	renderItems() {
 		const { filteredCars } = this.props
-		let carArr = []
+		const carArr = filteredCars ? filteredCars : []
 		let count = 0
-		if (filteredCars) {
-			carArr = filteredCars
-		}
 		return carArr.map(e => <Item item={e} key={count++} />)
 	}
 

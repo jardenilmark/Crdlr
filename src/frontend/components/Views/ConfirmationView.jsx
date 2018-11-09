@@ -11,7 +11,7 @@ import {
 	Container,
 	Grid
 } from 'semantic-ui-react'
-import { onKeyPressHandler, onChangeHandler, getColor } from '../../errorHandler'
+import { onKeyPressHandler, onChangeHandler, getColor } from '../../helpers/errorHandler'
 import { autoFillForm, getDate } from '../../documentHandler'
 import { confirmationHandler } from '../../confirmationHandler'
 import { Link } from 'react-router-dom'

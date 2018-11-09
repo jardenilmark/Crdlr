@@ -1,7 +1,7 @@
 import { storage } from '../../backend/database'
 import { addToDb, updateDocument } from '../../backend/data'
 import { getDocumentValues } from './documentHandler'
-import { isCarCreateError } from '../errorHandler'
+import { isCarCreateError } from './errorHandler'
 import alertify from 'alertify.js'
 
 export async function onClickHandler(props) {

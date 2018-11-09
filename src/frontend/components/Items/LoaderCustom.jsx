@@ -3,18 +3,19 @@ import { Dimmer, Loader, Header } from 'semantic-ui-react'
 
 const InventoryHeader = props => {
 	const { filteredCars, loader } = props
-	if (filteredCars.length === 0 && !loader) {
-		return (
+	return filteredCars.length === 0 ? (
+		loader ? (
 			<Dimmer active>
 				<Loader size="massive" indeterminate>
 					Preparing Selection
 				</Loader>
 			</Dimmer>
+		) : (
+			<Header size="large">No Available Cars</Header>
 		)
-	} else if (filteredCars.length === 0 && loader) {
-		return <Header size="large">No Available Cars</Header>
-	}
-	return <div />
+	) : (
+		<div />
+	)
 }
 
 export default InventoryHeader

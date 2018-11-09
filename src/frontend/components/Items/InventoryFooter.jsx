@@ -4,17 +4,13 @@ import { getNumberCarsSold } from '../../inventoryActions'
 
 const InventoryFooter = props => {
 	const { cars, propertyArray } = props
-	const renderEmptyRows = []
-	const toRender = []
-	let numberSold = 'N/A'
-	if (cars.length > 0) {
-		numberSold = getNumberCarsSold(cars)
-	}
+	const emptyRows = []
+	const numberSold = cars.length > 0 ? getNumberCarsSold(cars) : 'N/A'
 	let count = 0
 	for (let i = 0; i < propertyArray.length; i++) {
-		renderEmptyRows.push(<Table.HeaderCell key={count++} />)
+		emptyRows.push(<Table.HeaderCell key={count++} />)
 	}
-	toRender.push(
+	return [
 		<Table.Row key={count++}>
 			{renderEmptyRows}
 			<Table.HeaderCell>
@@ -24,8 +20,7 @@ const InventoryFooter = props => {
 				<Header size="medium">{numberSold}</Header>
 			</Table.HeaderCell>
 		</Table.Row>
-	)
-	return toRender
+	]
 }
 
 export default InventoryFooter

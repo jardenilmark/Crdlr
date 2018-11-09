@@ -5,10 +5,7 @@ import BuyerReceiptContainer from '../../../backend/containers/BuyerReceiptConta
 
 const PurchaseView = props => {
 	const { history, num } = props
-	let item
-	if (history.location.state) {
-		item = history.location.state.item
-	}
+	let item = history.location.state ? history.location.state.item : item
 	return (
 		<Container
 			fluid

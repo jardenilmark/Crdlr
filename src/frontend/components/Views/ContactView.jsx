@@ -13,7 +13,7 @@ import {
 	Dropdown
 } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { onKeyPressHandler, onChangeHandler, getColor } from '../../errorHandler'
+import { onKeyPressHandler, onChangeHandler, getColor } from '../../helpers/errorHandler'
 import { autoFillForm, getDate } from '../../documentHandler'
 import { contactHandler } from '../../contactHandler'
 

@@ -6,15 +6,11 @@ import { getDropdownValues, getFilteredList } from '../../carFilter'
 const DropdownCustom = props => {
 	const { allCars } = props
 	const placeholders = ['Location', 'Brand', 'Type', 'Model']
-	let dropDownArr = []
+	const dropDownArr = allCars ? getDropdownValues(placeholders, props) : []
 	let count = 0
-	if (allCars) {
-		dropDownArr = getDropdownValues(placeholders, props)
-	}
 	return dropDownArr.map(e => {
 		const placeholder = placeholders[count++]
-		const array = [...e]
-		compareData(array, 'text')
+		const array = compareData([...e], 'text')
 		array.push({ key: 'Show All', value: 'Show All', text: 'Show All' })
 		return (
 			<Grid.Column name={placeholder} key={placeholder}>

@@ -7,16 +7,6 @@ const onclickHandler = async (loginUser, status) => {
 	const email = document.getElementById('emailLogin').value
 	const pass = document.getElementById('passwordLogin').value
 	await loginUser(email, pass)
-	inSignUpScreen(status)
-}
-
-const getWarningSign = status => {
-	if (status === 'failed') {
-		return <Message error header="Login Denied" content="Email and Password do not match" />
-	}
-}
-
-const inSignUpScreen = status => {
 	if (status && history.location.pathname === '/SignUp') {
 		history.push('/')
 	}
@@ -53,7 +43,11 @@ const Login = props => {
 									Sign Up
 								</Button>
 							</Form>
-							{getWarningSign(status)}
+							{status === 'failed' ? (
+								<Message error header="Login Denied" content="Email and Password do not match" />
+							) : (
+								''
+							)}
 						</Grid.Column>
 					</Grid>
 				</Popup>
