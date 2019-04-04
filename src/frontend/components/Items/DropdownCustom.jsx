@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dropdown, Grid } from 'semantic-ui-react'
-import { compareData } from '../../../backend/sort'
-import { getDropdownValues, getFilteredList } from '../../carFilter'
+import { compareData } from '../../helpers/sort'
+import { getDropdownValues, getFilteredList } from '../../helpers/carFilter'
 
 const DropdownCustom = (props) => {
   const { allCars } = props

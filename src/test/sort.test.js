@@ -1,4 +1,4 @@
-import { compareData } from '../backend/sort'
+import { compareData } from '../frontend/helpers/sort'
 
 describe('sort ', () => {
   it('sorts the array alphabetically based on an object property', () => {

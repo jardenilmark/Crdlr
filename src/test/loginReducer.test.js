@@ -1,4 +1,4 @@
-import loginReducer from '../backend/reducers/loginReducer'
+import loginReducer from '../frontend/redux/reducers/loginReducer'
 
 describe('loginReducer ', () => {
   let data

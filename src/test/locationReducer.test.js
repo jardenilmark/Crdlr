@@ -1,4 +1,4 @@
-import locationReducer from '../backend/reducers/locationReducer'
+import locationReducer from '../frontend/redux/reducers/locationReducer'
 
 describe('locationReducer ', () => {
   let data

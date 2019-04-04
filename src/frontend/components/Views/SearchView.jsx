@@ -1,8 +1,8 @@
 import React from 'react'
 import Item from '../Items/Item'
 import { Container, Grid, Divider } from 'semantic-ui-react'
-import Dropdown from '../../../backend/containers/DropdownContainer'
-import Loader from '../../../backend/containers/LoaderContainer'
+import Dropdown from '../../redux/containers/DropdownContainer'
+import Loader from '../../redux/containers/LoaderContainer'
 
 class SearchView extends React.Component {
   componentDidMount () {

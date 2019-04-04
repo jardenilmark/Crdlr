@@ -1,4 +1,4 @@
-import imgReducer from '../backend/reducers/imgReducer'
+import imgReducer from '../frontend/redux/reducers/imgReducer'
 
 describe('imgReducer ', () => {
   let data

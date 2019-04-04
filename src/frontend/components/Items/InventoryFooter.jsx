@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Table } from 'semantic-ui-react'
-import { getNumberCarsSold } from '../../inventoryActions'
+import { getNumberCarsSold } from '../../helpers/inventoryActions'
 
 const InventoryFooter = (props) => {
   const { cars, propertyArray } = props

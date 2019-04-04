@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Modal, Card, Image, Button, Icon } from 'semantic-ui-react'
-import { onClickHandler } from '../../mailHandler'
+import { onClickHandler } from '../../helpers/mailHandler'
 
 const renderCardContent = (props) => {
   try {

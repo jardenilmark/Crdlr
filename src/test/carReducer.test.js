@@ -1,4 +1,4 @@
-import carReducer from '../backend/reducers/carReducer'
+import carReducer from '../frontend/redux/reducers/carReducer'
 
 describe('carReducer ', () => {
   let data

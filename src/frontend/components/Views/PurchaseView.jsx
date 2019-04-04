@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
-import ConfirmationContainer from '../../../backend/containers/ConfirmationContainer'
-import BuyerReceiptContainer from '../../../backend/containers/BuyerReceiptContainer'
+import ConfirmationContainer from '../../redux/containers/ConfirmationContainer'
+import BuyerReceiptContainer from '../../redux/containers/BuyerReceiptContainer'
 
 const PurchaseView = (props) => {
   const { history, num } = props

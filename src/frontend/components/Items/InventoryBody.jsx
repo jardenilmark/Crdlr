@@ -1,10 +1,10 @@
 import React from 'react'
 import { Icon, Table, Image, Popup } from 'semantic-ui-react'
-import { isAcceptedKey } from '../../inventoryActions'
-import { loadImage } from '../../documentHandler'
-import Receipt from '../../../backend/containers/SellerReceiptContainer'
-import Mail from '../../../backend/containers/MailContainer'
-import { onClickHandler } from '../../inventoryBodyHandler'
+import { isAcceptedKey } from '../../helpers/inventoryActions'
+import { loadImage } from '../../helpers/documentHandler'
+import Receipt from '../../redux/containers/SellerReceiptContainer'
+import Mail from '../../redux/containers/MailContainer'
+import { onClickHandler } from '../../helpers/inventoryBodyHandler'
 
 const getRowSubContents = (key, num, props) => {
   const { peopleModals, cars } = props

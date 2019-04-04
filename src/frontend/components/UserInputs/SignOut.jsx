@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
-import history from '../../../backend/history'
+import history from '../../helpers/history'
 
 const onClickHandler = async (props) => {
   await props.logOutUser()

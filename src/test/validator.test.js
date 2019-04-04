@@ -1,4 +1,4 @@
-import Validator from '../frontend/validator'
+import Validator from '../frontend/helpers/validator'
 
 const validator = new Validator()
 

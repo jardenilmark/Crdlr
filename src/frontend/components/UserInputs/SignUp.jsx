@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container, Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
-import { onKeyPressHandler, onChangeHandler } from '../../errorHandler'
-import { getDate } from '../../documentHandler'
-import { addUser } from '../../signUpHandler'
+import { onKeyPressHandler, onChangeHandler } from '../../helpers/errorHandler'
+import { getDate } from '../../helpers/documentHandler'
+import { addUser } from '../../helpers/signUpHandler'
 
 class SignUp extends React.Component {
   componentDidMount () {

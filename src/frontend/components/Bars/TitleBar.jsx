@@ -1,9 +1,9 @@
 import React from 'react'
-import LoginContainer from '../../../backend/containers/LoginContainer'
+import LoginContainer from '../../redux/containers/LoginContainer'
 import { Menu, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import history from '../../../backend/history'
-import SignedInView from '../../../backend/containers/SignedInContainer'
+import history from '../../redux/history'
+import SignedInView from '../../redux/containers/SignedInContainer'
 
 const component = (props) => {
   const { currentUser } = props

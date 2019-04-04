@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Header, Image, Button, Grid, Segment, Divider, Reveal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { loadImage, getNum } from '../../documentHandler'
+import { loadImage, getNum } from '../../helpers/documentHandler'
 
 const Item = (props) => {
   const { item } = props

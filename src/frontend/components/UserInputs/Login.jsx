@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Icon, Popup, Button, Form, Grid, Message } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import history from '../../../backend/history'
+import history from '../../helpers/history'
 
 const onclickHandler = async (loginUser, status) => {
   const email = document.getElementById('emailLogin').value

@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import store from '../backend/store'
+import store from '../frontend/redux/store'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
-import history from '../backend/history'
+import history from '../frontend/helpers/history'
 import AppView from './components/Views/AppView'
 
 function renderComponent (Component) {

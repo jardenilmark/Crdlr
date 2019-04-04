@@ -1,10 +1,10 @@
 import React from 'react'
 import { Table, Container } from 'semantic-ui-react'
-import { isUserError } from '../../errorHandler'
-import InventoryHeader from '../../../backend/containers/InvenHeaderContainer'
-import InventoryBody from '../../../backend/containers/InvenBodyContainer'
-import InventoryFooter from '../../../backend/containers/InvenFooterContainer'
-import { setPeopleModalArr, setReceiptModalArr } from '../../inventoryActions'
+import { isUserError } from '../../helpers/errorHandler'
+import InventoryHeader from '../../redux/containers/InvenHeaderContainer'
+import InventoryBody from '../../redux/containers/InvenBodyContainer'
+import InventoryFooter from '../../redux/containers/InvenFooterContainer'
+import { setPeopleModalArr, setReceiptModalArr } from '.../../helpers/inventoryActions'
 
 class InventoryView extends React.Component {
   componentDidMount () {

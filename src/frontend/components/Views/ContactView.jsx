@@ -1,9 +1,9 @@
 import React from 'react'
 import { Label, Modal, Divider, Input, Button, Header, TextArea, Icon, Container, Segment, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { onKeyPressHandler, onChangeHandler, getColor } from '../../errorHandler'
-import { autoFillForm, getDate } from '../../documentHandler'
-import { contactHandler } from '../../contactHandler'
+import { onKeyPressHandler, onChangeHandler, getColor } from '../../helpers/errorHandler'
+import { autoFillForm, getDate } from '../../helpers/documentHandler'
+import { contactHandler } from '../../helpers/contactHandler'
 
 class ContactView extends React.Component {
   async initialize () {

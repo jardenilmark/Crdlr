@@ -1,8 +1,8 @@
 import React from 'react'
 import { Message, Input, Button, Form, Grid, Segment, Container } from 'semantic-ui-react'
-import { isUserError } from '../../errorHandler'
-import ProgressBar from '../../../backend/containers/ProgressBarContainer'
-import { onClickHandler } from '../../carCreateHandler'
+import { isUserError } from '../../helpers/errorHandler'
+import ProgressBar from '../../redux/containers/ProgressBarContainer'
+import { onClickHandler } from '../../helpers/carCreateHandler'
 
 class CarCreate extends React.Component {
   componentDidMount () {

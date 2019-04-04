@@ -1,4 +1,4 @@
-import errorReducer from '../backend/reducers/errorReducer'
+import errorReducer from '../frontend/redux/reducers/errorReducer'
 
 describe('errorReducer ', () => {
   let data
